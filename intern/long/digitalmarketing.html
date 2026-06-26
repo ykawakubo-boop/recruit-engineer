@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>デジタルマーケティング 長期インターンシップ | ITエンジニア | ダイアモンドヘッド株式会社</title>
+    
+    <style>
+        /* =========================================
+           1. 全体設定・フォント読み込み（LP・各採用ページ完全共通）
+           ========================================= */
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
+
+        :root {
+            --bg-base: #ffffff;
+            --text-dark: #111111;
+            --text-muted: #555555;
+            --border-color: #e2e8f0;
+            --accent-blue: #00bfa5; 
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* レフトナビゲーション用大枠レイアウト */
+        .app-wrapper {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           2. レフトナビゲーション（階層ツリー構造・ホバー展開式）のスタイル
+           ※表示はsidebar.jsに任せますが、表示中の崩れを防ぐためのCSSです
+           ★全体の統一感を出すため、余白・フォントサイズを新卒採用ページと同じ黄金比に統一しました
+           ========================================= */
+        .left-nav {
+            width: 280px;
+            height: 100vh;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            border-right: 1px solid var(--border-color);
+            padding: 50px 40px; /* 40px 30pxから50px 40pxに統一 */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            overflow-y: auto; 
+        }
+
+        /* カスタムスクロールバー（レフトナビ用） */
+        .left-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+        .left-nav::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        .nav-logo {
+            text-decoration: none; margin-bottom: 60px; display: block; text-align: center; /* 40pxから60pxに変更 */
+        }
+        .nav-logo img {
+            width: 100%; max-width: 180px; height: auto; display: block; margin: 0 auto; /* 160pxから180pxに統一 */
+        }
+        .nav-logo .logo-text {
+            display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 11px; font-weight: 700; /* 10pxから11pxに統一 */
+            color: #555555; letter-spacing: 0.15em; margin-top: 16px; line-height: 1.6; /* 12pxから16pxに変更 */
+        }
+
+        .nav-recruit { flex-grow: 1; }
+        .nav-recruit-list { list-style: none; padding: 0; margin: 0; }
+        .nav-recruit-list > li { margin-bottom: 24px; } /* 20pxから24pxに変更 */
+        .nav-recruit-list a {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 14px; font-weight: 700; color: #333; text-decoration: none; /* 13.5px / #444 から 14px / #333 に統一 */
+            display: flex; align-items: center; justify-content: space-between; transition: color 0.3s;
+        }
+        .nav-recruit-list a:hover, .nav-recruit-list a.active { color: var(--accent-blue); }
+
+        /* 第2階層 */
+        .nav-sub-list {
+            list-style: none;
+            padding: 0 0 0 12px;
+            margin: 0;
+            border-left: 1px solid var(--border-color);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+        }
+        .nav-sub-list li { margin-bottom: 14px; }
+        .nav-sub-list a {
+            font-size: 12.5px; font-weight: 500; color: #666;
+        }
+        .nav-sub-list a:hover, .nav-sub-list a.active-sub { color: var(--accent-blue); }
+
+        /* ★ インターンシップにホバーした時、または配下のa要素（active, active-sub, active-deep）がアクティブな時に自動展開 */
+        .nav-recruit-list li.has-sub:hover .nav-sub-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-sub-list,
+        .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-sub-list {
+            max-height: 800px; 
+            opacity: 1;
+            padding: 10px 0 0 12px;
+        }
+
+        /* 第3階層 */
+        .nav-deep-list {
+            list-style: none;
+            padding: 0 0 0 12px;
+            margin: 0;
+            border-left: 1px solid var(--border-color);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+        }
+
+        /* ★ 「インターンシップ」全体にホバーした時点で一気に3階層目まで展開。メニュー逃げバグを完全防止 */
+        .nav-recruit-list li.has-sub:hover .nav-deep-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-deep-list,
+        .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-deep-list {
+            max-height: 400px;
+            opacity: 1;
+            padding: 10px 0 0 12px;
+        }
+
+        .nav-deep-list li { margin-bottom: 10px; }
+        .nav-deep-list a {
+            font-size: 11.5px; font-weight: 400; color: #888;
+        }
+        .nav-deep-list a:hover, .nav-deep-list a.active-deep {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        /* モバイル用ヘッダー（PCでは非表示） */
+        .mobile-header {
+            display: none;
+        }
+
+        /* =========================================
+           3. メインコンテンツエリア
+           ========================================= */
+        .main-content {
+            flex: 1;
+            width: 100%; 
+            padding-left: 280px; 
+            box-sizing: border-box;
+            background-color: var(--bg-base);
+        }
+
+        /* 幅広コンテナ */
+        .content-container {
+            padding: 80px 6%;
+            box-sizing: border-box;
+            max-width: 1100px; /* 横幅を1100pxに統一 */
+            margin: 0 auto;
+        }
+
+        .section-tag {
+            font-size: 1rem; font-weight: 700;
+            color: var(--accent-blue);
+            letter-spacing: 0.2em;
+            margin-bottom: 16px; text-transform: uppercase;
+            font-family: 'Bodoni Moda', serif;
+        }
+
+        .section-title {
+            font-size: clamp(24px, 3vw, 36px); font-weight: 700; line-height: 1.4;
+            margin: 0 0 30px 0; color: #111; letter-spacing: 0.02em;
+        }
+
+        /* =========================================
+           4. ヒーローセクション（長期インターン共通メインビジュアル）
+           ========================================= */
+        .hero {
+            position: relative; width: 100%; 
+            height: 40vh; 
+            min-height: 350px; 
+            display: flex; align-items: center; justify-content: flex-start;
+            box-sizing: border-box; padding: 0 6%; overflow: hidden;
+            background-color: #f5f5f5;
+        }
+
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('../../images/kari.jpg'); /* 長期インターン共通のメインビジュアル(kari.jpg)に統一 */
+            background-size: cover; background-position: center;
+            filter: grayscale(70%) contrast(1.1) brightness(0.7);
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 150px;
+            background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+            z-index: 3; pointer-events: none;
+        }
+
+        .hero::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 40%, rgba(255,255,255,0.05) 80%, rgba(255,255,255,1) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative; z-index: 10;
+        }
+
+        .hero-en {
+            font-family: 'Bodoni Moda', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 900;
+            color: #111; letter-spacing: 0.05em; line-height: 1.1; margin: 0 0 8px 0;
+            opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards 0.1s;
+        }
+        .hero-jp {
+            font-size: 16px; font-weight: 700; color: var(--accent-blue); letter-spacing: 0.2em; margin: 0;
+            opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards 0.3s;
+        }
+
+        /* =========================================
+           5. メイン就業詳細セクション
+           ========================================= */
+        .job-detail-section {
+            line-height: 1.8;
+            font-size: 15px;
+            color: #444;
+            margin-bottom: 60px;
+        }
+        .job-detail-section p { margin-bottom: 24px; }
+
+        /* 縦並び（1カラム化）レイアウト */
+        .vertical-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        .feature-box {
+            background-color: #fafafa;
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        .feature-box h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            color: #111;
+            border-left: 3px solid var(--accent-blue);
+            padding-left: 14px;
+            letter-spacing: 0.05em;
+        }
+
+        /* 業務内容リスト */
+        .work-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        .work-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            font-weight: 500;
+            color: #111;
+        }
+        .work-list li::before {
+            content: '▫';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: 900;
+        }
+
+        /* 技術バッジ */
+        .tech-badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .tech-badge {
+            background-color: #fafafa;
+            border: 1px solid var(--border-color);
+            padding: 6px 16px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #111;
+            border-radius: 4px;
+        }
+
+        /* スキルセクション */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 60px; /* 余白を他のページに統一 */
+        }
+        .skill-card {
+            border-top: 2px solid #111111;
+            padding: 24px 0;
+        }
+        .skill-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111;
+            margin: 0 0 16px 0;
+        }
+        .skill-card ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .skill-card li {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* =========================================
+           6. エントリーセクション
+           ========================================= */
+        .entry-section {
+            background-color: var(--bg-base); 
+            padding: 40px 40px 80px; /* 上部パディングを統一 */
+            text-align: center; 
+            margin-top: 0; /* マージンをなくして間隔を統一 */
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--border-color); /* 上線ではなく下線に統一 */
+        }
+        .entry-section h2 {
+            font-family: 'Bodoni Moda', serif; 
+            font-size: clamp(32px, 5vw, 48px); 
+            color: #111111; 
+            margin: 0 0 24px 0;
+            letter-spacing: 0.1em;
+        }
+        
+        .entry-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: #111111; color: #ffffff; text-decoration: none; padding: 18px 56px;
+            font-size: 14.5px; font-weight: 700; letter-spacing: 0.15em; transition: all 0.4s ease;
+            border-radius: 4px; /* 他のページに合わせて4pxに統一 */
+        }
+        .entry-btn::after { content: '→'; margin-left: 14px; transition: transform 0.4s; }
+        .entry-btn:hover { background-color: var(--accent-blue); color: #ffffff; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 191, 165, 0.2); }
+        .entry-btn:hover::after { transform: translateX(6px); }
+
+        /* ★ ページ下部SCSKロゴ（共通CSSスタイル） */
+        .scsk-bottom-logo {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 40px 60px;
+            background-color: #ffffff;
+        }
+        .scsk-bottom-logo a {
+            display: inline-block;
+            width: 120px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+        .scsk-bottom-logo a:hover {
+            transform: translateY(-2px);
+        }
+        .scsk-bottom-logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================
+           Responsive
+           ========================================= */
+        @media (max-width: 992px) {
+            .app-wrapper { display: block; }
+            .left-nav {
+                position: fixed; top: 0; left: -100%; height: 100vh;
+                transition: left 0.3s ease; box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+            }
+            .left-nav.is-open { left: 0; }
+            .main-content { width: 100%; padding-left: 0; padding-top: 0; }
+            
+            .mobile-header {
+                display: flex; justify-content: space-between; align-items: center;
+                background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);
+                padding: 15px 5%; box-sizing: border-box; border-bottom: 1px solid var(--border-color);
+                position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+            }
+            .mobile-logo { font-family: 'Bodoni Moda', serif; font-size: 18px; font-weight: 900; color: #111; }
+            .menu-toggle {
+                background: none; border: none; font-family: 'Noto Sans JP', sans-serif;
+                font-size: 12px; font-weight: 700; color: var(--accent-blue); cursor: pointer; padding: 10px;
+            }
+            .hero { margin-top: 60px; min-height: 250px; }
+            
+            .skills-grid { grid-template-columns: 1fr; gap: 30px; }
+        }
+
+        @media (max-width: 768px) {
+            .content-container { padding: 60px 5%; }
+            
+            .scsk-bottom-logo {
+                padding: 20px 24px 40px;
+            }
+            .scsk-bottom-logo a {
+                width: 100px;
+            }
+            .entry-section { padding: 40px 24px 60px; } /* スマホ用のパディングも統一 */
+        }
+    </style>
+</head>
+<body data-page="intern-dm"> <!-- 共通パーツsidebar.js of ID「intern-dm」と完全に一致させ自動展開させます -->
+
+    <div class="app-wrapper">
+
+        <!-- ★ 共通レフトナビ（モバイルヘッダー含む）がここに読み込まれます -->
+        <div id="sidebar-container"></div>
+
+        <!-- メインコンテンツ -->
+        <main class="main-content">
+
+            <!-- HERO（長期インターン共通：文言と画像をlong.htmlに完全統一） -->
+            <section class="hero">
+                <div class="hero-bg" data-local-bg="../../images/kari.jpg" data-fallback-bg="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1600&q=80"></div>
+                <div class="hero-content">
+                    <h1 class="hero-en">LONG-TERM INTERNSHIP</h1> <!-- 統一感を出すため「LONG-TERM INTERN」に揃えました -->
+                    <p class="hero-jp">長期インターンシップ</p> <!-- 統一感を出すため「長期インターンシップ」に揃えました -->
+                </div>
+            </section>
+
+            <div class="content-container">
+
+                <!-- プログラムの大見出し -->
+                <h2 class="section-title">デジタルマーケティング</h2>
+
+                <!-- OVERVIEW -->
+                <div class="section-tag">JOB OVERVIEW</div>
+                <h3 style="font-size: 20px; font-weight: 700; margin: 0 0 20px 0;">インターンシップの内容</h3>
+                
+                <div class="job-detail-section">
+                    <p>
+                        マーケティング業務をメインとした長期インターンシップとなります。ECビジネスを理解できるインターンシップのためプログラミング未経験の方やWEBマーケター志望の方の受け入れも行っています！
+                    </p>
+                    <p>
+                        主にWeb広告（リスティング広告・SNS広告など）の運用や、アクセス解析ツールを活用したデータ分析を行います。数値を読み解き、課題を特定し、改善策を考えるプロセスを通して、実践的なデジタルマーケティングスキルを身につけることができます。
+                    </p>
+                </div>
+
+                <!-- 縦並び（1カラム）レイアウト -->
+                <div class="vertical-layout">
+                    <div class="feature-box">
+                        <h3>参加者の傾向</h3>
+                        <p style="font-size: 14.5px; color: #555; margin: 0; line-height: 1.8;">
+                            数値を読み解き、課題を特定し、改善策を考えるプロセスを通して、実践的なデジタルマーケティングスキルを身につけたい方が参加しています。
+                        </p>
+                    </div>
+
+                    <div class="feature-box">
+                        <h3>業務内容の一例</h3>
+                        <p style="font-size: 13.5px; color: #111; font-weight: 700; margin: 0 0 16px 0; line-height: 1.5;">
+                            ※データ分析およびデジタルマーケティングチームのサポート業務を中心に以下のような実務に携わります。
+                        </p>
+                        <ul class="work-list">
+                            <li>競合分析および市場リサーチ</li>
+                            <li>レポート作成およびプレゼンテーション準備の補助</li>
+                            <li>ダッシュボードの整理およびデータクリーニング</li>
+                            <li>GA4とGTMの設定と運用サポート</li>
+                            <li>各種マーケティングプロジェクトへの協力</li>
+                        </ul>
+                        <p style="font-size: 12.5px; color: #888; margin: 0; line-height: 1.5;">
+                            ※スキルや適性、これまでの経験に合わせて個別の業務内容をご相談・決定します。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TECH STACK & TOOLS -->
+                <div class="section-tag">TECH STACK</div>
+                <h2 class="section-title">利用技術・ツール</h2>
+                <div class="tech-badge-container">
+                    <span class="tech-badge">Excel / Spreadsheets</span>
+                    <span class="tech-badge">Google Slides</span>
+                    <span class="tech-badge">Google Analytics (GA4)</span>
+                    <span class="tech-badge">Google Tag Manager (GTM)</span>
+                    <span class="tech-badge">3C分析 / フレームワーク</span>
+                </div>
+                <p style="font-size: 12.5px; color: #777; margin: 20px 0 80px 0; line-height: 1.6;">
+                    ※当社はGoogle Workspaceを契約しており、実務においてはGoogle Sheets, Google Slides, Google Docsをメインで使用します。
+                </p>
+
+                <!-- SKILLS (活かせる・身につく) -->
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <h3>活かせるスキル</h3>
+                        <ul>
+                            <li>Webマーケティングに関する基礎知識（授業や独学での学習経験）</li>
+                            <li>Google Analyticsなどのアクセス解析ツールに触れた経験</li>
+                            <li>データ分析や統計の基礎知識（授業・研究での学習経験）</li>
+                            <li>Excel / スプレッドシートを用いたデータ集計・分析経験</li>
+                            <li>チームでのプロジェクト経験（ゼミ・サークル・学生団体など）</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card">
+                        <h3>身につくスキル</h3>
+                        <ul>
+                            <li>基本的なビジネススキル</li>
+                            <li>Web広告運用・効果測定スキル</li>
+                            <li>ECビジネスにおける広告運用マーケティングの戦略理解</li>
+                            <li>データ分析に基づく課題発見・改善提案力</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div> <!-- /.content-container -->
+
+            <!-- ENTRY SECTION -->
+            <section class="entry-section">
+                <h2>ENTRY</h2>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScmKd3kR3RCUH8uaN43uobhGrx1KSqRCT3EE5LDlUfakCnK4w/viewform?a=1" target="_blank" rel="noopener noreferrer" class="entry-btn">
+                    応募する
+                </a>
+            </section>
+
+            <!-- ★ SCSKフッターロゴが自動的にこの中に挿入されます -->
+            <div id="scsk-logo-container"></div>
+
+        </main>
+    </div> <!-- .app-wrapper -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const bgElements = document.querySelectorAll("[data-local-bg]");
+            bgElements.forEach(el => {
+                const localBg = el.getAttribute("data-local-bg");
+                const fallbackBg = el.getAttribute("data-fallback-bg");
+                if (localBg && fallbackBg) {
+                    const testImg = new Image();
+                    testImg.onload = function() { el.style.backgroundImage = `url('${localBg}')`; };
+                    testImg.onerror = function() { el.style.backgroundImage = `url('${fallbackBg}')`; };
+                    testImg.src = localBg;
+                }
+            });
+        });
+    </script>
+
+    <!-- ★ 設定バトン：最上位から「2つ深い」ので、深さは「../../」になります -->
+    <script>var pathToRoot = "../../";</script>
+
+    <!-- 外部のJSファイルを読み込んで共通パーツを埋め込み -->
+    <script src="../../components/sidebar.js"></script>
+    <script src="../../components/scsk-logo.js"></script>
+    
+    <script>
+        // 共通パーツ読み込み後のナビゲーション初期化
+        // 読み込み競合を起こさずに安全に並行実行できるよう、addEventListenerを使用します
+        window.addEventListener('load', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const leftNav = document.getElementById('leftNav');
+            
+            if (menuToggle && leftNav) {
+                menuToggle.addEventListener('click', function() {
+                    leftNav.classList.toggle('is-open');
+                    if (leftNav.classList.contains('is-open')) {
+                        menuToggle.textContent = 'CLOSE';
+                        menuToggle.style.color = '#111';
+                    } else {
+                        menuToggle.textContent = 'MENU';
+                        menuToggle.style.color = 'var(--accent-blue)';
+                    }
+                });
+
+                // ナビゲーションリンクをクリックしたら閉じる（モバイル時）
+                const navLinks = leftNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 992) {
+                            leftNav.classList.remove('is-open');
+                            menuToggle.textContent = 'MENU';
+                            menuToggle.style.color = 'var(--accent-blue)';
+                        }
+                    });
+                });
+            }
+
+            const currentPageId = document.body.getAttribute('data-page');
+            if (currentPageId) {
+                const targetLink = document.querySelector(`.left-nav a[data-id="${currentPageId}"]`);
+                if (targetLink) {
+                    if (targetLink.closest('.nav-deep-list')) {
+                        targetLink.classList.add('active-deep');
+                        targetLink.closest('.has-deep').querySelector('a:first-child').classList.add('active-sub');
+                        targetLink.closest('.has-sub').querySelector('a:first-child').classList.add('active');
+                    } else if (targetLink.closest('.nav-sub-list')) {
+                        targetLink.classList.add('active-sub');
+                        targetLink.closest('.has-sub').querySelector('a:first-child').classList.add('active');
+                    } else {
+                        targetLink.classList.add('active');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
