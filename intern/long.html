@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>長期インターンシップ | ITエンジニア | ダイアモンドヘッド株式会社</title>
+    
+    <style>
+        /* =========================================
+           1. 全体設定・フォント読み込み
+           ========================================= */
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
+
+        :root {
+            --bg-base: #ffffff;
+            --text-dark: #111111;
+            --text-muted: #555555;
+            --border-color: #e2e8f0;
+            --accent-blue: #00bfa5; 
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           2. レフトナビゲーション
+           ========================================= */
+        .left-nav {
+            width: 280px;
+            height: 100vh;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            border-right: 1px solid var(--border-color);
+            padding: 50px 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            overflow-y: auto; 
+        }
+
+        .left-nav::-webkit-scrollbar { width: 4px; }
+        .left-nav::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+        .nav-logo { text-decoration: none; margin-bottom: 60px; display: block; text-align: center; }
+        .nav-logo img { width: 100%; max-width: 180px; height: auto; display: block; margin: 0 auto; }
+        .nav-logo .logo-text { display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 11px; font-weight: 700; color: #555555; letter-spacing: 0.15em; margin-top: 16px; line-height: 1.6; }
+
+        .nav-recruit { flex-grow: 1; }
+        .nav-recruit-list { list-style: none; padding: 0; margin: 0; }
+        .nav-recruit-list > li { margin-bottom: 24px; position: relative; }
+        .nav-recruit-list a { font-family: 'Noto Sans JP', sans-serif; font-size: 14px; font-weight: 700; color: #333; text-decoration: none; display: flex; align-items: center; justify-content: space-between; transition: color 0.3s; }
+        .nav-recruit-list a:hover, .nav-recruit-list a.active { color: var(--accent-blue); }
+
+        .nav-sub-list { list-style: none; padding: 0 0 0 12px; margin: 0; border-left: 1px solid var(--border-color); max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease; }
+        
+        .nav-recruit-list li.has-sub:hover .nav-sub-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-sub-list,
+        .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-sub-list { max-height: 800px; opacity: 1; padding: 10px 0 0 12px; }
+
+        .nav-sub-list li { margin-bottom: 14px; position: relative; }
+        .nav-sub-list li:last-child { margin-bottom: 0; }
+        .nav-sub-list a { font-size: 12.5px; font-weight: 500; color: #666; }
+        .nav-sub-list a:hover, .nav-sub-list a.active-sub { color: var(--accent-blue); }
+
+        .nav-deep-list { list-style: none; padding: 0 0 0 12px; margin: 0; border-left: 1px solid var(--border-color); max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease; }
+
+        .nav-recruit-list li.has-sub:hover .nav-deep-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-deep-list,
+        .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-deep-list { max-height: 400px; opacity: 1; padding: 10px 0 0 12px; }
+
+        .nav-deep-list li { margin-bottom: 10px; }
+        .nav-deep-list li:last-child { margin-bottom: 0; }
+        .nav-deep-list a { font-size: 11.5px; font-weight: 400; color: #888; }
+        .nav-deep-list a:hover, .nav-deep-list a.active-deep { color: var(--accent-blue); font-weight: 700; }
+
+        .mobile-header { display: none; }
+
+        /* =========================================
+           3. メインコンテンツエリア
+           ========================================= */
+        .main-content {
+            flex: 1;
+            width: 100%; 
+            padding-left: 280px; 
+            box-sizing: border-box;
+            background-color: var(--bg-base);
+        }
+
+        .content-container { padding: 80px 6%; box-sizing: border-box; max-width: 1100px; margin: 0 auto; }
+        .section-tag { font-size: 1rem; font-weight: 700; color: var(--accent-blue); letter-spacing: 0.2em; margin-bottom: 16px; text-transform: uppercase; font-family: 'Bodoni Moda', serif; }
+        .section-title { font-size: clamp(24px, 3vw, 36px); font-weight: 700; line-height: 1.4; margin: 0 0 40px 0; color: #111; letter-spacing: 0.02em; }
+
+        /* =========================================
+           4. ヒーローセクション
+           ========================================= */
+        .hero { position: relative; width: 100%; height: 40vh; min-height: 350px; display: flex; align-items: center; justify-content: flex-start; box-sizing: border-box; padding: 0 6%; overflow: hidden; background-color: #f5f5f5; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('../images/kari.jpg'); background-size: cover; background-position: center; filter: grayscale(70%) contrast(1.1) brightness(0.7); z-index: 1; }
+        .hero::before { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 150px; background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); z-index: 3; pointer-events: none; }
+        .hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 40%, rgba(255,255,255,0.05) 80%, rgba(255,255,255,1) 100%); z-index: 2; }
+        .hero-content { position: relative; z-index: 10; }
+        .hero-en { font-family: 'Bodoni Moda', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 900; color: #111; letter-spacing: 0.05em; line-height: 1.1; margin: 0; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards 0.1s; }
+        .hero-jp { font-size: 16px; font-weight: 700; color: var(--accent-blue); letter-spacing: 0.2em; margin: 8px 0 0 0; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards 0.3s; }
+
+        /* =========================================
+           5. 特徴・目的カードレイアウト
+           ========================================= */
+        .purpose-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 40px 0 80px 0; }
+        .purpose-card { border: 1px solid var(--border-color); padding: 32px 24px; text-align: center; border-top: 3px solid var(--accent-blue); background-color: #fafafa; }
+        .purpose-card h4 { font-size: 16px; font-weight: 700; margin: 0; color: #111; line-height: 1.6; }
+
+        .shift-info-box { background-color: #fafafa; border: 1px solid var(--border-color); padding: 40px; margin-bottom: 80px; line-height: 1.8; font-size: 15px; color: #555; }
+        .shift-info-box h3 { font-size: 20px; font-weight: 700; color: #111; margin: 0 0 20px 0; }
+
+        .section-header-row { display: flex; align-items: center; justify-content: space-between; gap: 5%; margin-bottom: 50px; }
+        .section-header-text { flex: 1.2; }
+        .section-header-image { flex: 1; height: 300px; border-radius: 12px; overflow: hidden; background-color: #f8f9fa; }
+        .section-header-image .img-cover { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+        .section-desc { font-size: 14.5px; color: #555; line-height: 1.8; margin: 0; max-width: 100%; }
+
+        /* =========================================
+           6. 募集要項
+           ========================================= */
+        .req-list { display: flex; flex-direction: column; border-top: 2px solid #111; margin-bottom: 80px; }
+        .req-row { display: flex; padding: 24px 0; border-bottom: 1px solid var(--border-color); align-items: flex-start; }
+        .req-title { width: 200px; font-weight: 700; color: #111; font-size: 15px; flex-shrink: 0; }
+        .req-detail { flex-grow: 1; font-size: 14.5px; color: #555; line-height: 1.8; margin: 0; }
+        .req-detail ul { margin: 12px 0 0 0; padding-left: 20px; }
+        .req-detail li { margin-bottom: 8px; }
+        .req-detail .note { font-size: 12px; color: #888; display: block; margin-top: 8px; }
+
+        /* =========================================
+           7. 就業内容
+           ========================================= */
+        .program-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 100px; }
+        .program-card { background: #ffffff; padding: 40px; border: 1px solid var(--border-color); display: flex; flex-direction: column; transition: border-color 0.3s, box-shadow 0.3s; }
+        .program-card:hover { border-color: var(--accent-blue); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .program-card h4 { font-size: 18px; font-weight: 700; margin: 0 0 16px 0; color: #111; line-height: 1.4; }
+        .program-card p { font-size: 14px; color: #555; line-height: 1.6; margin: 0 0 24px 0; flex-grow: 1; }
+        .program-btn { display: inline-flex; align-items: center; justify-content: center; background-color: #111111; color: #ffffff; text-decoration: none; padding: 12px 30px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em; transition: all 0.3s ease; align-self: flex-start; }
+        .program-btn::after { content: '→'; margin-left: 10px; transition: transform 0.3s; }
+        .program-btn:hover { background-color: var(--accent-blue); transform: translateY(-1px); }
+        .program-btn:hover::after { transform: translateX(4px); }
+
+        /* =========================================
+           8. 1日の流れタイムライン
+           ========================================= */
+        .timeline { position: relative; padding-left: 40px; margin: 40px 0 100px 0; }
+        .timeline::before { content: ''; position: absolute; top: 5px; left: 5px; bottom: 5px; width: 2px; background-color: var(--border-color); }
+        .timeline-item { position: relative; margin-bottom: 30px; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before { content: ''; position: absolute; top: 4px; left: -39px; width: 12px; height: 12px; border-radius: 50%; background-color: var(--accent-blue); border: 3px solid #ffffff; z-index: 1; }
+        .timeline-time { font-family: 'Bodoni Moda', serif; font-size: 16px; font-weight: 900; color: var(--accent-blue); margin-bottom: 4px; display: block; }
+        .timeline-title { font-size: 15px; font-weight: 700; color: #111; margin: 0 0 4px 0; }
+
+        /* =========================================
+           9. 注意事項
+           ========================================= */
+        .rules-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 80px; }
+        .rule-card { border-top: 2px solid #111111; padding: 24px 0; }
+        .rule-card h3 { font-size: 16px; font-weight: 700; color: #111; margin: 0 0 12px 0; }
+        .rule-card p { font-size: 14px; color: #555; line-height: 1.7; margin: 0 0 12px 0; }
+
+        /* =========================================
+           10. 採用フロー
+           ========================================= */
+        .flow-container { display: flex; flex-direction: column; gap: 24px; margin-bottom: 60px; }
+        .flow-step { display: flex; align-items: stretch; background: #ffffff; border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.02); border-radius: 12px; overflow: hidden; transition: all 0.4s ease; }
+        .flow-step:hover { border-color: transparent; box-shadow: 0 15px 40px rgba(0,0,0,0.06); transform: translateY(-4px); }
+        .flow-num { background: #111; color: #fff; font-family: 'Bodoni Moda', serif; font-size: 24px; font-weight: 900; width: 80px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: color 0.4s; }
+        .flow-step:hover .flow-num { color: var(--accent-blue); }
+        .flow-content { padding: 24px 30px; flex-grow: 1; text-align: left; }
+        .flow-content h4 { margin: 0 0 8px 0; font-size: 16px; font-weight: 700; color: var(--accent-blue); }
+        .flow-content p { margin: 0; font-size: 14px; color: #555; line-height: 1.6; }
+        .flow-content .sub-step { font-size: 13px; color: #555; margin-top: 8px; line-height: 1.8;}
+
+        /* =========================================
+           11. エントリーセクション
+           ========================================= */
+        .entry-section {
+            background-color: var(--bg-base); 
+            padding: 40px 40px 80px; 
+            text-align: center; 
+            margin-top: 0; 
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--border-color); 
+        }
+        .entry-section h2 {
+            font-family: 'Bodoni Moda', serif; 
+            font-size: clamp(32px, 5vw, 48px); 
+            color: #111111; 
+            margin: 0 0 24px 0;
+            letter-spacing: 0.1em;
+        }
+        .entry-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: #111111; color: #ffffff; text-decoration: none; padding: 18px 56px;
+            font-size: 14.5px; font-weight: 700; letter-spacing: 0.15em; transition: all 0.4s ease;
+            border-radius: 4px;
+        }
+        .entry-btn::after { content: '→'; margin-left: 14px; transition: transform 0.4s; }
+        .entry-btn:hover { background-color: var(--accent-blue); color: #ffffff; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 191, 165, 0.2); }
+        .entry-btn:hover::after { transform: translateX(6px); }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================
+           Responsive
+           ========================================= */
+        @media (max-width: 992px) {
+            .app-wrapper { display: block; }
+            .left-nav { position: fixed; top: 0; left: -100%; height: 100vh; transition: left 0.3s ease; box-shadow: 10px 0 30px rgba(0,0,0,0.1); }
+            .left-nav.is-open { left: 0; }
+            .main-content { width: 100%; padding-left: 0; padding-top: 0; }
+            
+            .mobile-header { display: flex; justify-content: space-between; align-items: center; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); padding: 15px 5%; box-sizing: border-box; border-bottom: 1px solid var(--border-color); position: fixed; top: 0; left: 0; width: 100%; z-index: 999; }
+            .mobile-logo { font-family: 'Bodoni Moda', serif; font-size: 18px; font-weight: 900; color: #111; }
+            .menu-toggle { background: none; border: none; font-family: 'Noto Sans JP', sans-serif; font-size: 12px; font-weight: 700; color: var(--accent-blue); cursor: pointer; padding: 10px; }
+            .hero { margin-top: 60px; min-height: 250px; }
+            
+            .purpose-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 60px; }
+            .program-grid { grid-template-columns: 1fr; gap: 24px; }
+            .section-header-row { flex-direction: column; gap: 30px; margin-bottom: 40px; }
+            .section-header-text, .section-header-image { width: 100%; flex: none; }
+            .section-header-image { height: 220px; }
+        }
+        @media (max-width: 768px) {
+            .content-container { padding: 60px 5%; }
+            .req-row { flex-direction: column; gap: 12px; }
+            .req-title { width: 100%; }
+            .flow-step { flex-direction: column; }
+            .flow-num { width: 100%; height: 50px; justify-content: flex-start; padding-left: 20px; box-sizing: border-box; font-size: 20px;}
+            .entry-section { padding: 40px 24px 60px; }
+        }
+    </style>
+</head>
+
+<body data-page="intern-long">
+
+    <div class="app-wrapper">
+
+        <!-- ★ 共通レフトナビ（モバイルヘッダー含む）がここに読み込まれます -->
+        <div id="sidebar-container"></div>
+
+        <!-- メインコンテンツ -->
+        <main class="main-content">
+
+            <!-- HERO -->
+            <section class="hero">
+                <div class="hero-bg" data-local-bg="../images/kari.jpg" data-fallback-bg="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1600&q=80"></div>
+                <div class="hero-content">
+                    <h1 class="hero-en">LONG-TERM INTERN</h1>
+                    <p class="hero-jp">長期インターンシップ</p>
+                </div>
+            </section>
+
+            <div class="content-container">
+
+                <!-- OVERVIEW -->
+                <div class="section-tag">OVERVIEW</div>
+                <h2 class="section-title">実務型の長期インターンシップ</h2>
+                
+                <p style="font-size: 15px; color: #555; line-height: 1.8; margin-bottom: 40px;">
+                    ダイアモンドヘッドでは通年で長期インターンシップの受け入れを行っています。<br>
+                    インターン生の皆さんには、実際の開発現場で社員と共に業務に携わっていただき、実務を通じたスキルの習得を目指していただきます。
+                </p>
+
+                <!-- 参加目的 -->
+                <div class="purpose-grid">
+                    <div class="purpose-card">
+                        <h4>学んだ知識を<br>実務で活かしたい</h4>
+                    </div>
+                    <div class="purpose-card">
+                        <h4>将来のキャリア選択の<br>参考にしたい</h4>
+                    </div>
+                    <div class="purpose-card">
+                        <h4>スキルアップしてから<br>新卒選考に進みたい</h4>
+                    </div>
+                </div>
+
+                <!-- 期間・勤務時間紹介 -->
+                <div class="shift-info-box">
+                    <h3>インターンの期間・勤務時間</h3>
+                    <p>
+                        開始日やインターン期間、勤務時間（シフト）については、ご自身のスケジュールに合わせて調整いただいたうえでご応募いただけます。<br><br>
+                        ただし、インターン生の皆さまに十分な実務経験を積んでいただくことを重視しており、<strong>3週間以上かつ週3日以上の参加</strong>を条件としています。<br><br>
+                        <span style="color: #777; font-size: 13.5px;">※講義や授業の無い長期休暇期間に参加する方が多いです。</span>
+                    </p>
+                </div>
+
+                <!-- REQUIREMENTS -->
+                <div class="section-header-row">
+                    <div class="section-header-text">
+                        <div class="section-tag">REQUIREMENTS</div>
+                        <h2 class="section-title" style="margin-bottom: 24px;">募集要項</h2>
+                        <p class="section-desc">実務を通じてエンジニアとしてのスキルアップを目指せる環境です。要件をご確認の上、ぜひご応募ください。</p>
+                    </div>
+                    <div class="section-header-image">
+                        <img src="../images/intern_4.jpg" alt="募集要項" class="img-cover" onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                </div>
+
+                <div class="req-list">
+                    <div class="req-row">
+                        <div class="req-title">募集期間</div>
+                        <div class="req-detail">
+                            通年開催、通期募集
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">就業内容</div>
+                        <div class="req-detail">
+                            システム開発に関するプログラムからお一つお選びいただきます。<br>
+                            <span class="note">※詳しいプログラム内容はページ下部的「就業内容」をご確認ください。</span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">応募条件</div>
+                        <div class="req-detail">
+                            <ul>
+                                <li><strong>30才未満で学校機関に在籍中の方</strong>（高校生不可）</li>
+                                <li><strong>3週間以上、8週間以下の参加</strong></li>
+                                <li><strong>週3日以上の参加</strong></li>
+                            </ul>
+                            <span class="note">※文理不問、履歴書/ES不要。どなたでもお気軽にご応募いただけます。</span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">報酬</div>
+                        <div class="req-detail">
+                            時給が発生する有償インターンシップです。<br>
+                            <strong>時給 1,200円</strong><br><br>
+                            <span class="note">
+                                以下は、情報・工学・数理系などIT技術を扱う大学院に進学している方の条件です。<br>
+                                ・修士課程：<strong>時給 1,400円</strong><br>
+                                ・博士課程：<strong>時給 1,600円</strong>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">勤務地</div>
+                        <div class="req-detail">
+                            <strong>札幌本社</strong><br>
+                            北海道札幌市中央区北１条西１丁目 6 さっぽろ創世スクエア14階（地下鉄大通駅直結）<br><br>
+                            <span class="note">
+                                ※遠方から対面参加される方には<strong>フライト代やホテル滞在費用の補助費支給</strong>があります。<br>
+                                （条件あり。詳細はページ下部「注意事項」の契約に関する項目をご参照ください。）
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">就業時間</div>
+                        <div class="req-detail">
+                            9:30～18:00（休憩時間含む）<br>
+                            <span class="note">
+                                ※1日の参加上限は7.5時間です。<br>
+                                ※基本はフルタイムですが、学校の予定や都合に合わせて調整可能です。
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">休日・休暇</div>
+                        <div class="req-detail">
+                            土曜日、日曜日、国民の祝日
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROGRAM -->
+                <div class="section-tag">PROGRAMS</div>
+                <h2 class="section-title">就業内容</h2>
+                <p style="font-size: 14.5px; color: #555; margin-bottom: 40px;">以下の4つのプログラムからご希望や適性に合わせてお選びいただけます。</p>
+
+                <div class="program-grid">
+                    <div class="program-card">
+                        <h4>1. EC支援システム開発<br>（バックエンド開発）</h4>
+                        <p>Python/Djangoを用いたEC支援システム（商品・在庫管理等）のバックエンド開発に携わります。実際のチームに加わり、実務を通じてモダンなスタックに触れられます。</p>
+                        <a href="long/backend.html" class="program-btn">詳細を見る</a>
+                    </div>
+                    <div class="program-card">
+                        <h4>2. ECサイト開発<br>（フロントエンド開発）</h4>
+                        <p>公式ストア（フロントエンド）開発を担当。HTML/CSSのデザイン修正からPHP/Laravelを用いた機能改善まで、実現場に近いスピード感を体験します。</p>
+                        <a href="long/frontend.html" class="program-btn">詳細を見る</a>
+                    </div>
+                    <div class="program-card">
+                        <h4>3. AI活用プロダクト開発</h4>
+                        <p>機械学習・AIの研究を専攻する大学院生向けのプログラム。アパレルの実データ（著作権処理済み）を活用し、EC運用の課題に対してAIアプローチを検証します。</p>
+                        <a href="long/ml.html" class="program-btn">詳細を見る</a>
+                    </div>
+                    <div class="program-card">
+                        <h4>4. デジタルマーケティング</h4>
+                        <p>Web広告（リスティング・SNS）の運用や分析ツールを用いたアクセス解析を担当。実データの分析に基づいた課題発見・改善提案のプロセスを学びます。</p>
+                        <a href="long/digitalmarketing.html" class="program-btn">詳細を見る</a>
+                    </div>
+                </div>
+
+                <!-- DAILY SCHEDULE -->
+                <div class="section-tag">DAILY SCHEDULE</div>
+                <h2 class="section-title">1日の流れの一例</h2>
+                <p style="font-size: 14.5px; color: #555; margin-bottom: 40px;">開発チームに所属してもらい、社員と同じ1日を通しで体験します。出社して朝のデイリーミーティングから定時まで一緒に仕事を進めます。</p>
+
+                <div class="timeline">
+                    <div class="timeline-item"><span class="timeline-time">09:20</span><h4 class="timeline-title">出社</h4></div>
+                    <div class="timeline-item"><span class="timeline-time">09:45</span><h4 class="timeline-title">朝会</h4><p style="font-size: 13.5px; color: #555; margin: 0;">その日に取り組むタスクの共有と認識合わせを行います。</p></div>
+                    <div class="timeline-item"><span class="timeline-time">12:30</span><h4 class="timeline-title">昼休み</h4><p style="font-size: 13.5px; color: #555; margin: 0;">近くのコンビニや、創世スクエア・周辺の飲食店でランチをとります。</p></div>
+                    <div class="timeline-item"><span class="timeline-time">13:30</span><h4 class="timeline-title">午後の業務開始</h4></div>
+                    <div class="timeline-item"><span class="timeline-time">16:00</span><h4 class="timeline-title">週次ミーティング・プルリク共有会</h4><p style="font-size: 13.5px; color: #555; margin: 0;">週次の振り返りや、コードのプルリクエストのレビュー・共有を行います。</p></div>
+                    <div class="timeline-item"><span class="timeline-time">17:00</span><h4 class="timeline-title">夕会</h4><p style="font-size: 13.5px; color: #555; margin: 0;">進捗の共有と、翌日取り組むタスクの整理・確認を行います。</p></div>
+                    <div class="timeline-item"><span class="timeline-time">18:00</span><h4 class="timeline-title">片付け</h4><p style="font-size: 13.5px; color: #555; margin: 0;">デスクや貸与ノートPCの片付けを行います。</p></div>
+                    <div class="timeline-item"><span class="timeline-time">18:05</span><h4 class="timeline-title">退勤</h4></div>
+                </div>
+
+                <!-- RULES / ATTENTION -->
+                <div class="section-tag">ATTENTION</div>
+                <h2 class="section-title">参加にあたっての注意事項</h2>
+
+                <div class="rules-grid">
+                    <div class="rule-card">
+                        <h3>他社就業について</h3>
+                        <p>労働基準法による労働時間の把握に基づく対応のため、インターンシップ参加期間中は週5日を越えた労働およびに週40時間以上の労働は出来ません（アルバイト先の退職は必要ありません）。</p>
+                        <p>コンプライアンス上の理由により、原則としてインターンシップ参加期間中は他社就業は出来ません（所属学校法人および自身が代表権を保有している企業は除く）。</p>
+                        <p>大学内での教授のお手伝いなど学業上やむえない理由で就業されている方は、理由を確認の上で就業可否を判断します。</p>
+                    </div>
+                    <div class="rule-card">
+                        <h3>終了条件について</h3>
+                        <p>退学や大学卒業などにより学籍を離れた方、卒業・修了見込みが無くなった方はインターンシップを継続できないものとし参加終了となります（満期退学を除く）。</p>
+                        <p>インターンシップ参加中に、インターンシップ応募時の回答または面接時に会話したインターンシップへの参加目的および活動との相違が認められた場合, インターンシップを継続できないものとし参加終了となります。</p>
+                        <p>勤怠管理が不十分な場合、業務の遂行が困難であると判断された場合はインターンシップを継続できないものとし参加終了となります。</p>
+                    </div>
+                    <div class="rule-card">
+                        <h3>契約期間について</h3>
+                        <p>8週間以上の参加を希望される方について、手続きの都合上、一度の契約期間を8週間としています。その後の延長については入社後に、受け入れ状況や業務内容を鑑みて担当から相談させていただきます。</p>
+                    </div>
+                    <div class="rule-card">
+                        <h3>外国人留学生の就労時間制限について</h3>
+                        <p>外国人留学生の方は週28時間を超えてのインターンシップ参加（就労）ができません。ご注意ください。ただし、学校が発行した長期休暇の証明書があれば、その期間内でのみ、週28時間を超えた就労が可能です。</p>
+                    </div>
+                </div>
+
+                <!-- FLOW -->
+                <div class="section-tag" style="margin-top: 60px;">FLOW</div>
+                <h2 class="section-title">インターン応募フロー</h2>
+
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <div class="flow-num">01</div>
+                        <div class="flow-content">
+                            <h4>会社を知る</h4>
+                            <p><a href="https://reserva.be/diamondhead" target="_blank" rel="noopener noreferrer" style="color: var(--accent-blue); text-decoration: underline; font-weight: bold;">ITエンジニア職説明会</a>に参加する</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-num">02</div>
+                        <div class="flow-content">
+                            <h4>スケジュールを決める</h4>
+                            <p>インターンシップ応募前に下記の内容をざっくり決めておきます</p>
+                            <p class="sub-step">
+                                ・希望開始日 / 終了日<br>・勤務時間（期間中のシフト）<br>・就業内容<br>
+                                <span style="color: #888; font-size: 12px; display: block; margin-top: 8px;">※選考や手続きに時間がかかりますので希望開始日は3週間以上先をご指定ください</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-num">03</div>
+                        <div class="flow-content">
+                            <h4>応募</h4>
+                            <p><a href="https://docs.google.com/forms/d/e/1FAIpQLScmKd3kR3RCUH8uaN43uobhGrx1KSqRCT3EE5LDlUfakCnK4w/viewform?a=1" target="_blank" rel="noopener noreferrer" style="color: var(--accent-blue); text-decoration: underline; font-weight: bold;">長期インターン応募フォームに回答します</a>（Googleフォームが開きます）</p>
+                            <p class="sub-step">※応募フォームの回答送信をもって応募完了となります<br>※マイナビなどの求人媒体からエントリーされた方も応募フォームへご回答下さい</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-num">04</div>
+                        <div class="flow-content">
+                            <h4>選考</h4>
+                            <p>選考は2回あります</p>
+                            <p class="sub-step">① 応募フォーム選考<br>② オンラインインタビュー選考（インタビュー形式の面談）</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-num">05</div>
+                        <div class="flow-content">
+                            <h4>受け入れ</h4>
+                            <p>受け入れが確定しましたら入社手続きに移行します</p>
+                            <p class="sub-step">
+                                ・参加日程の調整や事務手続き<br>・事前に学習しておくと役立つ内容のご連絡<br>
+                                <span style="color: #888; font-size: 12px; display: block; margin-top: 8px;">※契約は全て電子契約で行います。書類をご準備いただく必要はございません。</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- /.content-container -->
+
+            <!-- ENTRY SECTION -->
+            <section class="entry-section">
+                <h2>ENTRY</h2>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScmKd3kR3RCUH8uaN43uobhGrx1KSqRCT3EE5LDlUfakCnK4w/viewform?a=1" target="_blank" rel="noopener noreferrer" class="entry-btn">
+                    応募する
+                </a>
+            </section>
+
+            <!-- ★ SCSKフッターロゴが自動的にこの中に挿入されます -->
+            <div id="scsk-logo-container"></div>
+
+        </main>
+    </div> <!-- .app-wrapper -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 背景画像フォールバック処理
+            const bgElements = document.querySelectorAll("[data-local-bg]");
+            bgElements.forEach(el => {
+                const localBg = el.getAttribute("data-local-bg");
+                const fallbackBg = el.getAttribute("data-fallback-bg");
+                if (localBg && fallbackBg) {
+                    const testImg = new Image();
+                    testImg.onerror = function() { el.style.backgroundImage = `url('${fallbackBg}')`; };
+                    testImg.src = localBg;
+                }
+            });
+        });
+    </script>
+
+    <!-- ★ 設定バトン -->
+    <script>var pathToRoot = "../";</script>
+
+    <!-- ★ 共通JSファイルの読み込み -->
+    <script src="../components/sidebar.js"></script>
+    <script src="../components/scsk-logo.js"></script>
+    
+    <script>
+        // 共通パーツ読み込み後のナビゲーション初期化
+        // 読み込み競合を起こさずに安全に並行実行できるよう、addEventListenerを使用します
+        window.addEventListener('load', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const leftNav = document.getElementById('leftNav');
+            
+            if (menuToggle && leftNav) {
+                menuToggle.addEventListener('click', function() {
+                    leftNav.classList.toggle('is-open');
+                    if (leftNav.classList.contains('is-open')) {
+                        menuToggle.textContent = 'CLOSE';
+                        menuToggle.style.color = '#111';
+                    } else {
+                        menuToggle.textContent = 'MENU';
+                        menuToggle.style.color = 'var(--accent-blue)';
+                    }
+                });
+
+                // ナビゲーションリンクをクリックしたら閉じる（モバイル時）
+                const navLinks = leftNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 992) {
+                            leftNav.classList.remove('is-open');
+                            menuToggle.textContent = 'MENU';
+                            menuToggle.style.color = 'var(--accent-blue)';
+                        }
+                    });
+                });
+            }
+
+            // 現在の長期インターンシップ項目(data-id="intern-long")を自動で青色にし、メニューを展開します
+            const targetLink = document.querySelector('.left-nav a[data-id="intern-long"]');
+            if (targetLink) {
+                targetLink.classList.add('active-sub');
+                const parentLi = targetLink.closest('.has-sub');
+                if (parentLi) {
+                    parentLi.querySelector('a:first-child').classList.add('active');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
