@@ -29,15 +29,8 @@
                 border-top: 1px solid var(--border-color, #e2e8f0);
                 padding: 40px 6%;
                 display: flex;
-                justify-content: space-between;
-                align-items: flex-end;
-                flex-wrap: wrap;
-                gap: 30px;
-            }
-            .footer-info {
-                display: flex;
                 flex-direction: column;
-                gap: 24px;
+                gap: 40px;
             }
             .footer-links {
                 display: flex;
@@ -59,22 +52,40 @@
             .footer-links a:hover {
                 color: var(--accent-blue, #00bfa5);
             }
+            /* コピーライトとロゴを横並びにするためのコンテナ */
+            .footer-bottom {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end; /* 下揃え */
+                width: 100%;
+                gap: 20px;
+            }
             .footer-copyright {
                 font-family: 'Noto Sans JP', sans-serif;
                 font-size: 11px;
                 color: #888888;
                 margin: 0;
                 letter-spacing: 0.05em;
+                line-height: 1;
+                /* 文字と画像の下端を視覚的にピッタリ合わせるための微調整 */
+                padding-bottom: 2px;
             }
             .footer-scsk-area {
                 display: flex;
                 justify-content: flex-end;
+                flex-shrink: 0;
+            }
+            .footer-scsk-area a {
+                display: block;
+                margin-left: auto !important; 
             }
             .footer-scsk-logo {
-                width: 120px;
+                width: 120px !important;
                 height: auto;
                 transition: transform 0.3s ease;
                 display: block;
+                margin: 0 !important; 
+                position: static !important;
             }
             .footer-scsk-logo:hover {
                 transform: translateY(-2px);
@@ -82,18 +93,22 @@
             
             @media (max-width: 768px) {
                 .global-footer {
-                    flex-direction: column;
-                    align-items: flex-start;
                     padding: 40px 5%;
-                    gap: 40px;
+                    gap: 30px;
                 }
                 .footer-links {
                     flex-direction: column;
                     gap: 16px;
                 }
-                .footer-scsk-area {
-                    width: 100%;
-                    justify-content: flex-start;
+                .footer-bottom {
+                    /* スマホ時も横並びで下揃えをキープ */
+                    align-items: flex-end;
+                }
+                .footer-copyright {
+                    font-size: 10px;
+                }
+                .footer-scsk-logo {
+                    width: 90px !important;
                 }
             }
         `;
@@ -101,18 +116,18 @@
 
         container.innerHTML = `
         <footer class="global-footer">
-            <div class="footer-info">
-                <ul class="footer-links">
-                    <li><a href="https://diamondhead.jp/?_gl=1*3f2w89*_gcl_au*MTYyNDY5OTA2Ni4xNzgwOTk0ODM2" target="_blank" rel="noopener noreferrer">CORPORATE SITE</a></li>
-                    <li><a href="https://csr.diamondhead.jp/?_gl=1*i8jglq*_gcl_au*MTYyNDY5OTA2Ni4xNzgwOTk0ODM2" target="_blank" rel="noopener noreferrer">CSR</a></li>
-                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSe3ourzAaRgRIV6fMVq2dziMm5qKey4Iell5d3bjStALeWT5A/viewform" target="_blank" rel="noopener noreferrer">CONTACT</a></li>
-                </ul>
+            <ul class="footer-links">
+                <li><a href="https://diamondhead.jp/?_gl=1*3f2w89*_gcl_au*MTYyNDY5OTA2Ni4xNzgwOTk0ODM2" target="_blank" rel="noopener noreferrer">CORPORATE SITE</a></li>
+                <li><a href="https://csr.diamondhead.jp/?_gl=1*i8jglq*_gcl_au*MTYyNDY5OTA2Ni4xNzgwOTk0ODM2" target="_blank" rel="noopener noreferrer">CSR</a></li>
+                <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSe3ourzAaRgRIV6fMVq2dziMm5qKey4Iell5d3bjStALeWT5A/viewform" target="_blank" rel="noopener noreferrer">CONTACT</a></li>
+            </ul>
+            <div class="footer-bottom">
                 <p class="footer-copyright">&copy; Diamond head Co., Ltd.</p>
-            </div>
-            <div class="footer-scsk-area">
-                <a href="https://www.scsk.jp/" target="_blank" rel="noopener noreferrer">
-                    <img src="${root}images/scsk_black.png" alt="SCSK Group Logo" class="footer-scsk-logo">
-                </a>
+                <div class="footer-scsk-area">
+                    <a href="https://www.scsk.jp/" target="_blank" rel="noopener noreferrer">
+                        <img src="${root}images/scsk_black.png" alt="SCSK Group Logo" class="footer-scsk-logo">
+                    </a>
+                </div>
             </div>
         </footer>
         `;
