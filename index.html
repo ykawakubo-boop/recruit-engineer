@@ -502,16 +502,35 @@
 
         @media (max-width: 768px) {
             .about-full-width { padding: 40px 5%; } 
-            .hero-content { max-width: 100%; text-align: center; align-items: center; }
-            /* スマホで変な改行が起きないよう、最小文字サイズと可変比率を少し小さく調整 */
-            .hero-tagline { font-size: clamp(26px, 7vw, 48px); }
-            /* ★ スマホ表示での改行と見栄えを調整 */
+            
+            /* スマホ表示のメインビジュアルのレイアウト調整 */
+            .hero-content { 
+                max-width: 100%; 
+                text-align: center; 
+                align-items: center; /* 子要素を中央に */
+                width: 100%; 
+            }
+            .hero-title {
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* 全体を中央寄せに変更 */
+                width: 100%;
+            }
+            .hero-site-type {
+                text-align: center;
+            }
+            .hero-tagline { 
+                font-size: clamp(26px, 7vw, 48px); 
+                text-align: center; 
+            }
             .hero-keyline { 
                 border-left: none; 
                 border-top: 1px solid var(--accent-blue); 
                 padding-left: 0; 
                 padding-top: 20px; 
                 margin-top: 60px; /* ★写真の被りを避けるため下へ移動 */
+                align-self: center; /* この要素だけ中央に配置 */
+                text-align: center; /* テキストも中央寄せ */
             }
             
             .scsk-bottom-logo {
@@ -539,12 +558,11 @@
                 <div class="hero-content">
                     <div class="hero-title">
                         <div class="hero-site-type">ITエンジニア職 採用サイト</div>
-                        <!-- ★ 変な位置で改行されないよう、spanにinline-blockを付与 -->
                         <h1 class="hero-tagline">
                             <span style="display: inline-block;">ビジネスを動かす、</span><br>
                             <span style="display: inline-block;">ITエンジニアになる。</span>
                         </h1>
-                        <!-- ★ テキストを修正し、スマホでの見え方を改善 -->
+                        <!-- ★ 中央寄せに調整されたテキスト -->
                         <p class="hero-keyline">
                             <span style="display: inline-block;">日本最大級のECフルサービスを提供する</span><br>
                             <span style="display: inline-block;">ダイアモンドヘッドの自社開発で。</span>
