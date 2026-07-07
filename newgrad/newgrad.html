@@ -201,6 +201,7 @@
         .section-header-text {
             flex: 1.2;
         }
+        
         /* ★ 画質改善のため、サイズ固定と背景画像指定を調整 */
         .section-header-image {
             flex: 1;
@@ -236,6 +237,7 @@
 
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('../images/hero1.jpg');
             background-size: cover; background-position: center;
             filter: grayscale(70%) contrast(1.1) brightness(0.7);
             z-index: 1;
@@ -474,6 +476,7 @@
             .left-nav.is-open { left: 0; }
             .main-content { width: 100%; padding-left: 0; }
             
+            /* モバイル用ヘッダー */
             .mobile-header {
                 display: flex; justify-content: space-between; align-items: center;
                 background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);
@@ -483,7 +486,8 @@
             .mobile-logo { font-family: 'Bodoni Moda', serif; font-size: 18px; font-weight: 900; color: #111; }
             .menu-toggle {
                 background: none; border: none; font-family: 'Noto Sans JP', sans-serif;
-                font-size: 12px; font-weight: 700; color: var(--accent-blue); cursor: pointer; padding: 10px;
+                font-size: 12px; font-weight: 700; color: var(--accent-blue); letter-spacing: 0.1em;
+                cursor: pointer; padding: 10px 0 10px 20px;
             }
             .hero { margin-top: 60px; min-height: 250px; }
 
@@ -611,91 +615,84 @@
                     <div class="req-row">
                         <div class="req-title">応募要件</div>
                         <div class="req-detail">
-                            高等学校・短期大学・専門学校・高等専門学校・大学・大学院に在籍し、卒業見込みまたは修了見込みの方。または日本学術振興会の特別研究員の方。<br><br>
-                            <ul>
-                                <li>文理不問</li>
-                                <li>プログラミング未経験者応募可</li>
-                            </ul>
+                            高等学校・短期大学・専門学校・高等専門学校・大学・大学院に在籍し、卒業見込みまたは修了見込みの方。または日本学術振興会の特別研究員の方。<br>
                             <span class="note">
-                                ※卒業後3年以内の方は新卒採用枠でご応募いただけます。<br>
-                                ※外国籍の方はビジネスレベル以上の日本語能力（N1相当）が必要です。
+                                ※文理不問 / 早期選考可<br>
+                                ※既卒応募可（卒業から1年未満かつ未就業の方に限る）<br>
+                                ※外国人留学生の応募可 / 海外から応募可（日本人留学生および外国人可）<br>
+                                <br>
+                                <strong>*日本以外の国籍の方について</strong><br>
+                                日本国内の学校に留学中で技術ビザを取得できる学部・学科に所属している、または母国で技術ビザを取得できる学部・学科を卒業済みの方に限らせていただいております。
                             </span>
                         </div>
                     </div>
 
                     <div class="req-row">
-                        <div class="req-title">給与</div>
+                        <div class="req-title">求める人物像</div>
                         <div class="req-detail">
-                            <strong>基本給：250,000円〜</strong><br>
-                            <span class="note">※経験・能力・前職給与等を考慮の上、当社規定により決定いたします。</span>
-                        </div>
-                    </div>
-
-                    <div class="req-row">
-                        <div class="req-title">諸手当</div>
-                        <div class="req-detail">
+                            以下を満たしている方を採用しております。
                             <ul>
-                                <li>時間外手当（全額支給）</li>
-                                <li>通勤手当（全額支給 / 上限あり）</li>
-                                <li>役職手当</li>
-                                <li>家族手当（配偶者:10,000円、子1人につき:5,000円）</li>
+                                <li>札幌で働きたい方（北海道で働きたい方）</li>
+                                <li>チームワークを大事にできる方</li>
+                                <li>誠実さのある方</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="req-row">
-                        <div class="req-title">昇給・賞与</div>
+                        <div class="req-title">配属・勤務地</div>
                         <div class="req-detail">
-                            <strong>昇給：</strong>年2回（4月・10月）<br>
-                            <strong>賞与：</strong>年2回（6月・12月 / 業績連動）
+                            <strong>札幌本社 システム＆サービス開発部門</strong><br>
+                            <span class="note">※他拠点への転勤および他部門への配属・転属はございません</span><br><br>
+                            北海道札幌市中央区北１条西１丁目 6 さっぽろ創世スクエア14階（地下鉄大通駅直結）<br>
+                            <span class="note">※毎日オフィスでLOVOTが待っています。職場についてはオフィス紹介をご参照ください。</span>
                         </div>
                     </div>
 
                     <div class="req-row">
-                        <div class="req-title">勤務地</div>
+                        <div class="req-title">就業時間</div>
                         <div class="req-detail">
-                            <strong>札幌本社</strong><br>
-                            北海道札幌市中央区北1条西1丁目6 さっぽろ創世スクエア14階<br>
-                            <span class="note">※原則転勤はありません。</span>
+                            9:30～18:00 (所定労働時間 7.5時間、休憩1時間)
                         </div>
                     </div>
 
                     <div class="req-row">
-                        <div class="req-title">勤務時間</div>
+                        <div class="req-title">雇用形態</div>
                         <div class="req-detail">
-                            9:30〜18:30（休憩60分）<br>
-                            <span class="note">※フレックスタイム制あり（コアタイム11:00〜15:00 / 一部部署を除く）</span>
+                            正社員<br>
+                            <span class="note">※入社後3ヵ月の試用期間あり（給与や雇用形態の変動なし）</span>
                         </div>
                     </div>
 
                     <div class="req-row">
                         <div class="req-title">休日・休暇</div>
                         <div class="req-detail">
-                            <strong>年間休日120日以上</strong>
-                            <ul>
-                                <li>完全週休2日制（土・日・祝日）</li>
-                                <li>年末年始休暇</li>
-                                <li>年次有給休暇（入社半年後10日付与）</li>
-                                <li>慶弔休暇</li>
-                                <li>産前・産後休暇</li>
-                                <li>育児休暇（取得実績あり / 男性育休取得実績あり）</li>
-                            </ul>
+                            完全週休2日制（土・日曜日） / 国民の祝日 / 年次有給休暇（入社3ヶ月後付与） / 年末年始休暇 / 結婚休暇 / 出産休暇 / 忌引休暇 / 産前産後休暇 / 育児休暇 / 子の看護休暇 / 両立支援休暇 / その他会社指定の休暇
                         </div>
                     </div>
 
                     <div class="req-row">
-                        <div class="req-title">福利厚生</div>
+                        <div class="req-title">給与条件・手当</div>
                         <div class="req-detail">
                             <ul>
-                                <li>各種社会保険完備（雇用・労災・健康・厚生年金）</li>
-                                <li>定期健康診断</li>
-                                <li>インフルエンザ予防接種補助</li>
-                                <li>資格取得支援制度（受験費用補助、合格報奨金）</li>
-                                <li>書籍購入補助制度</li>
-                                <li>PC貸与（Mac/Windows選択可）</li>
-                                <li>服装・髪型自由</li>
-                                <li>オフィス内フリードリンク（コーヒー・お茶等）</li>
+                                <li>大学・専門学校・短大・高専卒：<strong>月給 26万円</strong></li>
+                                <li>大学卒（情報系学科）、大学院卒：<strong>月給 30万円</strong></li>
+                                <li>大学院卒（情報系専攻）：<strong>月給 34万円</strong></li>
                             </ul>
+                            <span class="note">
+                                ※34時間の固定残業代（57,200円～74,600円）を含む。34時間を超えた場合は別途時間外手当支給。<br>
+                                ※大学卒/大学院卒かつ選考過程において情報系学科と同等の知識・スキルを有すると判断した場合は、【大卒（情報系学科）】/【大学院卒（情報系専攻）】扱いとする<br>
+                                ※月平均所定外労働時間（残業時間）は11.3時間（2024年度実績）
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">補助・待遇<br>福利厚生</div>
+                        <div class="req-detail">
+                            社会保険完備 / 服装髪型自由 / 定期健康診断 / 通勤費全額支給 / パフォーマンスインセンティブ制度 / 慶弔見舞金支給（適用条件あり） / 退職金制度（DC/DB） / 私用PCの持ち込み制限（セキュリティ） / SCSKグループ保険 / 誕生日祝い金制度 / 資格取得補助制度（全額補助） / 資格取得報奨金制度 / スポーツ応援制度 / 懇親会補助制度 / UIターン補助制度 / 持株会（住友商事） / WELBOX<br><br>
+                            <strong>▼ITエンジニア教育研修制度</strong><br>
+                            内定者研修制度 / 内定者インターンシップ制度 / 新卒研修制度 / 配属前研修制度 / プログラミングコンテスト制度 / e-ラーニング制度（Udemy/アルゴ式の自由利用） / 勉強会企画制度
                         </div>
                     </div>
                 </div>
@@ -761,7 +758,7 @@
                 <!-- ★ FLOW を VOICE の後に移動 (写真はVOICEへ移動したため、テキストのみ) -->
                 <div class="section-tag">FLOW</div>
                 <h2 class="section-title" style="margin-bottom: 24px;">採用の流れ</h2>
-                <p style="font-size: 15px; color: #555; margin-bottom: 40px; line-height: 1.8;">エントリーから内定までのステップをご案内します。面接は相互理解の場と考えておりますので、リラックスして臨んでください。</p>
+                <p style="font-size: 15px; color: #555; margin-bottom: 40px; line-height: 1.8;">エントリーから内定までのステップをご案内します。面接は相互理解 of 場と考えておりますので、リラックスして臨んでください。</p>
 
                 <div class="flow-container">
                     <div class="flow-step">
