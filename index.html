@@ -29,6 +29,8 @@
             overflow-x: hidden;
         }
 
+        .sp-only { display: none; }
+
         /* レフトナビゲーション用大枠レイアウト */
         .app-wrapper {
             display: flex;
@@ -503,7 +505,14 @@
             .hero-content { max-width: 100%; text-align: center; align-items: center; }
             /* スマホで変な改行が起きないよう、最小文字サイズと可変比率を少し小さく調整 */
             .hero-tagline { font-size: clamp(26px, 7vw, 48px); }
-            .hero-keyline { border-left: none; border-top: 1px solid var(--accent-blue); padding-left: 0; padding-top: 16px; margin-top: 20px;}
+            /* ★ スマホ表示での改行と見栄えを調整 */
+            .hero-keyline { 
+                border-left: none; 
+                border-top: 1px solid var(--accent-blue); 
+                padding-left: 0; 
+                padding-top: 20px; 
+                margin-top: 60px; /* ★写真の被りを避けるため下へ移動 */
+            }
             
             .scsk-bottom-logo {
                 padding: 20px 24px 40px;
@@ -535,9 +544,10 @@
                             <span style="display: inline-block;">ビジネスを動かす、</span><br>
                             <span style="display: inline-block;">ITエンジニアになる。</span>
                         </h1>
+                        <!-- ★ テキストを修正し、スマホでの見え方を改善 -->
                         <p class="hero-keyline">
-                            <span style="display: inline-block;">日本最大級のECフルフィルメントサービスを提供する</span><br>
-                            <span style="display: inline-block;">ダイアモンドヘッドの自社開発エンジニア。</span>
+                            <span style="display: inline-block;">日本最大級のECフルサービスを提供する</span><br>
+                            <span style="display: inline-block;">ダイアモンドヘッドの自社開発で。</span>
                         </p>
                     </div>
                 </div>
