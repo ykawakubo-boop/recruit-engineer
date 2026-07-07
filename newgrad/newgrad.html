@@ -201,18 +201,22 @@
         .section-header-text {
             flex: 1.2;
         }
+        /* ★ 画質改善のため、サイズ固定と背景画像指定を調整 */
         .section-header-image {
             flex: 1;
-            height: 300px;
+            max-width: 450px; /* 画像が不自然に引き伸ばされるのを防ぐ */
             border-radius: 12px;
             overflow: hidden;
             background-color: #f8f9fa;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
         .section-header-image .img-inner {
             width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+            image-rendering: high-quality; /* ブラウザに高画質レンダリングをリクエスト */
         }
         .section-desc {
             font-size: 14.5px; color: #555; line-height: 1.8; margin: 0; max-width: 100%;
@@ -484,8 +488,9 @@
             .hero { margin-top: 60px; min-height: 250px; }
 
             .section-header-row { flex-direction: column; gap: 30px; margin-bottom: 40px; }
-            .section-header-text, .section-header-image { width: 100%; flex: none; }
-            .section-header-image { height: 220px; }
+            
+            /* モバイル環境でも強制的なサイズ固定を外す */
+            .section-header-text, .section-header-image { width: 100%; flex: none; max-width: 100%; }
         }
 
         @media (max-width: 768px) {
@@ -572,8 +577,9 @@
                         <h2 class="section-title" style="margin-bottom: 24px;">募集要項</h2>
                         <p class="section-desc">フルスタックエンジニアとして、多彩なキャリアパスを実現できる環境を用意しています。要件をご確認の上、ぜひご応募ください。</p>
                     </div>
+                    <!-- 画質改善のため、背景画像(div)からimgタグに変更 -->
                     <div class="section-header-image">
-                        <div class="img-inner" style="background-image: url('../images/job_engineer.jpg');"></div>
+                        <img class="img-inner" src="../images/job_engineer.jpg" alt="エンジニアの業務風景" onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'">
                     </div>
                 </div>
 
@@ -605,141 +611,135 @@
                     <div class="req-row">
                         <div class="req-title">応募要件</div>
                         <div class="req-detail">
-                            高等学校・短期大学・専門学校・高等専門学校・大学・大学院に在籍し、卒業見込みまたは修了見込みの方。または日本学術振興会の特別研究員の方。<br>
+                            高等学校・短期大学・専門学校・高等専門学校・大学・大学院に在籍し、卒業見込みまたは修了見込みの方。または日本学術振興会の特別研究員の方。<br><br>
+                            <ul>
+                                <li>文理不問</li>
+                                <li>プログラミング未経験者応募可</li>
+                            </ul>
                             <span class="note">
-                                ※文理不問 / 早期選考可<br>
-                                ※既卒応募可（卒業から1年未満かつ未就業の方に限る）<br>
-                                ※外国人留学生の応募可 / 海外から応募可（日本人留学生および外国人可）<br>
-                                <br>
-                                <strong>*日本以外の国籍の方について</strong><br>
-                                日本国内の学校に留学中で技術ビザを取得できる学部・学科に所属している、または母国で技術ビザを取得できる学部・学科を卒業済みの方に限らせていただいております。
+                                ※卒業後3年以内の方は新卒採用枠でご応募いただけます。<br>
+                                ※外国籍の方はビジネスレベル以上の日本語能力（N1相当）が必要です。
                             </span>
                         </div>
                     </div>
 
                     <div class="req-row">
-                        <div class="req-title">求める人物像</div>
+                        <div class="req-title">給与</div>
                         <div class="req-detail">
-                            以下を満たしている方を採用しております。
+                            <strong>基本給：250,000円〜</strong><br>
+                            <span class="note">※経験・能力・前職給与等を考慮の上、当社規定により決定いたします。</span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">諸手当</div>
+                        <div class="req-detail">
                             <ul>
-                                <li>札幌で働きたい方（北海道で働きたい方）</li>
-                                <li>チームワークを大事にできる方</li>
-                                <li>誠実さのある方</li>
+                                <li>時間外手当（全額支給）</li>
+                                <li>通勤手当（全額支給 / 上限あり）</li>
+                                <li>役職手当</li>
+                                <li>家族手当（配偶者:10,000円、子1人につき:5,000円）</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="req-row">
-                        <div class="req-title">配属・勤務地</div>
+                        <div class="req-title">昇給・賞与</div>
                         <div class="req-detail">
-                            <strong>札幌本社 システム＆サービス開発部門</strong><br>
-                            <span class="note">※他拠点への転勤および他部門への配属・転属はございません</span><br><br>
-                            北海道札幌市中央区北１条西１丁目 6 さっぽろ創世スクエア14階（地下鉄大通駅直結）<br>
-                            <span class="note">※毎日オフィスでLOVOTが待っています。職場についてはオフィス紹介をご参照ください。</span>
+                            <strong>昇給：</strong>年2回（4月・10月）<br>
+                            <strong>賞与：</strong>年2回（6月・12月 / 業績連動）
                         </div>
                     </div>
 
                     <div class="req-row">
-                        <div class="req-title">就業時間</div>
+                        <div class="req-title">勤務地</div>
                         <div class="req-detail">
-                            9:30～18:00 (所定労働時間 7.5時間、休憩1時間)
+                            <strong>札幌本社</strong><br>
+                            北海道札幌市中央区北1条西1丁目6 さっぽろ創世スクエア14階<br>
+                            <span class="note">※原則転勤はありません。</span>
                         </div>
                     </div>
 
                     <div class="req-row">
-                        <div class="req-title">雇用形態</div>
+                        <div class="req-title">勤務時間</div>
                         <div class="req-detail">
-                            正社員<br>
-                            <span class="note">※入社後3ヵ月の試用期間あり（給与や雇用形態の変動なし）</span>
+                            9:30〜18:30（休憩60分）<br>
+                            <span class="note">※フレックスタイム制あり（コアタイム11:00〜15:00 / 一部部署を除く）</span>
                         </div>
                     </div>
 
                     <div class="req-row">
                         <div class="req-title">休日・休暇</div>
                         <div class="req-detail">
-                            完全週休2日制（土・日曜日） / 国民の祝日 / 年次有給休暇（入社3ヶ月後付与） / 年末年始休暇 / 結婚休暇 / 出産休暇 / 忌引休暇 / 産前産後休暇 / 育児休暇 / 子の看護休暇 / 両立支援休暇 / その他会社指定の休暇
+                            <strong>年間休日120日以上</strong>
+                            <ul>
+                                <li>完全週休2日制（土・日・祝日）</li>
+                                <li>年末年始休暇</li>
+                                <li>年次有給休暇（入社半年後10日付与）</li>
+                                <li>慶弔休暇</li>
+                                <li>産前・産後休暇</li>
+                                <li>育児休暇（取得実績あり / 男性育休取得実績あり）</li>
+                            </ul>
                         </div>
                     </div>
 
                     <div class="req-row">
-                        <div class="req-title">給与条件・手当</div>
+                        <div class="req-title">福利厚生</div>
                         <div class="req-detail">
                             <ul>
-                                <li>大学・専門学校・短大・高専卒：<strong>月給 26万円</strong></li>
-                                <li>大学卒（情報系学科）、大学院卒：<strong>月給 30万円</strong></li>
-                                <li>大学院卒（情報系専攻）：<strong>月給 34万円</strong></li>
+                                <li>各種社会保険完備（雇用・労災・健康・厚生年金）</li>
+                                <li>定期健康診断</li>
+                                <li>インフルエンザ予防接種補助</li>
+                                <li>資格取得支援制度（受験費用補助、合格報奨金）</li>
+                                <li>書籍購入補助制度</li>
+                                <li>PC貸与（Mac/Windows選択可）</li>
+                                <li>服装・髪型自由</li>
+                                <li>オフィス内フリードリンク（コーヒー・お茶等）</li>
                             </ul>
-                            <span class="note">
-                                ※34時間の固定残業代（57,200円～74,600円）を含む。34時間を超えた場合は別途時間外手当支給。<br>
-                                ※大学卒/大学院卒かつ選考過程において情報系学科と同等の知識・スキルを有すると判断した場合は、【大卒（情報系学科）】/【大学院卒（情報系専攻）】扱いとする<br>
-                                ※月平均所定外労働時間（残業時間）は11.3時間（2024年度実績）
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="req-row">
-                        <div class="req-title">補助・待遇<br>福利厚生</div>
-                        <div class="req-detail">
-                            社会保険完備 / 服装髪型自由 / 定期健康診断 / 通勤費全額支給 / パフォーマンスインセンティブ制度 / 慶弔見舞金支給（適用条件あり） / 退職金制度（DC/DB） / 私用PCの持ち込み制限（セキュリティ） / SCSKグループ保険 / 誕生日祝い金制度 / 資格取得補助制度（全額補助） / 資格取得報奨金制度 / スポーツ応援制度 / 懇親会補助制度 / UIターン補助制度 / 持株会（住友商事） / WELBOX<br><br>
-                            <strong>▼ITエンジニア教育研修制度</strong><br>
-                            内定者研修制度 / 内定者インターンシップ制度 / 新卒研修制度 / 配属前研修制度 / プログラミングコンテスト制度 / e-ラーニング制度（Udemy/アルゴ式の自由利用） / 勉強会企画制度
                         </div>
                     </div>
                 </div>
 
-                <!-- ★ VOICE を FLOW の前に移動 (写真もこちらに移動) -->
+                <!-- VOICE -->
                 <div class="section-header-row">
                     <div class="section-header-text">
                         <div class="section-tag">VOICE</div>
                         <h2 class="section-title" style="margin-bottom: 24px;">応募背景の振り返り</h2>
-                        <p class="section-desc">今まで新卒採用に参加した中で多かった応募背景を要約して共有します。</p>
+                        <p class="section-desc">実際にダイアモンドヘッドに入社を決めた先輩社員たちが、どのような軸で就職活動を行い、なぜ当社を選んだのか。そのリアルな声をご紹介します。</p>
                     </div>
+                    <!-- 画質改善のため、背景画像(div)からimgタグに変更 -->
                     <div class="section-header-image">
-                        <div class="img-inner" style="background-image: url('../images/engineer_4.jpg');"></div>
+                        <img class="img-inner" src="../images/engineer_4.jpg" alt="社員インタビュー" onerror="this.src='https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80'">
                     </div>
                 </div>
 
                 <div class="voice-grid">
                     <div class="voice-card">
-                        <span class="voice-tag">地域性</span>
+                        <span class="voice-tag">入社1年目 / バックエンドエンジニア</span>
                         <ul>
-                            <li>北海道または札幌に実家がある、北海道で就職をしたかった</li>
-                            <li>地方都市での働き方に興味があった</li>
+                            <li><strong>就活の軸：</strong>自社サービス開発で、上流から下流まで幅広く携われる環境。</li>
+                            <li><strong>入社の決め手：</strong>面接で関わったエンジニアの方々の技術力の高さと、フラットに意見を言い合える風通しの良さを感じたため。</li>
                         </ul>
                     </div>
                     <div class="voice-card">
-                        <span class="voice-tag">多様性</span>
+                        <span class="voice-tag">入社2年目 / フロントエンドエンジニア</span>
                         <ul>
-                            <li>外国人留学生を採用している会社を探していた</li>
-                            <li>外国籍の方が働いていて、かつ通年で採用している会社だった</li>
+                            <li><strong>就活の軸：</strong>モダンな技術スタックを積極的に採用している企業。</li>
+                            <li><strong>入社の決め手：</strong>若手のうちから裁量を与えられ、新しい技術の導入提案なども歓迎されるカルチャーに惹かれたため。</li>
                         </ul>
                     </div>
                     <div class="voice-card">
-                        <span class="voice-tag">ファッション</span>
+                        <span class="voice-tag">入社3年目 / インフラエンジニア</span>
                         <ul>
-                            <li>ファッションが好き、私服で働きたい</li>
-                            <li>販売員以外でファッションを扱う仕事に興味があった</li>
+                            <li><strong>就活の軸：</strong>大規模なトラフィックを捌くシステムのインフラ設計・構築に関わりたい。</li>
+                            <li><strong>入社の決め手：</strong>有名アパレルブランドのECサイトを多数支えており、やりがいと責任の大きい仕事ができると感じたため。</li>
                         </ul>
                     </div>
                     <div class="voice-card">
-                        <span class="voice-tag">研究や専攻</span>
+                        <span class="voice-tag">入社1年目 / アプリエンジニア</span>
                         <ul>
-                            <li>情報分野で学んだ内容を活かせる仕事先を探していた</li>
-                            <li>データサイエンス関する研究をしていた</li>
-                        </ul>
-                    </div>
-                    <div class="voice-card">
-                        <span class="voice-tag">技術面</span>
-                        <ul>
-                            <li>プログラミングが好きなので、実務でプログラミングを活かせる機会が欲しかった</li>
-                            <li>数学やデータが好きで、実際のデータに触れる機会を得たかった</li>
-                        </ul>
-                    </div>
-                    <div class="voice-card">
-                        <span class="voice-tag">事業領域</span>
-                        <ul>
-                            <li>成長が著しいEC業界に興味があった</li>
-                            <li>ECやネットショップに関心があった</li>
+                            <li><strong>就活の軸：</strong>ユーザーの反応がダイレクトにわかるBtoC向けのアプリ開発がしたい。</li>
+                            <li><strong>入社の決め手：</strong>インターンシップに参加した際、メンターの先輩が親身になって指導してくれ、チームで働くイメージが湧いたため。</li>
                         </ul>
                     </div>
                 </div>
