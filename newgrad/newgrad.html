@@ -431,10 +431,12 @@
             letter-spacing: 0.1em;
         }
         
+        /* ★ 他ページのボタンデザインと完全に一致する「絶妙な角丸（border-radius: 6px;）」を追加 */
         .entry-btn {
             display: inline-flex; align-items: center; justify-content: center;
             background-color: #111111; color: #ffffff; text-decoration: none; padding: 18px 56px;
             font-size: 14.5px; font-weight: 700; letter-spacing: 0.15em; transition: all 0.4s ease;
+            border-radius: 6px; /* ★ 角立ちを解消し、中途採用ページと同様の上品な丸みに統一 */
         }
         .entry-btn::after { content: '→'; margin-left: 14px; transition: transform 0.4s; }
         .entry-btn:hover { background-color: var(--accent-blue); color: #ffffff; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 191, 165, 0.2); }
@@ -667,7 +669,7 @@
                     <div class="req-row">
                         <div class="req-title">休日・休暇</div>
                         <div class="req-detail">
-                            完全週休2日制（土・日曜日） / 国民の祝日 / 年次有給休暇（入社3ヶ月後付与） / 年末年始休暇 / 結婚休暇 / 出産休暇 / 忌引休暇 / 産前産後休暇 / 育児休暇 / 子の看護休暇 / 両立支援休暇 / その他会社指定の休暇
+                            完全週休2日制（土・日曜日） / 国民の祝日 / 年次有給休暇（入社3ヶ月後付与） / 年末年始休暇 / 結婚休暇 / 出産休暇 / 忌引休暇 / 産前産後休暇 / 育児休暇 / 子の看護休暇 / 両立支援休暇 / その他会社指定 of 休暇
                         </div>
                     </div>
 
@@ -758,7 +760,8 @@
                 <!-- ★ FLOW を VOICE の後に移動 (写真はVOICEへ移動したため、テキストのみ) -->
                 <div class="section-tag">FLOW</div>
                 <h2 class="section-title" style="margin-bottom: 24px;">採用の流れ</h2>
-                <p style="font-size: 15px; color: #555; margin-bottom: 40px; line-height: 1.8;">エントリーから内定までのステップをご案内します。面接は相互理解 of 場と考えておりますので、リラックスして臨んでください。</p>
+                <!-- 軽微な表現バグ「相互理解 of 場」を「相互理解の場」に修正 -->
+                <p style="font-size: 15px; color: #555; margin-bottom: 40px; line-height: 1.8;">エントリーから内定までのステップをご案内します。面接は相互理解の場と考えておりますので、リラックスして臨んでください。</p>
 
                 <div class="flow-container">
                     <div class="flow-step">
