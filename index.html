@@ -316,8 +316,11 @@
            6. WORKING ENVIRONMENT (働き方・組織・キャリア・教育)
            ========================================= */
         .working-sub-title {
-            font-size: 20px; font-weight: 700; color: #111; margin: 0 0 16px 0;
-            border-bottom: 2px solid var(--accent-blue); display: inline-block; padding-bottom: 8px;
+            font-size: 20px; font-weight: 700; color: #111; margin: 0 0 20px 0;
+            border-left: 3px solid var(--accent-blue); /* 下線から左側のアクセント縦線へ変更 */
+            padding: 2px 0 2px 16px; /* 左側に十分な余白を設定 */
+            line-height: 1.5;
+            display: block; /* ブロック要素にして縦線を左端にきれいに通す */
         }
         .working-desc {
             font-size: 14.5px; color: #555; line-height: 1.8; margin: 0 0 40px 0; max-width: 900px;
@@ -417,18 +420,74 @@
             background-color: var(--accent-blue); border-radius: 50%;
         }
 
-        /* 教育・研修リスト (バッジスタイル) */
-        .training-list { 
-            display: flex; flex-wrap: wrap; gap: 12px; list-style: none; padding: 0; margin: 0 0 40px 0; 
+        /* =========================================
+           教育・研修体制（3カテゴリ・ステップカード形式）のスタイル
+           ========================================= */
+        .training-step-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 40px;
         }
-        .training-list li { 
-            background: #ffffff; border: 1px solid var(--border-color); padding: 14px 28px; 
-            font-size: 13px; font-weight: 700; color: #444; border-radius: 40px;
-            transition: all 0.3s ease; letter-spacing: 0.05em;
+        .training-step-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 36px 28px;
+            position: relative;
+            box-sizing: border-box;
+            transition: all 0.4s ease;
         }
-        .training-list li:hover { 
-            border-color: var(--accent-blue); color: #fff; background-color: var(--accent-blue);
-            transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 191, 165, 0.2);
+        .training-step-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 15px 40px rgba(0,191,165,0.06);
+            transform: translateY(-4px);
+        }
+        .training-step-badge {
+            display: inline-block;
+            background: rgba(0, 191, 165, 0.08);
+            color: var(--accent-blue);
+            font-family: 'Bodoni Moda', serif;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            letter-spacing: 0.05em;
+        }
+        .training-step-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111;
+            margin: 0 0 20px 0;
+            line-height: 1.4;
+        }
+        .training-step-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .training-step-items li {
+            font-size: 13.5px;
+            color: #555;
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        .training-step-items li:last-child {
+            margin-bottom: 0;
+        }
+        .training-step-items li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 8px;
+            height: 4px;
+            border-left: 2px solid var(--accent-blue);
+            border-bottom: 2px solid var(--accent-blue);
+            transform: rotate(-45deg);
         }
 
         /* ページ下部SCSKロゴ */
@@ -498,10 +557,24 @@
             .section-header-row { flex-direction: column; gap: 30px; margin-bottom: 40px; }
             .section-header-text, .section-header-image { width: 100%; flex: none; }
             .section-header-image { height: 220px; }
+
+            /* モバイル用の教育・研修体制レイアウト */
+            .training-step-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
         }
 
         @media (max-width: 768px) {
+            .sp-only { display: inline; } /* スマホ用改行を有効化 */
             .about-full-width { padding: 40px 5%; } 
+            
+            /* 追加：見出しのスマホ最適化 */
+            .working-sub-title {
+                font-size: 18px; /* 文字サイズを少し抑えて窮屈さを解消 */
+                padding-left: 12px; /* 余白を微調整 */
+                margin-bottom: 16px;
+            }
             
             /* スマホ表示のメインビジュアルのレイアウト調整 */
             .hero-content { 
@@ -562,7 +635,7 @@
                             <span style="display: inline-block;">ビジネスを動かす、</span><br>
                             <span style="display: inline-block;">ITエンジニアになる。</span>
                         </h1>
-                        <!-- ★ 中央寄せに調整されたテキスト -->
+                        <!-- ★ opacityアニメーション付きキーラインテキスト -->
                         <p class="hero-keyline">
                             <span style="display: inline-block;">日本最大級のECフルサービスを提供する</span><br>
                             <span style="display: inline-block;">ダイアモンドヘッドの自社開発で。</span>
@@ -577,7 +650,7 @@
                 
                 <div class="about-row">
                     <div class="about-text">
-                        <h2 class="business-concept" style="text-align: left;">顧客の要望に応えるための、<br>圧倒的なプロダクト群とSaaS展開</h2>
+                        <h2 class="business-concept" style="text-align: left;">顧客の要望に応えるための<br>圧倒的なプロダクト群と<br>SaaS展開</h2>
                         <p class="business-lead" style="text-align: left;">
                             ダイアモンドヘッドはファッションアパレルを中心に、プロスポーツチームや様々な業界の小売まで幅広くECフルサービスを提供しています。<br><br>
                             自社開発のECシステム・販売機会を最大化するSaaSサービスの提供、およびスタジオでの商品撮影、Webマーケティング、物流、カスタマーサポートに至るまで、EC運営に必要なすべての業務をシームレスにフルサポートしています。<br><br>
@@ -613,7 +686,7 @@
 
                 <!-- 1. 配属グループ -->
                 <div style="margin-top: 60px;">
-                    <h3 class="working-sub-title">ビジネスを推進する3つの開発グループ</h3>
+                    <h3 class="working-sub-title">ビジネスを推進する3つの<br class="sp-only">「開発グループ」</h3>
                     <p class="working-desc">
                         ITエンジニア職は、ビジネス課題の解決やシステムの目的に合わせ、主に3つの開発グループに分かれています。
                     </p>
@@ -683,7 +756,7 @@
                                 </svg>
                             </div>
                             <h4>SaaSG</h4>
-                            <p>10以上ある自社サービスの導入支援、開発、保守を行うグループです。<br><br>クライアントの要望をただ叶えるのではなく、その先にいるエンドユーザーの生活を変える製品の提供を目指しています。</p>
+                            <p>10以上ある自社サービスの導入支援、開発、保守を行うグループです。<br><br>クライアントの要望をただ叶えるのではない、その先にいるエンドユーザーの生活を変える製品の提供を目指しています。</p>
                         </div>
                         <div class="team-card">
                             <div class="team-icon">
@@ -731,7 +804,7 @@
 
                 <!-- 2. ジョブ制度 -->
                 <div>
-                    <h3 class="working-sub-title">個人のキャリアを形成する「ジョブ制度」</h3>
+                    <h3 class="working-sub-title">個人のキャリアを形成する<br class="sp-only">「ジョブ制度」</h3>
                     <p class="working-desc">
                         組織としての配属（グループ）とは別に、エンジニア一人ひとりの適性や志向性に合わせたキャリア形成を支援するため、5つの「ジョブ（役割）」を設けています。<br>
                         プロジェクトマネージャーとしてビジネス的側面を牽引するのか、技術のクオリティを高めるスペシャリストになるのか。画一的なレールではなく、自分に合った方向性を選択・チェンジしながらキャリアを設計できます。
@@ -813,7 +886,7 @@
                             </div>
                             <div class="job-box-content">
                                 <h4>イノベーションエンジニア</h4>
-                                <p>高い技術力で会社の技術競争力を高める、先駆者的ジョブ。</p>
+                                <p>高い技術力で会社の技術競争力を高める、先駆者がいるジョブ。</p>
                             </div>
                             <div class="job-details">
                                 <div class="job-details-title">主な役割</div>
@@ -850,27 +923,49 @@
 
                 <!-- 3. 教育・研修体制 -->
                 <div class="section-header-row" style="margin-top: 100px;">
-                    <div class="section-header-text">
-                        <h3 class="working-sub-title" style="border: none; padding: 0; margin-bottom: 24px; font-size: clamp(24px, 3vw, 32px);">教育・研修体制</h3>
-                        <p class="working-desc" style="margin-bottom: 30px;">
+                    <div class="section-header-text" style="width: 100%; flex: none; max-width: 100%;">
+                        <h3 class="working-sub-title">教育・研修体制</h3>
+                        <p class="working-desc" style="margin-bottom: 40px; max-width: 1000px;">
                             ITエンジニアの技術は日々進化しており、現在のスキルが数年後に通用するとは限りません。ダイアモンドヘッドでは、5年後、10年後、さらにはその先を見据え、長期的なキャリアを支える研修体制を整えています。積極的に制度を活用してもらうことで、一人ひとりの成長を支援しています。
                         </p>
-                        <ul class="training-list">
-                            <li>内定者研修</li>
-                            <li>新卒研修</li>
-                            <li>配属前技術研修</li>
-                            <li>プログラミングコンテスト</li>
-                            <li>IT資格取得全額補助制度</li>
-                            <li>資格取得報奨金制度</li>
-                            <li>Eラーニング受講自由（Udemy等）</li>
-                            <li>勉強会企画制度</li>
-                            <li>ビジネス研修</li>
-                            <li>リーダー研修</li>
-                            <li>マネジメント研修</li>
-                        </ul>
-                    </div>
-                    <div class="section-header-image">
-                        <div class="img-inner" data-local-bg="images/diamond_head_021.jpg" data-fallback-bg="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80"></div>
+                        
+                        <!-- ★ 改善された教育・研修体制のフェーズ別カードレイアウト -->
+                        <div class="training-step-container">
+                            <!-- Phase 01 -->
+                            <div class="training-step-card">
+                                <div class="training-step-badge">Phase 01</div>
+                                <h4>土台を築く「基礎・配属研修」</h4>
+                                <ul class="training-step-items">
+                                    <li>内定者研修</li>
+                                    <li>新卒研修</li>
+                                    <li>配属前技術研修</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Phase 02 -->
+                            <div class="training-step-card">
+                                <div class="training-step-badge">Phase 02</div>
+                                <h4>牙を研ぐ「スキルアップ・自己啓発」</h4>
+                                <ul class="training-step-items">
+                                    <li>プログラミングコンテスト</li>
+                                    <li>IT資格取得全額補助制度</li>
+                                    <li>資格取得報奨金制度</li>
+                                    <li>Eラーニング受講自由（Udemy等）</li>
+                                    <li>勉強会企画制度</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Phase 03 -->
+                            <div class="training-step-card">
+                                <div class="training-step-badge">Phase 03</div>
+                                <h4>未来を創る「ビジネスマネジメント」</h4>
+                                <ul class="training-step-items">
+                                    <li>ビジネス研修</li>
+                                    <li>リーダー研修</li>
+                                    <li>マネジメント研修</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
