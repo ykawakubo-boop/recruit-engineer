@@ -128,3 +128,22 @@
     }, 50);
 
 })();
+
+// =========================================================================
+// 全ページに会社のロゴ（ファビコン）を自動追加する命令
+// =========================================================================
+(function() {
+    var faviconData = [
+        { rel: 'shortcut icon', type: 'image/vnd.microsoft.icon', href: 'https://diamondhead.jp/assets/images/common/favicon/favicon.ico' },
+        { rel: 'apple-touch-icon', type: 'image/png', href: 'https://diamondhead.jp/assets/images/common/favicon/apple-touch-icon-180x180.png' },
+        { rel: 'icon', type: 'image/png', href: 'https://diamondhead.jp/assets/images/common/favicon/icon-192x192.png' }
+    ];
+
+    faviconData.forEach(function(data) {
+        var link = document.createElement('link');
+        link.rel = data.rel;
+        link.type = data.type;
+        link.href = data.href;
+        document.head.appendChild(link);
+    });
+})();
