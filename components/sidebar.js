@@ -13,7 +13,7 @@
     <!-- モバイル用ヘッダー -->
     <header class="mobile-header">
         <a href="${root}index.html" class="mobile-nav-logo" style="text-decoration: none; display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
-            <img src="${root}images/透過.png" alt="Diamondhead" style="width: 100%; max-width: 130px; height: auto; display: block; margin: 0; padding: 0; border: none;">
+            <img src="${root}images/dh_logo.png" alt="Diamondhead" style="width: 100%; max-width: 130px; height: auto; display: block; margin: 0; padding: 0; border: none;">
             <span class="mobile-logo-text" style="font-family: 'Noto Sans JP', sans-serif; font-size: 9px; font-weight: 700; color: #555555; letter-spacing: 0.15em; margin-top: 6px; line-height: 1.2;">ENGINEERING CAREERS</span>
         </a>
         <button class="menu-toggle" id="commonMenuToggle" style="background: none; border: none; font-family: 'Noto Sans JP', sans-serif; font-size: 12px; font-weight: 700; color: #00bfa5; cursor: pointer; padding: 10px; z-index: 1001;">MENU</button>
@@ -23,7 +23,7 @@
     <aside class="left-nav" id="commonLeftNav">
         <!-- ロゴ画像とトップへのリンク -->
         <a href="${root}index.html" class="nav-logo" data-id="logo">
-            <img src="${root}images/透過.png" alt="Diamondhead">
+            <img src="${root}images/dh_logo.png" alt="Diamondhead">
             <span class="logo-text">ENGINEERING CAREERS</span>
         </a>
         
