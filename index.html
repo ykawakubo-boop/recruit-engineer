@@ -280,7 +280,7 @@
         }
 
         /* =========================================
-           5. ABOUT US レイアウト（カラー固定・ズーム解除）
+           5. ABOUT US レイアウト（カラー固定・ズーム解除、角丸適用）
            ========================================= */
         .about-row {
             display: flex; align-items: center; justify-content: space-between; gap: 6%;
@@ -290,16 +290,20 @@
         }
         .about-image-wrapper {
             flex: 1; height: 480px;
-            overflow: hidden;
+            background-color: #ffffff; /* ラッパー背景を白に指定して余分なグレー余白をカット */
             display: flex;
             align-items: center;
             justify-content: center;
+            box-sizing: border-box;
+            overflow: hidden;
         }
         .about-image-wrapper .story-image {
-            width: 100%; height: 100%; 
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            border-radius: 12px; /* システム構成図（グレー長方形）自体の端っこをピッタリ丸くします */
+            object-fit: contain; /* アスペクト比を維持し見切れを防止 */
         }
 
         .common-btn {
@@ -636,7 +640,7 @@
                         </h1>
                         <!-- ★ opacityアニメーション付きキーラインテキスト -->
                         <p class="hero-keyline">
-                            <span style="display: inline-block;">日本最大級のECフルサービスを提供する</span><br>
+                            <span style="display: inline-block;">日本最大級 of ECフルサービスを提供する</span><br>
                             <span style="display: inline-block;">ダイアモンドヘッドの自社開発で。</span>
                         </p>
                     </div>
@@ -660,7 +664,8 @@
                         </a>
                     </div>
                     <div class="about-image-wrapper">
-                        <div class="story-image" data-local-bg="images/system.png" data-fallback-bg="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80"></div>
+                        <!-- 画質向上のため背景div構造から、要素サイズに追従するimgタグ指定に変更 -->
+                        <img class="story-image" src="images/system.png" alt="システム構成図" onerror="this.src='https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80'">
                     </div>
                 </div>
             </section>
@@ -849,7 +854,7 @@
                                 <ul>
                                     <li>新規開発プロジェクトのマネジメント</li>
                                     <li>QCD（品質・コスト・納期）のコントロール</li>
-                                    <li>リスク管理・課題管理の遂行</li>
+                                    <li>リスク管理・課題管理 of 遂行</li>
                                 </ul>
                             </div>
                         </div>
@@ -869,7 +874,7 @@
                             <div class="job-details">
                                 <div class="job-details-title">主な役割</div>
                                 <ul>
-                                    <li>中長期戦略の立案、ビジョンの構築</li>
+                                    <li>中長期戦略 of 立案、ビジョンの構築</li>
                                     <li>開発・UX・ビジネス各プロセスの統括</li>
                                     <li>利害関係者のとりまとめ</li>
                                 </ul>
