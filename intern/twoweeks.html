@@ -6,11 +6,11 @@
     <title>2weeksインターンシップ | ITエンジニア | ダイアモンドヘッド株式会社</title>
     
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
+
         /* =========================================
            1. 全体設定・フォント読み込み（各採用ページ完全共通）
            ========================================= */
-        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
-
         :root {
             --bg-base: #ffffff;
             --text-dark: #111111;
@@ -103,7 +103,7 @@
         /* インターンシップにホバー、または配下のa要素がアクティブな時に自動展開 */
         .nav-recruit-list li.has-sub:hover .nav-sub-list,
         .nav-recruit-list li.has-sub:focus-within .nav-sub-list,
-        .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-sub-list {
+        .nav-recruit-list li.open-sub .nav-sub-list {
             max-height: 800px;
             opacity: 1;
             padding: 10px 0 0 12px;
@@ -131,7 +131,7 @@
         /* 長期インターンにホバーした時に自動展開 */
         .nav-recruit-list li.has-sub:hover .nav-deep-list,
         .nav-recruit-list li.has-sub:focus-within .nav-deep-list,
-        .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-deep-list {
+        .nav-recruit-list li.open-deep .nav-deep-list {
             max-height: 400px;
             opacity: 1;
             padding: 10px 0 0 12px;
@@ -399,11 +399,28 @@
                 if (targetLink) {
                     if (targetLink.closest('.nav-deep-list')) {
                         targetLink.classList.add('active-deep');
-                        targetLink.closest('.has-deep').querySelector('a:first-child').classList.add('active-sub');
-                        targetLink.closest('.has-sub').querySelector('a:first-child').classList.add('active');
+                        
+                        const deepParent = targetLink.closest('.nav-deep-list').parentElement;
+                        if (deepParent) {
+                            deepParent.classList.add('open-deep');
+                            const subLink = deepParent.querySelector('a:first-child');
+                            if (subLink) subLink.classList.add('active-sub');
+                        }
+                        
+                        const mainParent = targetLink.closest('.nav-sub-list').parentElement;
+                        if (mainParent) {
+                            mainParent.classList.add('open-sub');
+                            const mainLink = mainParent.querySelector('a:first-child');
+                            if (mainLink) mainLink.classList.add('active');
+                        }
                     } else if (targetLink.closest('.nav-sub-list')) {
                         targetLink.classList.add('active-sub');
-                        targetLink.closest('.has-sub').querySelector('a:first-child').classList.add('active');
+                        const mainParent = targetLink.closest('.nav-sub-list').parentElement;
+                        if (mainParent) {
+                            mainParent.classList.add('open-sub');
+                            const mainLink = mainParent.querySelector('a:first-child');
+                            if (mainLink) mainLink.classList.add('active');
+                        }
                     } else {
                         targetLink.classList.add('active');
                     }
