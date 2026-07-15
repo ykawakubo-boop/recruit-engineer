@@ -109,7 +109,7 @@
         /* インターンシップにホバーした時、または配下のa要素がアクティブな時に自動展開 */
         .nav-recruit-list li.has-sub:hover .nav-sub-list,
         .nav-recruit-list li.has-sub:focus-within .nav-sub-list,
-        .nav-recruit-list li.has-sub:has(a.active, a.active-sub, a.active-deep) .nav-sub-list {
+        .nav-recruit-list li.open-sub .nav-sub-list {
             max-height: 800px; 
             opacity: 1;
             padding: 10px 0 0 12px;
@@ -137,7 +137,7 @@
         /* 「インターンシップ」にホバーした時点で一括展開（逃げ防止） */
         .nav-recruit-list li.has-sub:hover .nav-deep-list,
         .nav-recruit-list li.has-sub:focus-within .nav-deep-list,
-        .nav-recruit-list li.has-sub:has(a.active, a.active-sub, a.active-deep) .nav-deep-list {
+        .nav-recruit-list li.open-deep .nav-deep-list {
             max-height: 400px;
             opacity: 1;
             padding: 10px 0 0 12px;
@@ -612,6 +612,17 @@
                         menuToggle.style.color = 'var(--accent-blue)';
                     }
                 });
+
+                const navLinks = leftNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 992) {
+                            leftNav.classList.remove('is-open');
+                            menuToggle.textContent = 'MENU';
+                            menuToggle.style.color = 'var(--accent-blue)';
+                        }
+                    });
+                });
             }
 
             const currentPageId = document.body.getAttribute('data-page');
@@ -620,11 +631,28 @@
                 if (targetLink) {
                     if (targetLink.closest('.nav-deep-list')) {
                         targetLink.classList.add('active-deep');
-                        targetLink.closest('.has-deep').querySelector('a:first-child').classList.add('active-sub');
-                        targetLink.closest('.has-sub').querySelector('a:first-child').classList.add('active');
+                        
+                        const deepParent = targetLink.closest('.nav-deep-list').parentElement;
+                        if (deepParent) {
+                            deepParent.classList.add('open-deep');
+                            const subLink = deepParent.querySelector('a:first-child');
+                            if (subLink) subLink.classList.add('active-sub');
+                        }
+                        
+                        const mainParent = targetLink.closest('.nav-sub-list').parentElement;
+                        if (mainParent) {
+                            mainParent.classList.add('open-sub');
+                            const mainLink = mainParent.querySelector('a:first-child');
+                            if (mainLink) mainLink.classList.add('active');
+                        }
                     } else if (targetLink.closest('.nav-sub-list')) {
                         targetLink.classList.add('active-sub');
-                        targetLink.closest('.has-sub').querySelector('a:first-child').classList.add('active');
+                        const mainParent = targetLink.closest('.nav-sub-list').parentElement;
+                        if (mainParent) {
+                            mainParent.classList.add('open-sub');
+                            const mainLink = mainParent.querySelector('a:first-child');
+                            if (mainLink) mainLink.classList.add('active');
+                        }
                     } else {
                         targetLink.classList.add('active');
                     }
