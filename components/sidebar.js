@@ -3,6 +3,8 @@
 // =========================================================================
 // HTML側で指定された「pathToRoot」を使ってパスを組み立てます。
 (function() {
+    "use strict";
+
     const root = typeof pathToRoot !== 'undefined' ? pathToRoot : '../';
 
     // 1. HTMLの流し込み（スマホ用のロゴ画像にはインラインCSSでスタイルを直接適用）
@@ -19,7 +21,7 @@
         <button class="menu-toggle" id="commonMenuToggle" style="background: none; border: none; font-family: 'Noto Sans JP', sans-serif; font-size: 12px; font-weight: 700; color: #00bfa5; cursor: pointer; padding: 10px; z-index: 1001;">MENU</button>
     </header>
 
-    <!-- レフトナビゲーション本体（IDを共通専用の commonLeftNav に変更して干渉を防ぎます） -->
+    <!-- レフトナビゲーション本体 -->
     <aside class="left-nav" id="commonLeftNav">
         <!-- ロゴ画像とトップへのリンク -->
         <a href="${root}index.html" class="nav-logo" data-id="logo">
@@ -54,7 +56,7 @@
     </aside>
     `;
 
-    // 2. スマホメニュー開閉用のCSSをJSから強制注入（HTMLのCSSに依存せず確実に動作させるため）
+    // 2. スマホメニュー開閉用のCSSをJSから強制注入
     const style = document.createElement('style');
     style.textContent = `
         @media (max-width: 992px) {
@@ -65,7 +67,6 @@
             #commonLeftNav.is-open {
                 left: 0 !important;
             }
-            /* ★ スマホ時はタップ判定が競合しないよう、最初からサブメニューを全て展開しておく */
             #commonLeftNav .nav-sub-list,
             #commonLeftNav .nav-deep-list {
                 max-height: 800px !important;
@@ -76,14 +77,13 @@
     `;
     document.head.appendChild(style);
 
-    // 3. HTML側の古いJSを回避し、ここでメニュー開閉と現在地ハイライトを完結させる
+    // 3. メニュー開閉と現在地ハイライト
     setTimeout(() => {
         const menuToggle = document.getElementById('commonMenuToggle');
         const leftNav = document.getElementById('commonLeftNav');
         
         if (menuToggle && leftNav) {
-            // メニューボタンのクリック処理
-            menuToggle.addEventListener('click', function(e) {
+            menuToggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 leftNav.classList.toggle('is-open');
                 if (leftNav.classList.contains('is-open')) {
@@ -95,9 +95,8 @@
                 }
             });
 
-            // メニューリンククリック時に閉じる処理
             const navLinks = leftNav.querySelectorAll('a');
-            navLinks.forEach(link => {
+            navLinks.forEach((link) => {
                 link.addEventListener('click', () => {
                     if (window.innerWidth <= 992) {
                         leftNav.classList.remove('is-open');
@@ -133,14 +132,16 @@
 // 全ページに会社のロゴ（ファビコン）を自動追加する命令
 // =========================================================================
 (function() {
-    var faviconData = [
+    "use strict";
+
+    const faviconData = [
         { rel: 'shortcut icon', type: 'image/vnd.microsoft.icon', href: 'https://diamondhead.jp/assets/images/common/favicon/favicon.ico' },
         { rel: 'apple-touch-icon', type: 'image/png', href: 'https://diamondhead.jp/assets/images/common/favicon/apple-touch-icon-180x180.png' },
         { rel: 'icon', type: 'image/png', href: 'https://diamondhead.jp/assets/images/common/favicon/icon-192x192.png' }
     ];
 
-    faviconData.forEach(function(data) {
-        var link = document.createElement('link');
+    faviconData.forEach((data) => {
+        const link = document.createElement('link');
         link.rel = data.rel;
         link.type = data.type;
         link.href = data.href;
