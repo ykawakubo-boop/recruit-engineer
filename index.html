@@ -6,11 +6,11 @@
     <title>ITエンジニア採用情報 | ダイアモンドヘッド株式会社</title>
     
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
+
         /* =========================================
            1. 全体設定・フォント読み込み（LP・各採用ページ完全共通）
            ========================================= */
-        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
-
         :root {
             --bg-base: #ffffff;
             --text-dark: #111111;
@@ -102,7 +102,7 @@
         
         .nav-recruit-list li.has-sub:hover .nav-sub-list,
         .nav-recruit-list li.has-sub:focus-within .nav-sub-list,
-        .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-sub-list {
+        .nav-recruit-list li.open-sub .nav-sub-list {
             max-height: 800px;
             opacity: 1;
             padding: 10px 0 0 12px;
@@ -129,7 +129,7 @@
 
         .nav-recruit-list li.has-sub:hover .nav-deep-list,
         .nav-recruit-list li.has-sub:focus-within .nav-deep-list,
-        .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-deep-list {
+        .nav-recruit-list li.open-deep .nav-deep-list {
             max-height: 400px;
             opacity: 1;
             padding: 10px 0 0 12px;
@@ -300,7 +300,6 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            /* モノクロ解除（カラー固定）およびホバー遷移の削除 */
         }
 
         .common-btn {
@@ -317,10 +316,10 @@
            ========================================= */
         .working-sub-title {
             font-size: 20px; font-weight: 700; color: #111; margin: 0 0 20px 0;
-            border-left: 3px solid var(--accent-blue); /* 下線から左側のアクセント縦線へ変更 */
-            padding: 2px 0 2px 16px; /* 左側に十分な余白を設定 */
+            border-left: 3px solid var(--accent-blue); 
+            padding: 2px 0 2px 16px; 
             line-height: 1.5;
-            display: block; /* ブロック要素にして縦線を左端にきれいに通す */
+            display: block; 
         }
         .working-desc {
             font-size: 14.5px; color: #555; line-height: 1.8; margin: 0 0 40px 0; max-width: 900px;
@@ -340,7 +339,7 @@
             box-shadow: 0 15px 40px rgba(0,191,165,0.08); transform: translateY(-4px);
         }
         
-        /* ★ がっつりイラスト用のスタイルに変更 */
+        /* イラスト用スタイル */
         .team-icon {
             width: 100%; height: 180px; margin-bottom: 24px;
             background: #ffffff; border: 1px solid var(--border-color);
@@ -656,7 +655,7 @@
                             自社開発のECシステム・販売機会を最大化するSaaSサービスの提供、およびスタジオでの商品撮影、Webマーケティング、物流、カスタマーサポートに至るまで、EC運営に必要なすべての業務をシームレスにフルサポートしています。<br><br>
                             ITエンジニア職は会社の中心であるECシステム＆サービスを開発・提供しています。
                         </p>
-                        <a href="https://diamondhead.jp/#service" target="_blank" class="common-btn" style="background-color: #ffffff; color: #111; border: 1px solid #e2e8f0; align-self: flex-start;">
+                        <a href="https://diamondhead.jp/#service" target="_blank" rel="noopener noreferrer" class="common-btn" style="background-color: #ffffff; color: #111; border: 1px solid #e2e8f0; align-self: flex-start;">
                             システム&amp;サービスを見る
                         </a>
                     </div>
@@ -1032,11 +1031,28 @@
                 if (targetLink) {
                     if (targetLink.closest('.nav-deep-list')) {
                         targetLink.classList.add('active-deep');
-                        targetLink.closest('.has-deep').querySelector('a:first-child').classList.add('active-sub');
-                        targetLink.closest('.has-sub').querySelector('a:first-child').classList.add('active');
+                        
+                        const deepParent = targetLink.closest('.nav-deep-list').parentElement;
+                        if (deepParent) {
+                            deepParent.classList.add('open-deep');
+                            const subLink = deepParent.querySelector('a:first-child');
+                            if (subLink) subLink.classList.add('active-sub');
+                        }
+                        
+                        const mainParent = targetLink.closest('.nav-sub-list').parentElement;
+                        if (mainParent) {
+                            mainParent.classList.add('open-sub');
+                            const mainLink = mainParent.querySelector('a:first-child');
+                            if (mainLink) mainLink.classList.add('active');
+                        }
                     } else if (targetLink.closest('.nav-sub-list')) {
                         targetLink.classList.add('active-sub');
-                        targetLink.closest('.has-sub').querySelector('a:first-child').classList.add('active');
+                        const mainParent = targetLink.closest('.nav-sub-list').parentElement;
+                        if (mainParent) {
+                            mainParent.classList.add('open-sub');
+                            const mainLink = mainParent.querySelector('a:first-child');
+                            if (mainLink) mainLink.classList.add('active');
+                        }
                     } else {
                         targetLink.classList.add('active');
                     }
