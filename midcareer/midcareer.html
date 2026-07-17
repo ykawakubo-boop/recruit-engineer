@@ -211,8 +211,8 @@
         .section-header-image .img-inner {
             width: 100%;
             height: 100%;
-            background-size: cover;
-            background-position: center;
+            object-fit: cover; /* 背景画像からimg要素のカバー設定に変更 */
+            display: block;
         }
         .section-desc {
             font-size: 14.5px; color: #555; line-height: 1.8; margin: 0; max-width: 100%;
@@ -232,10 +232,10 @@
 
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('../images/scale.jpg'); /* 指定された画像ファイル名（正しい深さ「../」）に更新 */
-            background-size: cover; background-position: center;
+            object-fit: cover; /* 背景画像からimg要素のカバー設定に変更 */
             filter: grayscale(70%) contrast(1.1) brightness(0.7);
             z-index: 1;
+            display: block;
         }
 
         .hero::before {
@@ -434,7 +434,8 @@
 
             <!-- HERO（メインビジュアルをscale.jpgかつ正しい深さ「../」に修正） -->
             <section class="hero">
-                <div class="hero-bg" data-local-bg="../images/scale.jpg" data-fallback-bg="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1600&q=80"></div>
+                <!-- 実タグ<img>を使用することでブラウザの高画質スケーリングとデコード最適化を活性化 -->
+                <img class="hero-bg" data-local-src="../images/scale.jpg" data-fallback-src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1600&q=80" alt="中途採用メインビジュアル">
                 <div class="hero-content">
                     <h1 class="hero-en">MID-CAREER</h1>
                     <p class="hero-jp">中途採用</p>
@@ -514,7 +515,8 @@
                         <p class="section-desc">エントリーから内定までのステップをご案内します。これまでのキャリアやご実績について、カジュアル面談や面接を通じてじっくりお聞かせください。</p>
                     </div>
                     <div class="section-header-image">
-                        <div class="img-inner" data-local-bg="../images/discretion.jpeg" data-fallback-bg="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80"></div>
+                        <!-- 実タグ<img>を使用することで縮小によるジャギーやモアレ,ボケを本質的に回避 -->
+                        <img class="img-inner" data-local-src="../images/discretion.jpg" data-fallback-src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80" alt="採用の流れイメージ">
                     </div>
                 </div>
 
@@ -573,15 +575,16 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const bgElements = document.querySelectorAll("[data-local-bg]");
-            bgElements.forEach(el => {
-                const localBg = el.getAttribute("data-local-bg");
-                const fallbackBg = el.getAttribute("data-fallback-bg");
-                if (localBg && fallbackBg) {
+            // 背景画像スライダーのプリロード方式から、実imgタグのsrc変更ロジックへアップグレード
+            const imgElements = document.querySelectorAll("[data-local-src]");
+            imgElements.forEach(el => {
+                const localSrc = el.getAttribute("data-local-src");
+                const fallbackSrc = el.getAttribute("data-fallback-src");
+                if (localSrc && fallbackSrc) {
                     const testImg = new Image();
-                    testImg.onload = function() { el.style.backgroundImage = `url('${localBg}')`; };
-                    testImg.onerror = function() { el.style.backgroundImage = `url('${fallbackBg}')`; };
-                    testImg.src = localBg;
+                    testImg.onload = function() { el.src = localSrc; };
+                    testImg.onerror = function() { el.src = fallbackSrc; };
+                    testImg.src = localSrc;
                 }
             });
         });
