@@ -6,9 +6,6 @@
     <title>ITエンジニア 新卒採用 | ダイアモンドヘッド株式会社</title>
     
     <style>
-        /* =========================================
-           1. 全体設定・フォント読み込み（LP完全共通）
-           ========================================= */
         @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700;900&family=Montserrat:wght@700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
 
         :root {
@@ -29,7 +26,6 @@
             overflow-x: hidden;
         }
 
-        /* ★ レフトナビゲーションを配置するための大枠レイアウト */
         .app-wrapper {
             display: flex;
             align-items: flex-start;
@@ -37,9 +33,6 @@
             min-height: 100vh;
         }
 
-        /* =========================================
-           2. レフトナビゲーション（固定）
-           ========================================= */
         .left-nav {
             width: 280px;
             height: 100vh;
@@ -56,10 +49,10 @@
             overflow-y: auto; 
         }
 
-        /* カスタムスクロールバー（レフトナビ用） */
         .left-nav::-webkit-scrollbar {
             width: 4px;
         }
+        
         .left-nav::-webkit-scrollbar-thumb {
             background: var(--border-color);
             border-radius: 10px;
@@ -68,9 +61,11 @@
         .nav-logo {
             text-decoration: none; margin-bottom: 60px; display: block; text-align: center;
         }
+        
         .nav-logo img {
             width: 100%; max-width: 180px; height: auto; display: block; margin: 0 auto;
         }
+        
         .nav-logo .logo-text {
             display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 11px; font-weight: 700;
             color: #555555; letter-spacing: 0.15em; margin-top: 16px; line-height: 1.6;
@@ -84,17 +79,18 @@
             font-size: 14px; font-weight: 700; color: #333; text-decoration: none;
             display: flex; align-items: center; justify-content: space-between; transition: color 0.3s;
         }
-        /* 現在のページのアクティブ表示 */
+        
         .nav-recruit-list a.active {
             color: var(--accent-blue);
         }
+        
         .nav-recruit-list > li > a::after {
             content: '→'; color: var(--accent-blue); opacity: 0; transform: translateX(-10px); transition: all 0.3s ease;
         }
+        
         .nav-recruit-list > li > a:hover { color: var(--accent-blue); }
         .nav-recruit-list > li > a:hover::after, .nav-recruit-list > li > a.active::after { opacity: 1; transform: translateX(0); }
 
-        /* 第2階層 */
         .nav-sub-list {
             list-style: none;
             padding: 0 0 0 12px;
@@ -106,7 +102,6 @@
             transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
         }
         
-        /* インターンシップにホバーした時、または配下のa要素がアクティブな時に自動展開 */
         .nav-recruit-list li.has-sub:hover .nav-sub-list,
         .nav-recruit-list li.has-sub:focus-within .nav-sub-list,
         .nav-recruit-list li.has-sub:has(a.active, a.active-sub, a.active-deep) .nav-sub-list {
@@ -122,7 +117,6 @@
         }
         .nav-sub-list a:hover, .nav-sub-list a.active-sub { color: var(--accent-blue); }
 
-        /* 第3階層 */
         .nav-deep-list {
             list-style: none;
             padding: 0 0 0 12px;
@@ -134,7 +128,6 @@
             transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
         }
 
-        /* 「インターンシップ」にホバーした時点で一括展開（逃げ防止） */
         .nav-recruit-list li.has-sub:hover .nav-deep-list,
         .nav-recruit-list li.has-sub:focus-within .nav-deep-list,
         .nav-recruit-list li.has-sub:has(a.active, a.active-sub, a.active-deep) .nav-deep-list {
@@ -153,14 +146,10 @@
             font-weight: 700;
         }
 
-        /* モバイル用ヘッダー（PCでは非表示） */
         .mobile-header {
             display: none;
         }
 
-        /* =========================================
-           3. メインコンテンツエリア
-           ========================================= */
         .main-content {
             flex: 1;
             width: 100%; 
@@ -169,11 +158,10 @@
             background-color: var(--bg-base);
         }
 
-        /* 幅広コンテナ */
         .content-container {
             padding: 100px 6%;
             box-sizing: border-box;
-            max-width: 1100px; /* 少し広げてゆとりを */
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -190,7 +178,6 @@
             margin: 0 0 50px 0; color: #111; letter-spacing: 0.02em;
         }
 
-        /* ★ 画像とテキストを並べるヘッダー用のレイアウト */
         .section-header-row {
             display: flex;
             align-items: center;
@@ -198,34 +185,33 @@
             gap: 5%;
             margin-bottom: 50px;
         }
+        
         .section-header-text {
             flex: 1.2;
         }
         
-        /* ★ 画質改善のため、サイズ固定と背景画像指定を調整 */
         .section-header-image {
             flex: 1;
-            max-width: 450px; /* 画像が不自然に引き伸ばされるのを防ぐ */
+            max-width: 450px;
             border-radius: 12px;
             overflow: hidden;
             background-color: #f8f9fa;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
+        
         .section-header-image .img-inner {
             width: 100%;
             height: auto;
             display: block;
             object-fit: cover;
             object-position: center;
-            image-rendering: high-quality; /* ブラウザに高画質レンダリングをリクエスト */
+            image-rendering: high-quality;
         }
+        
         .section-desc {
             font-size: 14.5px; color: #555; line-height: 1.8; margin: 0; max-width: 100%;
         }
 
-        /* =========================================
-           4. ヒーローセクション（新卒用）
-           ========================================= */
         .hero {
             position: relative; width: 100%; 
             height: 40vh; 
@@ -266,14 +252,12 @@
             color: #111; letter-spacing: 0.1em; line-height: 1.1; margin: 0 0 8px 0;
             opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards 0.1s;
         }
+        
         .hero-jp {
             font-size: 16px; font-weight: 700; color: var(--accent-blue); letter-spacing: 0.2em; margin: 0;
             opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards 0.3s;
         }
 
-        /* =========================================
-           5. イベント用フローティングバナー
-           ========================================= */
         .event-banner {
             display: inline-flex;
             align-items: center;
@@ -290,16 +274,19 @@
             transition: all 0.4s ease;
             gap: 40px;
         }
+        
         .event-banner:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 40px rgba(0, 191, 165, 0.2);
             background-color: var(--accent-blue);
         }
+        
         .event-banner-content {
             display: flex;
             align-items: center;
             gap: 16px;
         }
+        
         .event-banner-tag {
             font-family: 'Bodoni Moda', serif;
             font-size: 11px;
@@ -309,23 +296,23 @@
             padding: 4px 12px;
             border-radius: 40px;
         }
+        
         .event-banner-text {
             font-size: 14.5px;
             font-weight: 700;
             letter-spacing: 0.05em;
         }
+        
         .event-banner-arrow {
             font-size: 18px;
             font-weight: 700;
             transition: transform 0.4s ease;
         }
+        
         .event-banner:hover .event-banner-arrow {
             transform: translateX(6px);
         }
 
-        /* =========================================
-           6. 募集要項・コンテンツレイアウト
-           ========================================= */
         .info-box {
             background-color: #ffffff; 
             border: 1px solid var(--accent-blue);
@@ -334,24 +321,28 @@
             border-radius: 8px;
             box-shadow: 0 10px 25px rgba(0, 191, 165, 0.05);
         }
+        
         .info-box strong { color: #111; }
         .info-box a { color: var(--accent-blue); text-decoration: none; font-weight: bold; }
         .info-box a:hover { text-decoration: underline; }
 
-        /* リスト形式（テーブル風） */
         .req-list {
             display: flex; flex-direction: column; border-top: 2px solid #111; margin-bottom: 100px;
         }
+        
         .req-row {
             display: flex; padding: 32px 0; border-bottom: 1px solid var(--border-color);
             align-items: flex-start;
         }
+        
         .req-title {
             width: 220px; font-weight: 700; color: #111; font-size: 16px; flex-shrink: 0;
         }
+        
         .req-detail {
             flex-grow: 1; font-size: 15px; color: #555; line-height: 1.8; margin: 0;
         }
+        
         .req-detail ul { margin: 12px 0 0 0; padding-left: 20px; }
         .req-detail li { margin-bottom: 8px; }
         .req-detail .note { font-size: 13px; color: #888; display: block; margin-top: 12px; }
@@ -359,70 +350,71 @@
         .req-detail a { color: var(--accent-blue); text-decoration: none; font-weight: bold; }
         .req-detail a:hover { text-decoration: underline; }
 
-        /* =========================================
-           7. 応募背景（VOICE）
-           ========================================= */
         .voice-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 100px;
         }
+        
         .voice-card {
             background: #ffffff; border: 1px solid var(--border-color); padding: 40px;
             border-radius: 12px; transition: all 0.4s ease;
         }
+        
         .voice-card:hover {
             border-color: transparent;
             box-shadow: 0 15px 40px rgba(0,0,0,0.06);
             transform: translateY(-4px);
         }
+        
         .voice-tag {
             display: inline-block; font-size: 12px; font-weight: 700; color: #fff; background: #111;
             padding: 6px 16px; margin-bottom: 20px; letter-spacing: 0.1em; border-radius: 4px;
         }
+        
         .voice-card ul { padding-left: 20px; margin: 0; font-size: 14.5px; color: #555; line-height: 1.8; }
         .voice-card li { margin-bottom: 10px; }
 
-        /* =========================================
-           8. 採用フロー (FLOW)
-           ========================================= */
         .flow-container {
-            display: flex; flex-direction: column; gap: 24px; margin-bottom: 60px; /* ★余白を詰めるため 100px -> 60px に変更 */
+            display: flex; flex-direction: column; gap: 24px; margin-bottom: 60px;
         }
+        
         .flow-step {
             display: flex; align-items: stretch; background: #ffffff;
             border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;
             transition: all 0.4s ease;
         }
+        
         .flow-step:hover {
             border-color: transparent;
             box-shadow: 0 15px 40px rgba(0,0,0,0.06);
             transform: translateY(-4px);
         }
+        
         .flow-num {
             background: #111; color: #fff; font-family: 'Bodoni Moda', serif; font-size: 28px; font-weight: 900;
             width: 100px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
             transition: color 0.4s;
         }
+        
         .flow-step:hover .flow-num { color: var(--accent-blue); }
         .flow-content {
             padding: 30px 40px; flex-grow: 1;
         }
+        
         .flow-content h4 { margin: 0 0 12px 0; font-size: 18px; font-weight: 700; color: var(--accent-blue); }
         .flow-content p { margin: 0; font-size: 14.5px; color: #555; line-height: 1.6; }
         .flow-content p a { color: var(--accent-blue); text-decoration: none; font-weight: bold; }
         .flow-content p a:hover { text-decoration: underline; }
         .flow-content .sub-step { font-size: 13.5px; color: #777; margin-top: 12px; line-height: 1.8;}
 
-        /* =========================================
-           9. エントリーセクション
-           ========================================= */
         .entry-section {
             background-color: var(--bg-base); 
-            padding: 40px 40px 80px; /* ★上部paddingを60px -> 40px に変更 */
+            padding: 40px 40px 80px;
             text-align: center; 
-            margin-top: 0; /* ★上部marginをなくしてFLOWに近づける */
+            margin-top: 0;
             box-sizing: border-box;
-            border-bottom: 1px solid var(--border-color); /* ボタンの下に線を引く */
+            border-bottom: 1px solid var(--border-color);
         }
+        
         .entry-section h2 {
             font-family: 'Bodoni Moda', serif; 
             font-size: clamp(32px, 5vw, 48px); 
@@ -431,33 +423,35 @@
             letter-spacing: 0.1em;
         }
         
-        /* ★ 他ページのボタンデザインと完全に一致する「絶妙な角丸（border-radius: 6px;）」を追加 */
         .entry-btn {
             display: inline-flex; align-items: center; justify-content: center;
             background-color: #111111; color: #ffffff; text-decoration: none; padding: 18px 56px;
             font-size: 14.5px; font-weight: 700; letter-spacing: 0.15em; transition: all 0.4s ease;
-            border-radius: 6px; /* ★ 角立ちを解消し、中途採用ページと同様の上品な丸みに統一 */
+            border-radius: 6px;
         }
+        
         .entry-btn::after { content: '→'; margin-left: 14px; transition: transform 0.4s; }
         .entry-btn:hover { background-color: var(--accent-blue); color: #ffffff; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 191, 165, 0.2); }
         .entry-btn:hover::after { transform: translateX(6px); }
 
-        /* ★ ページ下部SCSKロゴ（共通CSSスタイル） */
         .scsk-bottom-logo {
             display: flex;
             justify-content: flex-end;
             padding: 20px 40px 60px;
             background-color: #ffffff;
         }
+        
         .scsk-bottom-logo a {
             display: inline-block;
             width: 120px;
             height: auto;
             transition: transform 0.3s ease;
         }
+        
         .scsk-bottom-logo a:hover {
             transform: translateY(-2px);
         }
+        
         .scsk-bottom-logo img {
             width: 100%;
             height: auto;
@@ -466,9 +460,6 @@
 
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-        /* =========================================
-           Responsive
-           ========================================= */
         @media (max-width: 992px) {
             .app-wrapper { display: block; }
             .left-nav {
@@ -478,7 +469,6 @@
             .left-nav.is-open { left: 0; }
             .main-content { width: 100%; padding-left: 0; }
             
-            /* モバイル用ヘッダー */
             .mobile-header {
                 display: flex; justify-content: space-between; align-items: center;
                 background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);
@@ -491,18 +481,15 @@
                 font-size: 12px; font-weight: 700; color: var(--accent-blue); letter-spacing: 0.1em;
                 cursor: pointer; padding: 10px 0 10px 20px;
             }
-            .hero { margin-top: 60px; min-height: 250px; }
-
-            .section-header-row { flex-direction: column; gap: 30px; margin-bottom: 40px; }
             
-            /* モバイル環境でも強制的なサイズ固定を外す */
+            .hero { margin-top: 60px; min-height: 250px; }
+            .section-header-row { flex-direction: column; gap: 30px; margin-bottom: 40px; }
             .section-header-text, .section-header-image { width: 100%; flex: none; max-width: 100%; }
         }
 
         @media (max-width: 768px) {
             .content-container { padding: 60px 5%; }
             
-            /* スマホ時のイベントバナー調整（横並びでコンパクトに） */
             .event-banner {
                 display: inline-flex;
                 padding: 16px 20px; 
@@ -510,19 +497,10 @@
                 margin-bottom: 50px;
                 gap: 20px;
             }
-            .event-banner-content {
-                gap: 12px;
-            }
-            .event-banner-tag {
-                padding: 3px 8px;
-                font-size: 10px;
-            }
-            .event-banner-text {
-                font-size: 13px;
-            }
-            .event-banner-arrow { 
-                font-size: 16px; 
-            }
+            .event-banner-content { gap: 12px; }
+            .event-banner-tag { padding: 3px 8px; font-size: 10px; }
+            .event-banner-text { font-size: 13px; }
+            .event-banner-arrow { font-size: 16px; }
 
             .req-row { flex-direction: column; gap: 12px; }
             .req-title { width: 100%; }
@@ -530,12 +508,8 @@
             .flow-step { flex-direction: column; }
             .flow-num { width: 100%; height: 50px; justify-content: flex-start; padding-left: 20px; box-sizing: border-box; font-size: 20px;}
             
-            .scsk-bottom-logo {
-                padding: 20px 24px 40px;
-            }
-            .scsk-bottom-logo a {
-                width: 100px;
-            }
+            .scsk-bottom-logo { padding: 20px 24px 40px; }
+            .scsk-bottom-logo a { width: 100px; }
             .entry-section { padding: 40px 24px 60px; }
         }
     </style>
@@ -544,13 +518,10 @@
 
     <div class="app-wrapper">
 
-        <!-- ★ 共通レフトナビ（モバイルヘッダー含む）がJSでここに自動挿入されます -->
         <div id="sidebar-container"></div>
 
-        <!-- メインコンテンツ -->
         <main class="main-content">
 
-            <!-- HERO -->
             <section class="hero">
                 <div class="hero-bg" style="background-image: url('../images/hero1.jpg');"></div>
                 <div class="hero-content">
@@ -561,7 +532,6 @@
 
             <div class="content-container">
 
-                <!-- ★ イベント用フローティングバナー -->
                 <a href="https://reserva.be/diamondhead" target="_blank" rel="noopener noreferrer" class="event-banner">
                     <div class="event-banner-content">
                         <span class="event-banner-tag">EVENT</span>
@@ -570,20 +540,17 @@
                     <span class="event-banner-arrow">→</span>
                 </a>
                 
-                <!-- 注意事項 -->
                 <div class="info-box">
                     <strong>※はじめにご確認下さい。</strong><br>
 皆さまが安心して就職活動に取り組めるよう、SNS等を通じた社員への直接のご連絡はお控えいただいております。
 当社では、社員個人によるOB・OG訪問やご相談の受付は行っておりません。採用に関するあらゆるサポートやご質問にはリクルーターが対応いたしますので、何かございましたら<a href="https://line.me/R/ti/p/@591kaqzh" target="_blank" rel="noopener noreferrer">公式LINEチャット</a>よりお気軽にご連絡ください。
                 </div>
 
-                <!-- REQUIREMENTS -->
                 <div class="section-header-row">
                     <div class="section-header-text">
                         <div class="section-tag">REQUIREMENTS</div>
                         <h2 class="section-title" style="margin-bottom: 24px;">募集要項</h2>
                     </div>
-                    <!-- 画質改善のため、背景画像(div)からimgタグに変更 -->
                     <div class="section-header-image">
                         <img class="img-inner" src="../images/job_engineer.jpg" alt="エンジニアの業務風景" onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'">
                     </div>
@@ -684,21 +651,19 @@
                     <div class="req-row">
                         <div class="req-title">補助・待遇<br>福利厚生</div>
                         <div class="req-detail">
-                            社会保険完備 / 服装髪型自由 / 定期健康診断 / 通勤費全額支給 / パフォーマンスインセンティブ制度 / 慶弔見舞金支給（適用条件あり） / 退職金制度（DC/DB） / SCSKグループ保険 / 誕生日祝い金制度 / 資格取得補助制度（全額補助） / 資格取得報奨金制度 / スポーツ応援制度 / 懇親会補助制度 / UIターン補助制度 / 持株会（住友商事） / WELBOX<br><br>
+                            社会保険完備 / 服装髪型自由 / 定期健康診断 / 通勤費全額支給 / パフォーマンスインセンティブ制度 / 慶弔見舞金支給（適用条件あり） / 退職金制度（DC/DB） / SCSKグループ保険 / 誕生日祝い金制度 / 資格取得補助制度（全額補助） / 資格取得報奨金制度 / スポーツ応援制度 / 懇親会補助制度 / UIターン補助制度 / 持株会（住友商事） / <a href="https://www.ewel.co.jp/recruit/workplace/welbox.html" target="_blank" rel="noopener noreferrer">WELBOX</a><br><br>
                             <strong>▼ITエンジニア教育研修制度</strong><br>
                             内定者研修制度 / 内定者インターンシップ制度 / 新卒研修制度 / 配属前研修制度 / e-ラーニング制度（Udemy/アルゴ式の自由利用） / 勉強会企画制度 / ビジネス研修 / リーダー研修 / マネジメント研修
                         </div>
                     </div>
                 </div>
 
-                <!-- VOICE -->
                 <div class="section-header-row">
                     <div class="section-header-text">
                         <div class="section-tag">VOICE</div>
                         <h2 class="section-title" style="margin-bottom: 24px;">応募背景の振り返り</h2>
-                        <p class="section-desc">今まで新卒採用に参加した中で多かった応募背景を要約して共有します。</p>
+                        <p class="section-desc">今まで新卒採用に参加した中で多かった応募背景を要約して共有いたします。</p>
                     </div>
-                    <!-- 画質改善のため、背景画像(div)からimgタグに変更 -->
                     <div class="section-header-image">
                         <img class="img-inner" src="../images/engineer_4.jpg" alt="社員インタビュー" onerror="this.src='https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80'">
                     </div>
@@ -749,10 +714,8 @@
                     </div>
                 </div>
 
-                <!-- ★ FLOW を VOICE の後に移動 (写真はVOICEへ移動したため、テキストのみ) -->
                 <div class="section-tag">FLOW</div>
                 <h2 class="section-title" style="margin-bottom: 24px;">採用の流れ</h2>
-                <!-- 軽微な表現バグ「相互理解 of 場」を「相互理解の場」に修正 -->
                 <p style="font-size: 15px; color: #555; margin-bottom: 40px; line-height: 1.8;">エントリーから内定までのステップをご案内します。面接は相互理解の場と考えておりますので、リラックスして臨んでください。</p>
 
                 <div class="flow-container">
@@ -787,9 +750,8 @@
                     </div>
                 </div>
 
-            </div> <!-- /.content-container -->
+            </div>
 
-            <!-- ENTRY SECTION -->
             <section class="entry-section">
                 <h2>ENTRY</h2>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSd4GZAajcL9XotamVv2M59FBoEUFDGxEgkH1FRoR5R7zqILIQ/viewform?a=2" target="_blank" rel="noopener noreferrer" class="entry-btn">
@@ -797,21 +759,17 @@
                 </a>
             </section>
 
-            <!-- ★ SCSKロゴがフッターの床位置（右寄せ）に自動挿入されます -->
             <div id="scsk-logo-container"></div>
 
         </main>
     </div>
 
-    <!-- ★ ここが最重要ポイント：共通JSを呼び出す前に、自分から見たルートの深さを教えます -->
     <script>var pathToRoot = "../";</script>
 
-    <!-- 外部のJSファイルを読み込んで共通パーツを埋め込み -->
     <script src="../components/sidebar.js"></script>
     <script src="../components/footer.js"></script>
     
     <script>
-        // 共通パーツ読み込み後のナビゲーション初期化
         window.onload = function() {
             const menuToggle = document.getElementById('menuToggle');
             const leftNav = document.getElementById('leftNav');
