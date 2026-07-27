@@ -7,7 +7,7 @@
     
     <style>
         /* =========================================
-           1. 全体設定・フォント読み込み（各採用ページ完全共通）
+           1. 全体設定・フォント読み込み
            ========================================= */
         @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
 
@@ -29,7 +29,6 @@
             overflow-x: hidden;
         }
 
-        /* レフトナビゲーション用大枠レイアウト */
         .app-wrapper {
             display: flex;
             align-items: flex-start;
@@ -38,9 +37,7 @@
         }
 
         /* =========================================
-           2. レフトナビゲーション（階層ツリー構造・ホバー展開式）のスタイル
-           ※表示はsidebar.jsに任せますが、表示中の崩れを防ぐためのCSSです
-           ★全体の統一感を出すため、余白・フォントサイズを新卒採用ページと同じ黄金比に統一しました
+           2. レフトナビゲーション
            ========================================= */
         .left-nav {
             width: 280px;
@@ -50,7 +47,7 @@
             left: 0;
             background-color: #ffffff;
             border-right: 1px solid var(--border-color);
-            padding: 50px 40px; /* 40px 30pxから50px 40pxに統一 */
+            padding: 50px 40px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -58,7 +55,6 @@
             overflow-y: auto; 
         }
 
-        /* カスタムスクロールバー（レフトナビ用） */
         .left-nav::-webkit-scrollbar {
             width: 4px;
         }
@@ -68,27 +64,26 @@
         }
 
         .nav-logo {
-            text-decoration: none; margin-bottom: 60px; display: block; text-align: center; /* 40pxから60pxに変更 */
+            text-decoration: none; margin-bottom: 60px; display: block; text-align: center;
         }
         .nav-logo img {
-            width: 100%; max-width: 180px; height: auto; display: block; margin: 0 auto; /* 160pxから180pxに統一 */
+            width: 100%; max-width: 180px; height: auto; display: block; margin: 0 auto;
         }
         .nav-logo .logo-text {
-            display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 11px; font-weight: 700; /* 10pxから11pxに統一 */
-            color: #555555; letter-spacing: 0.15em; margin-top: 16px; line-height: 1.6; /* 12pxから16pxに変更 */
+            display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 11px; font-weight: 700;
+            color: #555555; letter-spacing: 0.15em; margin-top: 16px; line-height: 1.6;
         }
 
         .nav-recruit { flex-grow: 1; }
         .nav-recruit-list { list-style: none; padding: 0; margin: 0; }
-        .nav-recruit-list > li { margin-bottom: 24px; position: relative; } /* 20pxから24pxに変更 */
+        .nav-recruit-list > li { margin-bottom: 24px; position: relative; }
         .nav-recruit-list a {
             font-family: 'Noto Sans JP', sans-serif;
-            font-size: 14px; font-weight: 700; color: #333; text-decoration: none; /* 13.5px / #444 から 14px / #333 に統一 */
+            font-size: 14px; font-weight: 700; color: #333; text-decoration: none;
             display: flex; align-items: center; justify-content: space-between; transition: color 0.3s;
         }
         .nav-recruit-list a:hover, .nav-recruit-list a.active { color: var(--accent-blue); }
 
-        /* 第2階層 */
         .nav-sub-list {
             list-style: none;
             padding: 0 0 0 12px;
@@ -106,7 +101,6 @@
         }
         .nav-sub-list a:hover, .nav-sub-list a.active-sub { color: var(--accent-blue); }
 
-        /* ★ インターンシップにホバーした時、または配下のa要素（active, active-sub, active-deep）がアクティブな時に自動展開 */
         .nav-recruit-list li.has-sub:hover .nav-sub-list,
         .nav-recruit-list li.has-sub:focus-within .nav-sub-list,
         .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-sub-list {
@@ -115,7 +109,6 @@
             padding: 10px 0 0 12px;
         }
 
-        /* 第3階層：長期インターンシップ内の詳細 */
         .nav-deep-list {
             list-style: none;
             padding: 0 0 0 12px;
@@ -127,7 +120,6 @@
             transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
         }
 
-        /* ★ 「インターンシップ」全体にホバーした時点で一気に3階層目まで展開。メニュー逃げバグを完全防止 */
         .nav-recruit-list li.has-sub:hover .nav-deep-list,
         .nav-recruit-list li.has-sub:focus-within .nav-deep-list,
         .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-deep-list {
@@ -146,7 +138,6 @@
             font-weight: 700;
         }
 
-        /* モバイル用ヘッダー（PCでは非表示） */
         .mobile-header {
             display: none;
         }
@@ -162,11 +153,10 @@
             background-color: var(--bg-base);
         }
 
-        /* 幅広コンテナ */
         .content-container {
             padding: 80px 6%;
             box-sizing: border-box;
-            max-width: 1100px; /* 横幅を1100pxに統一 */
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -197,7 +187,7 @@
 
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('../images/hero3.jpg'); /* メインビジュアルを sapporo.jpg に指定 */
+            background-image: url('../images/hero3.jpg');
             background-size: cover; background-position: center;
             filter: grayscale(70%) contrast(1.1) brightness(0.7);
             z-index: 1;
@@ -240,7 +230,7 @@
         .info-box strong { color: #111; }
 
         /* =========================================
-           6. 募集要項 (リスト形式・テーブル風)
+           6. 募集要項
            ========================================= */
         .req-list {
             display: flex; flex-direction: column; border-top: 2px solid #111; margin-bottom: 80px;
@@ -310,7 +300,6 @@
             margin: 0 0 4px 0;
         }
 
-        /* ★ 主なプログラム下部に挿入する「いい感じの画像エリア」 */
         .program-under-image {
             margin-top: 24px;
             margin-bottom: 80px;
@@ -329,13 +318,13 @@
         }
 
         /* =========================================
-           8. プログラム一覧 (縦積み・洗練されたフラットカード)
+           8. プログラム一覧
            ========================================= */
         .program-stack {
             display: flex;
             flex-direction: column;
             gap: 40px;
-            margin-bottom: 40px; /* 画像エリアとの間隔調整 */
+            margin-bottom: 40px;
         }
         .program-block {
             background-color: #fafafa;
@@ -387,7 +376,7 @@
         }
 
         /* =========================================
-           9. 応募フロー (ステップUI)
+           9. 応募フロー
            ========================================= */
         .flow-container {
             display: flex; flex-direction: column; gap: 24px; margin-bottom: 80px;
@@ -426,7 +415,6 @@
             margin: 0 0 24px 0;
             letter-spacing: 0.1em;
         }
-        
         .entry-btn {
             display: inline-flex; align-items: center; justify-content: center;
             background-color: #111111; color: #ffffff; text-decoration: none; padding: 18px 56px;
@@ -437,7 +425,6 @@
         .entry-btn:hover { background-color: var(--accent-blue); color: #ffffff; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 191, 165, 0.2); }
         .entry-btn:hover::after { transform: translateX(6px); }
 
-        /* ★ ページ下部SCSKロゴ（共通CSSスタイル） */
         .scsk-bottom-logo {
             display: flex;
             justify-content: flex-end;
@@ -497,12 +484,8 @@
             .flow-step { flex-direction: column; }
             .flow-num { width: 100%; height: 40px; justify-content: flex-start; padding-left: 20px; box-sizing: border-box; font-size: 18px;}
             
-            .scsk-bottom-logo {
-                padding: 20px 24px 40px;
-            }
-            .scsk-bottom-logo a {
-                width: 100px;
-            }
+            .scsk-bottom-logo { padding: 20px 24px 40px; }
+            .scsk-bottom-logo a { width: 100px; }
             .entry-section { padding: 40px 24px 60px; }
             .program-under-image { height: 200px; margin-bottom: 40px; margin-top: 10px; }
         }
@@ -512,13 +495,10 @@
 
     <div class="app-wrapper">
 
-        <!-- ★ 共通レフトナビ（モバイルヘッダー含む）がここに読み込まれます -->
         <div id="sidebar-container"></div>
 
-        <!-- メインコンテンツ -->
         <main class="main-content">
 
-            <!-- HERO -->
             <section class="hero">
                 <div class="hero-bg" data-local-bg="../images/hero3.jpg" data-fallback-bg="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=1600&q=80"></div>
                 <div class="hero-content">
@@ -529,13 +509,11 @@
 
             <div class="content-container">
 
-                <!-- 期間限定注意書きアラート -->
                 <div class="info-box">
                     <strong>※本インターンシップは期間限定の1dayインターンシップです。</strong><br>
                     長期インターンシップとはプログラム・応募要件・条件が異なります。ご確認の上ご応募ください。
                 </div>
 
-                <!-- OVERVIEW -->
                 <div class="section-tag">OVERVIEW</div>
                 <h2 class="section-title">エンジニアとしての働くイメージが深まる1日</h2>
                 
@@ -544,7 +522,6 @@
                     実際の開発現場で使われている技術や思考プロセスに触れながら、エンジニアとして働くイメージが一気に深まる1日をお届けします！
                 </p>
 
-                <!-- REQUIREMENTS -->
                 <div class="section-tag">REQUIREMENTS</div>
                 <h2 class="section-title">募集要項</h2>
 
@@ -605,7 +582,6 @@
                     </div>
                 </div>
 
-                <!-- RULES / ATTENTION (移動後) -->
                 <div class="section-tag">ATTENTION</div>
                 <h2 class="section-title">注意事項</h2>
 
@@ -618,12 +594,11 @@
                             <li>昼食のご準備は不要です。弊社にてウェルカムランチをご用意いたします</li>
                             <li>セキュリティ対策により私用PCの持ち込みはできません。当社にてご用意いたします</li>
                             <li>希望される日程の1週間前までには応募を完了させてください</li>
-                            <li>その他ご質問等ございましたら弊社公式LINEよりお問い合わせください</li>
+                            <li>その他ご質問等ございましたら<a href="https://line.me/R/ti/p/@591kaqzh" target="_blank" rel="noopener noreferrer" style="color: var(--accent-blue); text-decoration: none; font-weight: bold;">公式LINEチャット</a>よりお問い合わせください</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- PROGRAMS (主なプログラム) -->
                 <div class="section-tag">PROGRAMS</div>
                 <h2 class="section-title">主なプログラム</h2>
 
@@ -665,12 +640,10 @@
                     </div>
                 </div>
 
-                <!-- ★ イメージ写真を、「主なプログラム」セクションのすぐ下へ配置。 -->
                 <div class="program-under-image">
                     <div class="img-inner" data-local-bg="../images/intern_1.jpg" data-fallback-bg="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"></div>
                 </div>
 
-                <!-- DAILY SCHEDULE -->
                 <div class="section-tag">DAILY SCHEDULE</div>
                 <h2 class="section-title">一日の流れ</h2>
 
@@ -701,7 +674,6 @@
                     </div>
                 </div>
 
-                <!-- FLOW (応募の流れ) -->
                 <div class="section-tag" style="margin-top: 60px;">FLOW</div>
                 <h2 class="section-title">応募の流れ</h2>
 
@@ -736,9 +708,8 @@
                     </div>
                 </div>
 
-            </div> <!-- /.content-container -->
+            </div>
 
-            <!-- ENTRY SECTION -->
             <section class="entry-section">
                 <h2>ENTRY</h2>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSh7SXwFC67_aNK-lZwRxQ0NyCkj9ATl9psf1WfktZeqqHxg/viewform" target="_blank" rel="noopener noreferrer" class="entry-btn">
@@ -746,11 +717,10 @@
                 </a>
             </section>
 
-            <!-- ★ SCSKフッターロゴが自動的にこの中に挿入されます -->
             <div id="footer-container"></div>
 
         </main>
-    </div> <!-- .app-wrapper -->
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -768,16 +738,12 @@
         });
     </script>
 
-    <!-- ★ 設定バトン： intern/oneday.htmlは最上位から「1つ深い」ので深さは「../」になります -->
     <script>var pathToRoot = "../";</script>
 
-    <!-- ★ 共通JSファイルの読み込み（1つ深いフォルダなので「../」が必要です） -->
     <script src="../components/sidebar.js"></script>
     <script src="../components/footer.js"></script>
     
     <script>
-        // 共通パーツ読み込み後のナビゲーション初期化
-        // 読み込み競合を起こさずに安全に並行実行できるよう、addEventListenerを使用します
         window.addEventListener('load', function() {
             const menuToggle = document.getElementById('menuToggle');
             const leftNav = document.getElementById('leftNav');
@@ -794,7 +760,6 @@
                     }
                 });
 
-                // ナビゲーションリンクをクリックしたら閉じる（モバイル時）
                 const navLinks = leftNav.querySelectorAll('a');
                 navLinks.forEach(link => {
                     link.addEventListener('click', () => {
