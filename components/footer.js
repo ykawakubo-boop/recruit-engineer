@@ -122,7 +122,7 @@
                 <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSe3ourzAaRgRIV6fMVq2dziMm5qKey4Iell5d3bjStALeWT5A/viewform" target="_blank" rel="noopener noreferrer">CONTACT</a></li>
             </ul>
             <div class="footer-bottom">
-                <p class="footer-copyright">&copy; Diamond head Co., Ltd.</p>
+                <p class="footer-copyright">&copy; Diamondhead Co., Ltd.</p>
                 <div class="footer-scsk-area">
                     <a href="https://www.scsk.jp/" target="_blank" rel="noopener noreferrer">
                         <img src="${root}images/scsk_black.png" alt="SCSK Group Logo" class="footer-scsk-logo">
