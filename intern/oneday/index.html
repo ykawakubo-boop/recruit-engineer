@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1dayインターンシップ | ITエンジニア | ダイアモンドヘッド株式会社</title>
+    
+    <style>
+        /* =========================================
+           1. 全体設定・フォント読み込み
+           ========================================= */
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
+
+        :root {
+            --bg-base: #ffffff;
+            --text-dark: #111111;
+            --text-muted: #555555;
+            --border-color: #e2e8f0;
+            --accent-blue: #00bfa5; 
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           2. レフトナビゲーション
+           ========================================= */
+        .left-nav {
+            width: 280px;
+            height: 100vh;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            border-right: 1px solid var(--border-color);
+            padding: 50px 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            overflow-y: auto; 
+        }
+
+        .left-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+        .left-nav::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        .nav-logo {
+            text-decoration: none; margin-bottom: 60px; display: block; text-align: center;
+        }
+        .nav-logo img {
+            width: 100%; max-width: 180px; height: auto; display: block; margin: 0 auto;
+        }
+        .nav-logo .logo-text {
+            display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 11px; font-weight: 700;
+            color: #555555; letter-spacing: 0.15em; margin-top: 16px; line-height: 1.6;
+        }
+
+        .nav-recruit { flex-grow: 1; }
+        .nav-recruit-list { list-style: none; padding: 0; margin: 0; }
+        .nav-recruit-list > li { margin-bottom: 24px; position: relative; }
+        .nav-recruit-list a {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 14px; font-weight: 700; color: #333; text-decoration: none;
+            display: flex; align-items: center; justify-content: space-between; transition: color 0.3s;
+        }
+        .nav-recruit-list a:hover, .nav-recruit-list a.active { color: var(--accent-blue); }
+
+        .nav-sub-list {
+            list-style: none;
+            padding: 0 0 0 12px;
+            margin: 0;
+            border-left: 1px solid var(--border-color);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+        }
+        .nav-sub-list li { margin-bottom: 14px; position: relative; }
+        .nav-sub-list li:last-child { margin-bottom: 0; }
+        .nav-sub-list a {
+            font-size: 12.5px; font-weight: 500; color: #666;
+        }
+        .nav-sub-list a:hover, .nav-sub-list a.active-sub { color: var(--accent-blue); }
+
+        .nav-recruit-list li.has-sub:hover .nav-sub-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-sub-list,
+        .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-sub-list {
+            max-height: 800px;
+            opacity: 1;
+            padding: 10px 0 0 12px;
+        }
+
+        .nav-deep-list {
+            list-style: none;
+            padding: 0 0 0 12px;
+            margin: 0;
+            border-left: 1px solid var(--border-color);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+        }
+
+        .nav-recruit-list li.has-sub:hover .nav-deep-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-deep-list,
+        .nav-recruit-list li.has-sub:has(.active, .active-sub, .active-deep) .nav-deep-list {
+            max-height: 400px;
+            opacity: 1;
+            padding: 10px 0 0 12px;
+        }
+
+        .nav-deep-list li { margin-bottom: 10px; }
+        .nav-deep-list li:last-child { margin-bottom: 0; }
+        .nav-deep-list a {
+            font-size: 11.5px; font-weight: 400; color: #888;
+        }
+        .nav-deep-list a:hover, .nav-deep-list a.active-deep {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .mobile-header {
+            display: none;
+        }
+
+        /* =========================================
+           3. メインコンテンツエリア
+           ========================================= */
+        .main-content {
+            flex: 1;
+            width: 100%; 
+            padding-left: 280px; 
+            box-sizing: border-box;
+            background-color: var(--bg-base);
+        }
+
+        .content-container {
+            padding: 80px 6%;
+            box-sizing: border-box;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-tag {
+            font-size: 1rem; font-weight: 700;
+            color: var(--accent-blue);
+            letter-spacing: 0.2em;
+            margin-bottom: 16px; text-transform: uppercase;
+            font-family: 'Bodoni Moda', serif;
+        }
+
+        .section-title {
+            font-size: clamp(24px, 3vw, 36px); font-weight: 700; line-height: 1.4;
+            margin: 0 0 30px 0; color: #111; letter-spacing: 0.02em;
+        }
+
+        /* =========================================
+           4. ヒーローセクション
+           ========================================= */
+        .hero {
+            position: relative; width: 100%; 
+            height: 40vh; 
+            min-height: 350px; 
+            display: flex; align-items: center; justify-content: flex-start;
+            box-sizing: border-box; padding: 0 6%; overflow: hidden;
+            background-color: #f5f5f5;
+        }
+
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('../../images/hero3.jpg');
+            background-size: cover; background-position: center;
+            filter: grayscale(70%) contrast(1.1) brightness(0.7);
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 150px;
+            background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+            z-index: 3; pointer-events: none;
+        }
+
+        .hero::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 40%, rgba(255,255,255,0.05) 80%, rgba(255,255,255,1) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative; z-index: 10;
+        }
+
+        .hero-en {
+            font-family: 'Bodoni Moda', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 900;
+            color: #111; letter-spacing: 0.05em; line-height: 1.1; margin: 0 0 8px 0;
+            opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards 0.1s;
+        }
+        .hero-jp {
+            font-size: 16px; font-weight: 700; color: var(--accent-blue); letter-spacing: 0.2em; margin: 0;
+            opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards 0.3s;
+        }
+
+        /* =========================================
+           5. アラート・情報ボックス
+           ========================================= */
+        .info-box {
+            background-color: #fafafa; border: 1px solid var(--border-color);
+            padding: 30px; margin-bottom: 60px; font-size: 13.5px; color: #555; line-height: 1.8;
+            border-left: 4px solid var(--accent-blue);
+        }
+        .info-box strong { color: #111; }
+
+        /* =========================================
+           6. 募集要項
+           ========================================= */
+        .req-list {
+            display: flex; flex-direction: column; border-top: 2px solid #111; margin-bottom: 80px;
+        }
+        .req-row {
+            display: flex; padding: 24px 0; border-bottom: 1px solid var(--border-color);
+            align-items: flex-start;
+        }
+        .req-title {
+            width: 200px; font-weight: 700; color: #111; font-size: 15px; flex-shrink: 0;
+        }
+        .req-detail {
+            flex-grow: 1; font-size: 14.5px; color: #555; line-height: 1.8; margin: 0;
+        }
+        .req-detail ul { margin: 12px 0 0 0; padding-left: 20px; }
+        .req-detail li { margin-bottom: 8px; }
+        .req-detail .note { font-size: 12px; color: #888; display: block; margin-top: 8px; }
+
+        /* =========================================
+           7. 1日の流れタイムラインと画像エリア
+           ========================================= */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 40px 0 80px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            bottom: 5px;
+            width: 2px;
+            background-color: var(--border-color);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: -39px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--accent-blue);
+            border: 3px solid #ffffff;
+            z-index: 1;
+        }
+        .timeline-time {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--accent-blue);
+            margin-bottom: 4px;
+            display: block;
+        }
+        .timeline-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #111;
+            margin: 0 0 4px 0;
+        }
+
+        .program-under-image {
+            margin-top: 24px;
+            margin-bottom: 80px;
+            height: 380px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        .program-under-image .img-inner {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* =========================================
+           8. プログラム一覧
+           ========================================= */
+        .program-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .program-block {
+            background-color: #fafafa;
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        .program-block h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            color: #111;
+            border-left: 3px solid var(--accent-blue);
+            padding-left: 14px;
+            letter-spacing: 0.05em;
+        }
+        .program-block p {
+            font-size: 14.5px;
+            color: #555;
+            line-height: 1.8;
+            margin: 0 0 20px 0;
+        }
+        .program-sub-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 12px;
+        }
+        .program-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .program-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .program-list li::before {
+            content: '▫';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: 900;
+        }
+
+        /* =========================================
+           9. 応募フロー
+           ========================================= */
+        .flow-container {
+            display: flex; flex-direction: column; gap: 24px; margin-bottom: 80px;
+        }
+        .flow-step {
+            display: flex; align-items: stretch; background: #ffffff;
+            border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+        .flow-num {
+            background: #111; color: #fff; font-family: 'Bodoni Moda', serif; font-size: 24px; font-weight: 900;
+            width: 80px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .flow-content {
+            padding: 24px 30px; flex-grow: 1;
+            text-align: left;
+        }
+        .flow-content h4 { margin: 0 0 8px 0; font-size: 16px; font-weight: 700; color: var(--accent-blue); }
+        .flow-content p { margin: 0; font-size: 14px; color: #555; line-height: 1.6; }
+        .flow-content .sub-step { font-size: 13px; color: #555; margin-top: 8px; line-height: 1.8;}
+
+        /* =========================================
+           10. エントリーセクション
+           ========================================= */
+        .entry-section {
+            background-color: var(--bg-base); 
+            padding: 40px 40px 80px; 
+            text-align: center; 
+            margin-top: 0; 
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--border-color); 
+        }
+        .entry-section h2 {
+            font-family: 'Bodoni Moda', serif; 
+            font-size: clamp(32px, 5vw, 48px); 
+            color: #111111; 
+            margin: 0 0 24px 0;
+            letter-spacing: 0.1em;
+        }
+        .entry-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: #111111; color: #ffffff; text-decoration: none; padding: 18px 56px;
+            font-size: 14.5px; font-weight: 700; letter-spacing: 0.15em; transition: all 0.4s ease;
+            border-radius: 4px;
+        }
+        .entry-btn::after { content: '→'; margin-left: 14px; transition: transform 0.4s; }
+        .entry-btn:hover { background-color: var(--accent-blue); color: #ffffff; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 191, 165, 0.2); }
+        .entry-btn:hover::after { transform: translateX(6px); }
+
+        .scsk-bottom-logo {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 40px 60px;
+            background-color: #ffffff;
+        }
+        .scsk-bottom-logo a {
+            display: inline-block;
+            width: 120px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+        .scsk-bottom-logo a:hover {
+            transform: translateY(-2px);
+        }
+        .scsk-bottom-logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .rules-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 60px; }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================
+           Responsive
+           ========================================= */
+        @media (max-width: 992px) {
+            .app-wrapper { display: block; }
+            .left-nav {
+                position: fixed; top: 0; left: -100%; height: 100vh;
+                transition: left 0.3s ease; box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+            }
+            .left-nav.is-open { left: 0; }
+            .main-content { width: 100%; padding-left: 0; padding-top: 0; }
+            
+            .mobile-header {
+                display: flex; justify-content: space-between; align-items: center;
+                background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);
+                padding: 15px 5%; box-sizing: border-box; border-bottom: 1px solid var(--border-color);
+                position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+            }
+            .mobile-logo { font-family: 'Bodoni Moda', serif; font-size: 18px; font-weight: 900; color: #111; }
+            .menu-toggle {
+                background: none; border: none; font-family: 'Noto Sans JP', sans-serif;
+                font-size: 12px; font-weight: 700; color: var(--accent-blue); cursor: pointer; padding: 10px;
+            }
+            .hero { margin-top: 60px; min-height: 250px; }
+            .program-under-image { height: 280px; margin-bottom: 60px; margin-top: 16px; }
+        }
+
+        @media (max-width: 768px) {
+            .content-container { padding: 60px 5%; }
+            .req-row { flex-direction: column; gap: 12px; }
+            .req-title { width: 100%; }
+            .flow-step { flex-direction: column; }
+            .flow-num { width: 100%; height: 40px; justify-content: flex-start; padding-left: 20px; box-sizing: border-box; font-size: 18px;}
+            
+            .scsk-bottom-logo { padding: 20px 24px 40px; }
+            .scsk-bottom-logo a { width: 100px; }
+            .entry-section { padding: 40px 24px 60px; }
+            .program-under-image { height: 200px; margin-bottom: 40px; margin-top: 10px; }
+        }
+    </style>
+</head>
+<body data-page="intern-oneday">
+
+    <div class="app-wrapper">
+
+        <div id="sidebar-container"></div>
+
+        <main class="main-content">
+
+            <section class="hero">
+                <div class="hero-bg" data-local-bg="../../images/hero3.jpg" data-fallback-bg="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=1600&q=80"></div>
+                <div class="hero-content">
+                    <h1 class="hero-en">1-DAY INTERNSHIP</h1>
+                    <p class="hero-jp">1dayインターンシップ</p>
+                </div>
+            </section>
+
+            <div class="content-container">
+
+                <div class="info-box">
+                    <strong>※本インターンシップは期間限定の1dayインターンシップです。</strong><br>
+                    長期インターンシップとはプログラム・応募要件・条件が異なります。ご確認の上ご応募ください。
+                </div>
+
+                <div class="section-tag">OVERVIEW</div>
+                <h2 class="section-title">エンジニアとしての働くイメージが深まる1日</h2>
+                
+                <p style="font-size: 15px; color: #555; line-height: 1.8; margin-bottom: 40px;">
+                    ダイアモンドヘッドのITエンジニア職に興味がある方向けに、プログラミング体験 × 現役エンジニアによる実務解説を1日で学べる「エンジニア 1dayインターンシップ」を札幌本社にて開催します。<br><br>
+                    実際の開発現場で使われている技術や思考プロセスに触れながら、エンジニアとして働くイメージが一気に深まる1日をお届けします！
+                </p>
+
+                <div class="section-tag">REQUIREMENTS</div>
+                <h2 class="section-title">募集要項</h2>
+
+                <div class="req-list">
+                    <div class="req-row">
+                        <div class="req-title">開催日</div>
+                        <div class="req-detail">
+                            下記の中からいずれか1つの日程をお選びいただきます。
+                            <ul>
+                                <li>2026年 8月7日(金)</li>
+                                <li>2026年 8月14日(金)</li>
+                                <li>2026年 8月21日(金)</li>
+                                <li>2026年 8月28日(金)</li>
+                                <li>2026年 9月11日(金)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">開催時間</div>
+                        <div class="req-detail">
+                            <strong>11:00 - 17:00</strong>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">開催場所</div>
+                        <div class="req-detail">
+                            <strong>ダイアモンドヘッド株式会社 札幌本社</strong><br>
+                            北海道札幌市中央区北１条西１丁目 6 さっぽろ創世スクエア14階（地下鉄大通駅直結）<br>
+                            <span class="note">※リモート開催はありません。対面のみでの実施となります。</span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">募集対象</div>
+                        <div class="req-detail">
+                            大学・大学院・専門学校に在籍中で、以下のいずれかを満たす方。
+                            <ul>
+                                <li>札幌のIT企業でエンジニアとして働きたい方</li>
+                                <li>ファッションアパレルのECビジネスを支えるサービスに興味のある方</li>
+                                <li>プログラミングスキルに不安のある方</li>
+                                <li>会社の雰囲気を知った上で選考を考えたい方</li>
+                            </ul>
+                            <span class="note">
+                                ※文理不問、プログラミング未経験可<br>
+                                ※高校生不可
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">エントリー締め切り</div>
+                        <div class="req-detail">
+                            各開催日の1週間前終日
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-tag">ATTENTION</div>
+                <h2 class="section-title">注意事項</h2>
+
+                <div class="rules-grid">
+                    <div class="rule-card" style="border-top: 2px solid #111111; padding: 24px 0;">
+                        <ul class="program-list">
+                            <li>就業体験のため報酬（時給）は発生しません</li>
+                            <li>途中参加・途中退席は基本的にできませんが、発生する可能性がある場合は事前にご相談ください</li>
+                            <li>交通費及び移動費の支給はございません</li>
+                            <li>昼食のご準備は不要です。弊社にてウェルカムランチをご用意いたします</li>
+                            <li>セキュリティ対策により私用PCの持ち込みはできません。当社にてご用意いたします</li>
+                            <li>希望される日程の1週間前までには応募を完了させてください</li>
+                            <li>その他ご質問等ございましたら<a href="https://line.me/R/ti/p/@591kaqzh" target="_blank" rel="noopener noreferrer" style="color: var(--accent-blue); text-decoration: none; font-weight: bold;">公式LINEチャット</a>よりお問い合わせください</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-tag">PROGRAMS</div>
+                <h2 class="section-title">主なプログラム</h2>
+
+                <div class="program-stack">
+                    <div class="program-block">
+                        <h3>1. プログラミング体験</h3>
+                        <p>エンジニア職の研修でも使われるカリキュラムとツールを使ってWeb開発のプログラミングについて学ぶことができます。丁寧な解説がありますので、スキルに自信のない方や未経験の方でも安心して体験することができます。</p>
+                        <div class="program-sub-title">主な体験内容</div>
+                        <ul class="program-list">
+                            <li>Python基礎・ロジック理解</li>
+                            <li>アルゴリズム</li>
+                            <li>競技プログラミング</li>
+                        </ul>
+                    </div>
+
+                    <div class="program-block">
+                        <h3>2. エンジニア座談会 &amp; 交流会</h3>
+                        <p>ファッションアパレルのECビジネスを支えるダイアモンドヘッドのユニークなプロダクト・サービスについて、実際に開発に携わっているエンジニアから座談会形式で聞くことができます。</p>
+                        <div class="program-sub-title">紹介するプロジェクト例</div>
+                        <ul class="program-list">
+                            <li>ECサービスのバックエンド開発プロジェクト</li>
+                            <li>オンラインストアのフロントエンド開発プロジェクト</li>
+                            <li>機械学習の技術検証プロジェクト　など</li>
+                        </ul>
+                        <p style="font-size: 13.5px; color: #555; margin-top: 16px;">
+                            ※当日は若手エンジニアとのウェルカムランチもご用意していますので、カジュアルな質問や本音の対話を楽しんでいただける機会も設けています。
+                        </p>
+                    </div>
+
+                    <div class="program-block">
+                        <h3>3. 就活エピソード紹介</h3>
+                        <p>新卒1〜3年目の若手社員が、就活中に実際に行っていた対策や準備、成功談・失敗談を惜しみなく共有します。また、実際の採用担当者から面接時の評価点や対策についてもお話いたします。「企業の本音」と「先輩のリアル」を一度に聞ける、参加者限定のプログラムです。</p>
+                        <div class="program-sub-title">主なセッション内容</div>
+                        <ul class="program-list">
+                            <li>採用フロー、面接の評価ポイント</li>
+                            <li>選考期間、初任給、キャリアパス</li>
+                            <li>求める人物像、福利厚生の詳細　など</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="program-under-image">
+                    <div class="img-inner" data-local-bg="../../images/intern_1.jpg" data-fallback-bg="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"></div>
+                </div>
+
+                <div class="section-tag">DAILY SCHEDULE</div>
+                <h2 class="section-title">一日の流れ</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-time">11:00 - 12:00</span>
+                        <h4 class="timeline-title">オープニング・会社説明</h4>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">12:00 - 13:00</span>
+                        <h4 class="timeline-title">若手エンジニア座談会 &amp; 開発プロジェクト紹介</h4>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">13:00 - 14:00</span>
+                        <h4 class="timeline-title">ウェルカムランチ</h4>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">14:00 - 16:00</span>
+                        <h4 class="timeline-title">プログラミング体験</h4>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">16:00 - 16:30</span>
+                        <h4 class="timeline-title">先輩就活エピソード紹介</h4>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">16:30 - 17:00</span>
+                        <h4 class="timeline-title">今後の案内・解散</h4>
+                    </div>
+                </div>
+
+                <div class="section-tag" style="margin-top: 60px;">FLOW</div>
+                <h2 class="section-title">応募の流れ</h2>
+
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <div class="flow-num">01</div>
+                        <div class="flow-content">
+                            <h4>応募</h4>
+                            <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSeSh7SXwFC67_aNK-lZwRxQ0NyCkj9ATl9psf1WfktZeqqHxg/viewform" target="_blank" rel="noopener noreferrer" style="color: var(--accent-blue); text-decoration: underline; font-weight: bold;">1dayインターンシップ応募フォームに回答する</a>（Googleフォームが開きます）</p>
+                            <p class="sub-step">
+                                ※応募フォームの回答をもって応募完了です。<br>
+                                ※マイナビなど求人媒体から応募された方も応募フォームへご回答下さい。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-num">02</div>
+                        <div class="flow-content">
+                            <h4>選考</h4>
+                            <p>応募フォームの回答を基に社内にてインターンシップ受け入れを検討します</p>
+                            <p class="sub-step">
+                                ※5営業日を目安に選考結果（受け入れ可否連絡）をメールにて案内します
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-num">03</div>
+                        <div class="flow-content">
+                            <h4>参加</h4>
+                            <p>参加日が確定したら当日の詳細についてご案内いたします</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <section class="entry-section">
+                <h2>ENTRY</h2>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSh7SXwFC67_aNK-lZwRxQ0NyCkj9ATl9psf1WfktZeqqHxg/viewform" target="_blank" rel="noopener noreferrer" class="entry-btn">
+                    応募する
+                </a>
+            </section>
+
+            <div id="footer-container"></div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const bgElements = document.querySelectorAll("[data-local-bg]");
+            bgElements.forEach(el => {
+                const localBg = el.getAttribute("data-local-bg");
+                const fallbackBg = el.getAttribute("data-fallback-bg");
+                if (localBg && fallbackBg) {
+                    const testImg = new Image();
+                    testImg.onload = function() { el.style.backgroundImage = `url('${localBg}')`; };
+                    testImg.onerror = function() { el.style.backgroundImage = `url('${fallbackBg}')`; };
+                    testImg.src = localBg;
+                }
+            });
+        });
+    </script>
+
+    <script>var pathToRoot = "../../";</script>
+
+    <script src="../../components/sidebar.js"></script>
+    <script src="../../components/footer.js"></script>
+    
+    <script>
+        window.addEventListener('load', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const leftNav = document.getElementById('leftNav');
+            
+            if (menuToggle && leftNav) {
+                menuToggle.addEventListener('click', function() {
+                    leftNav.classList.toggle('is-open');
+                    if (leftNav.classList.contains('is-open')) {
+                        menuToggle.textContent = 'CLOSE';
+                        menuToggle.style.color = '#111';
+                    } else {
+                        menuToggle.textContent = 'MENU';
+                        menuToggle.style.color = 'var(--accent-blue)';
+                    }
+                });
+
+                const navLinks = leftNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 992) {
+                            leftNav.classList.remove('is-open');
+                            menuToggle.textContent = 'MENU';
+                            menuToggle.style.color = 'var(--accent-blue)';
+                        }
+                    });
+                });
+            }
+
+            const currentPageId = document.body.getAttribute('data-page');
+            if (currentPageId) {
+                const targetLink = document.querySelector(`.left-nav a[data-id="${currentPageId}"]`);
+                if (targetLink) {
+                    if (targetLink.closest('.nav-deep-list')) {
+                        targetLink.classList.add('active-deep');
+                        targetLink.closest('.has-deep').querySelector('a:first-child').classList.add('active-sub');
+                        targetLink.closest('.has-sub').querySelector('a:first-child').classList.add('active');
+                    } else if (targetLink.closest('.nav-sub-list')) {
+                        targetLink.classList.add('active-sub');
+                        targetLink.closest('.has-sub').querySelector('a:first-child').classList.add('active');
+                    } else {
+                        targetLink.classList.add('active');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
