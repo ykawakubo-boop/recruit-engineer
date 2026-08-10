@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITエンジニア 中途採用 | ダイアモンドヘッド株式会社</title>
+    
+    <style>
+        /* =========================================
+           1. 全体設定・フォント読み込み（LP・新卒・中途完全共通）
+           ========================================= */
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700;900&family=Montserrat:wght@700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
+
+        :root {
+            --bg-base: #ffffff;
+            --text-dark: #111111;
+            --text-muted: #555555;
+            --border-color: #e2e8f0;
+            --accent-blue: #00bfa5; 
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* ★ レフトナビゲーションを配置するための大枠レイアウト */
+        .app-wrapper {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           2. レフトナビゲーション（固定・共通）
+           ========================================= */
+        .left-nav {
+            width: 280px;
+            height: 100vh;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            border-right: 1px solid var(--border-color);
+            padding: 50px 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            overflow-y: auto; 
+        }
+
+        /* カスタムスクロールバー（レフトナビ用） */
+        .left-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+        .left-nav::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        .nav-logo {
+            text-decoration: none; margin-bottom: 60px; display: block; text-align: center;
+        }
+        .nav-logo img {
+            width: 100%; max-width: 180px; height: auto; display: block; margin: 0 auto;
+        }
+        .nav-logo .logo-text {
+            display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 11px; font-weight: 700;
+            color: #555555; letter-spacing: 0.15em; margin-top: 16px; line-height: 1.6;
+        }
+
+        .nav-recruit { flex-grow: 1; }
+        .nav-recruit-list { list-style: none; padding: 0; margin: 0; }
+        .nav-recruit-list > li { margin-bottom: 24px; position: relative; }
+        .nav-recruit-list a {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 14px; font-weight: 700; color: #333; text-decoration: none;
+            display: flex; align-items: center; justify-content: space-between; transition: color 0.3s;
+        }
+        /* 現在のページのアクティブ表示 */
+        .nav-recruit-list a.active {
+            color: var(--accent-blue);
+        }
+        .nav-recruit-list > li > a::after {
+            content: '→'; color: var(--accent-blue); opacity: 0; transform: translateX(-10px); transition: all 0.3s ease;
+        }
+        .nav-recruit-list > li > a:hover { color: var(--accent-blue); }
+        .nav-recruit-list > li > a:hover::after, .nav-recruit-list > li > a.active::after { opacity: 1; transform: translateX(0); }
+
+        /* 第2階層 */
+        .nav-sub-list {
+            list-style: none;
+            padding: 0 0 0 12px;
+            margin: 0;
+            border-left: 1px solid var(--border-color);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+        }
+        
+        /* インターンシップにホバーした時、または配下のa要素がアクティブな時に自動展開 */
+        .nav-recruit-list li.has-sub:hover .nav-sub-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-sub-list,
+        .nav-recruit-list li.open-sub .nav-sub-list {
+            max-height: 800px; 
+            opacity: 1;
+            padding: 10px 0 0 12px;
+        }
+
+        .nav-sub-list li { margin-bottom: 14px; position: relative; }
+        .nav-sub-list li:last-child { margin-bottom: 0; }
+        .nav-sub-list a {
+            font-size: 12.5px; font-weight: 500; color: #666;
+        }
+        .nav-sub-list a:hover, .nav-sub-list a.active-sub { color: var(--accent-blue); }
+
+        /* 第3階層 */
+        .nav-deep-list {
+            list-style: none;
+            padding: 0 0 0 12px;
+            margin: 0;
+            border-left: 1px solid var(--border-color);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+        }
+
+        /* 「インターンシップ」にホバーした時点で一括展開（逃げ防止） */
+        .nav-recruit-list li.has-sub:hover .nav-deep-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-deep-list,
+        .nav-recruit-list li.open-deep .nav-deep-list {
+            max-height: 400px;
+            opacity: 1;
+            padding: 10px 0 0 12px;
+        }
+
+        .nav-deep-list li { margin-bottom: 10px; }
+        .nav-deep-list li:last-child { margin-bottom: 0; }
+        .nav-deep-list a {
+            font-size: 11.5px; font-weight: 400; color: #888;
+        }
+        .nav-deep-list a:hover, .nav-deep-list a.active-deep {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        /* モバイル用ヘッダー（PCでは非表示） */
+        .mobile-header {
+            display: none;
+        }
+
+        /* =========================================
+           3. メインコンテンツエリア
+           ========================================= */
+        .main-content {
+            flex: 1;
+            width: 100%; 
+            padding-left: 280px; 
+            box-sizing: border-box;
+            background-color: var(--bg-base);
+        }
+
+        /* 幅広コンテナ */
+        .content-container {
+            padding: 80px 6%;
+            box-sizing: border-box;
+            max-width: 1100px; /* 見栄え向上のため少し広げて新卒採用ページに統一 */
+            margin: 0 auto;
+        }
+
+        .section-tag {
+            font-size: 1rem; font-weight: 700;
+            color: var(--accent-blue);
+            letter-spacing: 0.2em;
+            margin-bottom: 16px; text-transform: uppercase;
+            font-family: 'Bodoni Moda', serif;
+        }
+
+        .section-title {
+            font-size: clamp(24px, 3vw, 36px); font-weight: 700; line-height: 1.4;
+            margin: 0 0 40px 0; color: #111; letter-spacing: 0.02em;
+        }
+
+        /* ★ 画像とテキストを並べるヘッダー用のレイアウト */
+        .section-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 5%;
+            margin-bottom: 50px;
+        }
+        .section-header-text {
+            flex: 1.2;
+        }
+        .section-header-image {
+            flex: 1;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #f8f9fa;
+        }
+        .section-header-image .img-inner {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 背景画像からimg要素のカバー設定に変更 */
+            display: block;
+        }
+        .section-desc {
+            font-size: 14.5px; color: #555; line-height: 1.8; margin: 0; max-width: 100%;
+        }
+
+        /* =========================================
+           4. ヒーローセクション（中途用）
+           ========================================= */
+        .hero {
+            position: relative; width: 100%; 
+            height: 40vh; 
+            min-height: 350px; 
+            display: flex; align-items: center; justify-content: flex-start;
+            box-sizing: border-box; padding: 0 6%; overflow: hidden;
+            background-color: #f5f5f5;
+        }
+
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; /* 背景画像からimg要素のカバー設定に変更 */
+            filter: grayscale(70%) contrast(1.1) brightness(0.7);
+            z-index: 1;
+            display: block;
+        }
+
+        .hero::before {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 150px;
+            background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+            z-index: 3; pointer-events: none;
+        }
+
+        .hero::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 40%, rgba(255,255,255,0.05) 80%, rgba(255,255,255,1) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative; z-index: 10;
+        }
+
+        /* ★ メインビジュアルのフォントをBodoni Modaに変更 */
+        .hero-en {
+            font-family: 'Bodoni Moda', serif; 
+            font-size: clamp(32px, 5vw, 64px); 
+            font-weight: 900;
+            color: #111; letter-spacing: 0.1em; line-height: 1.1; margin: 0 0 8px 0;
+            opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards 0.1s;
+        }
+        .hero-jp {
+            font-size: 16px; font-weight: 700; color: var(--accent-blue); letter-spacing: 0.2em; margin: 0;
+            opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards 0.3s;
+        }
+
+        /* =========================================
+           5. 募集要項・コンテンツレイアウト
+           ========================================= */
+        /* リスト形式（テーブル風） */
+        .req-list {
+            display: flex; flex-direction: column; border-top: 2px solid #111; margin-bottom: 100px;
+        }
+        .req-row {
+            display: flex; padding: 24px 0; border-bottom: 1px solid var(--border-color);
+            align-items: flex-start;
+        }
+        .req-title {
+            width: 200px; font-weight: 700; color: #111; font-size: 15px; flex-shrink: 0;
+        }
+        .req-detail {
+            flex-grow: 1; font-size: 14.5px; color: #555; line-height: 1.8; margin: 0;
+        }
+        .req-detail ul { margin: 12px 0 0 0; padding-left: 20px; }
+        .req-detail li { margin-bottom: 8px; }
+        .req-detail .note { font-size: 12px; color: #888; display: block; margin-top: 8px; }
+        
+        .req-detail a { color: var(--accent-blue); text-decoration: none; font-weight: bold; }
+        .req-detail a:hover { text-decoration: underline; }
+
+        /* =========================================
+           6. 採用フロー
+           ========================================= */
+        .flow-container {
+            display: flex; flex-direction: column; gap: 24px; margin-bottom: 60px; /* ★余白を詰めるため 100px -> 60px に変更 */
+        }
+        .flow-step {
+            display: flex; align-items: stretch; background: #ffffff;
+            border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            border-radius: 12px; /* 少し角丸を追加 */
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .flow-step:hover {
+            border-color: transparent;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+            transform: translateY(-4px);
+        }
+        .flow-num {
+            background: #111; color: #fff; font-family: 'Bodoni Moda', serif; font-size: 28px; font-weight: 900;
+            width: 100px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            transition: color 0.4s;
+        }
+        .flow-step:hover .flow-num { color: var(--accent-blue); }
+        .flow-content {
+            padding: 30px 40px; flex-grow: 1;
+        }
+        .flow-content h4 { margin: 0 0 12px 0; font-size: 18px; font-weight: 700; color: var(--accent-blue); }
+        .flow-content p { margin: 0; font-size: 14.5px; color: #555; line-height: 1.6; }
+        .flow-content .sub-step { font-size: 13.5px; color: #777; margin-top: 12px; line-height: 1.8;}
+
+        /* =========================================
+           7. エントリーセクション（新卒採用と統一したデザイン）
+           ========================================= */
+        .entry-section {
+            background-color: var(--bg-base); 
+            padding: 40px 40px 80px; /* ★上部paddingを60px -> 40px に変更 */
+            text-align: center; 
+            margin-top: 0; /* ★上部marginをなくしてFLOWに近づける */
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--border-color); /* ボタンの下に線を引く */
+        }
+        .entry-section h2 {
+            font-family: 'Bodoni Moda', serif; 
+            font-size: clamp(32px, 5vw, 48px); 
+            color: #111111; 
+            margin: 0 0 24px 0;
+            letter-spacing: 0.1em;
+        }
+        
+        .entry-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: #111111; color: #ffffff; text-decoration: none; padding: 18px 56px;
+            font-size: 14.5px; font-weight: 700; letter-spacing: 0.15em; transition: all 0.4s ease;
+            border-radius: 4px;
+        }
+        .entry-btn::after { content: '→'; margin-left: 14px; transition: transform 0.4s; }
+        .entry-btn:hover { background-color: var(--accent-blue); color: #ffffff; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 191, 165, 0.2); }
+        .entry-btn:hover::after { transform: translateX(6px); }
+
+        /* ★ ページ下部SCSKロゴ（共通CSSスタイル） */
+        .scsk-bottom-logo {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 40px 60px;
+            background-color: #ffffff;
+        }
+        .scsk-bottom-logo a {
+            display: inline-block;
+            width: 120px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+        .scsk-bottom-logo a:hover {
+            transform: translateY(-2px);
+        }
+        .scsk-bottom-logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================
+           Responsive
+           ========================================= */
+        @media (max-width: 992px) {
+            .app-wrapper { display: block; }
+            .left-nav {
+                position: fixed; top: 0; left: -100%; height: 100vh;
+                transition: left 0.3s ease; box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+            }
+            .left-nav.is-open { left: 0; }
+            .main-content { width: 100%; padding-left: 0; }
+            
+            .mobile-header {
+                display: flex; justify-content: space-between; align-items: center;
+                background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);
+                padding: 15px 5%; box-sizing: border-box; border-bottom: 1px solid var(--border-color);
+                position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+            }
+            .mobile-logo { font-family: 'Bodoni Moda', serif; font-size: 18px; font-weight: 900; color: #111; }
+            .menu-toggle {
+                background: none; border: none; font-family: 'Noto Sans JP', sans-serif;
+                font-size: 12px; font-weight: 700; color: var(--accent-blue); cursor: pointer; padding: 10px;
+            }
+            .hero { margin-top: 60px; min-height: 250px; }
+
+            .section-header-row { flex-direction: column; gap: 30px; margin-bottom: 40px; }
+            .section-header-text, .section-header-image { width: 100%; flex: none; }
+            .section-header-image { height: 220px; }
+        }
+
+        @media (max-width: 768px) {
+            .content-container { padding: 60px 5%; }
+            .req-row { flex-direction: column; gap: 12px; }
+            .req-title { width: 100%; }
+            .flow-step { flex-direction: column; }
+            .flow-num { width: 100%; height: 50px; justify-content: flex-start; padding-left: 20px; box-sizing: border-box; font-size: 20px;}
+            
+            .scsk-bottom-logo {
+                padding: 20px 24px 40px;
+            }
+            .scsk-bottom-logo a {
+                width: 100px;
+            }
+            .entry-section { padding: 40px 24px 60px; }
+        }
+    </style>
+</head>
+<body data-page="midcareer">
+
+    <div class="app-wrapper">
+
+        <!-- ★ 共通レフトナビ（モバイルヘッダー含む）がここに読み込まれます -->
+        <div id="sidebar-container"></div>
+
+        <!-- メインコンテンツ -->
+        <main class="main-content">
+
+            <!-- HERO（メインビジュアルをscale.jpgかつ正しい深さ「../」に修正） -->
+            <section class="hero">
+                <!-- 実タグ<img>を使用することでブラウザの高画質スケーリングとデコード最適化を活性化 -->
+                <img class="hero-bg" data-local-src="../images/scale.jpg" data-fallback-src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1600&q=80" alt="中途採用メインビジュアル">
+                <div class="hero-content">
+                    <h1 class="hero-en">MID-CAREER</h1>
+                    <p class="hero-jp">中途採用</p>
+                </div>
+            </section>
+
+            <div class="content-container">
+
+                <!-- REQUIREMENTS（画像なし・元の見出し形式へ） -->
+                <div class="section-tag">REQUIREMENTS</div>
+                <h2 class="section-title">募集要項</h2>
+
+                <div class="req-list">
+                    <div class="req-row">
+                        <div class="req-title">募集職種</div>
+                        <div class="req-detail">
+                            <strong>ITエンジニア職 オープンポジションでの募集</strong>
+                            <ul>
+                                <li>プロジェクトマネージャー（プロジェクト管理者）</li>
+                                <li>プロダクトマネージャー（製品サービス責任者）</li>
+                                <li>システムエンジニア</li>
+                                <li>バックエンドエンジニア （Python/Django等）</li>
+                                <li>フロントエンドエンジニア（PHP/Laravel等）</li>
+                                <li>インフラエンジニア（AWS）</li>
+                                <li>Javaエンジニア</li>
+                                <li>アプリケーションエンジニア（iOS/Android）など</li>
+                            </ul>
+                            <span class="note">※ご希望やご経験に合わせてポジションを調整します</span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">募集期間</div>
+                        <div class="req-detail">
+                            通期募集、通年採用
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">応募要件</div>
+                        <div class="req-detail">
+                            ソフトウェア開発に関する何かしらの経験をお持ちの方
+                            <span class="note">
+                                ※前職の職種不問<br>
+                                ※未経験不可<br>
+                                ※外国籍および海外から応募可（技術の就業ビザが必要です）<br>
+                                ※既卒1年未満で未就業の方は、新卒枠での採用となります。新卒採用ページをご確認下さい。
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">募集拠点</div>
+                        <div class="req-detail">
+                            <strong>札幌本社</strong><br>
+                            <span class="note">※「プロジェクトマネージャー」「インフラエンジニア」のみ東京拠点配属の相談可</span>
+                        </div>
+                    </div>
+
+                    <div class="req-row">
+                        <div class="req-title">想定給与</div>
+                        <div class="req-detail">
+                            <strong>〇正社員採用 年収：400万円 ~ 900万円（昇給年1回）</strong><br>
+                            <span class="note">
+                                ※スキル・経験を考慮して決定します。<br>
+                                ※選考過程にて希望給与を考慮した給与調整を行いますのでご相談下さい。
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FLOW（募集要項から画像をこちらに移動、discretion.jpegを正しい深さ「../」に修正） -->
+                <div class="section-header-row">
+                    <div class="section-header-text">
+                        <div class="section-tag">FLOW</div>
+                        <h2 class="section-title" style="margin-bottom: 24px;">採用の流れ</h2>
+                        <p class="section-desc">エントリーから内定までのステップをご案内します。これまでのキャリアやご実績について、カジュアル面談や面接を通じてじっくりお聞かせください。</p>
+                    </div>
+                    <div class="section-header-image">
+                        <!-- 実タグ<img>を使用することで縮小によるジャギーやモアレ,ボケを本質的に回避 -->
+                        <img class="img-inner" data-local-src="../images/discretion.jpg" data-fallback-src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80" alt="採用の流れイメージ">
+                    </div>
+                </div>
+
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <div class="flow-num">01</div>
+                        <div class="flow-content">
+                            <h4>カジュアル面談</h4>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-num">02</div>
+                        <div class="flow-content">
+                            <h4>書類選考</h4>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-num">03</div>
+                        <div class="flow-content">
+                            <h4>面接</h4>
+                            <p>面接を実施します。※簡単なテストを実施します</p>
+                            <p class="sub-step">※テストにはソフトウェア開発やプログラミングに関する内容が含まれます</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-num">04</div>
+                        <div class="flow-content">
+                            <h4>最終面談</h4>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-num">05</div>
+                        <div class="flow-content">
+                            <h4>内定</h4>
+                            <p>最終面談の結果をもって条件提示と内定通知、合否の連絡を行います。</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- /.content-container -->
+
+            <!-- ENTRY SECTION -->
+            <section class="entry-section">
+                <h2>ENTRY</h2>
+                <a href="https://recruit.jobcan.jp/diamondhead/job_offers/2046098" target="_blank" rel="noopener noreferrer" class="entry-btn">
+                    応募する
+                </a>
+            </section>
+
+            <!-- ★ SCSKロゴがフッターの床位置（右寄せ）に自動挿入されます -->
+            <div id="scsk-logo-container"></div>
+
+        </main>
+        
+    </div> <!-- .app-wrapper -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 背景画像スライダーのプリロード方式から、実imgタグのsrc変更ロジックへアップグレード
+            const imgElements = document.querySelectorAll("[data-local-src]");
+            imgElements.forEach(el => {
+                const localSrc = el.getAttribute("data-local-src");
+                const fallbackSrc = el.getAttribute("data-fallback-src");
+                if (localSrc && fallbackSrc) {
+                    const testImg = new Image();
+                    testImg.onload = function() { el.src = localSrc; };
+                    testImg.onerror = function() { el.src = fallbackSrc; };
+                    testImg.src = localSrc;
+                }
+            });
+        });
+    </script>
+
+    <!-- ★ 設定バトン： midcareer.htmlは最上位から「1つ深い」ので、深さは「../」になります -->
+    <script>var pathToRoot = "../";</script>
+
+    <!-- 外部のJSファイルを読み込んで共通パーツを埋め込み -->
+    <script src="../components/sidebar.js"></script>
+    <script src="../components/footer.js"></script>
+    
+    <script>
+        // 共通パーツ読み込み後のナビゲーション初期化
+        // 読み込み競合を起こさずに安全に実行できるよう、addEventListenerを使用します
+        window.addEventListener('load', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const leftNav = document.getElementById('leftNav');
+            
+            if (menuToggle && leftNav) {
+                menuToggle.addEventListener('click', function() {
+                    leftNav.classList.toggle('is-open');
+                    if (leftNav.classList.contains('is-open')) {
+                        menuToggle.textContent = 'CLOSE';
+                        menuToggle.style.color = '#111';
+                    } else {
+                        menuToggle.textContent = 'MENU';
+                        menuToggle.style.color = 'var(--accent-blue)';
+                    }
+                });
+
+                const navLinks = leftNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 992) {
+                            leftNav.classList.remove('is-open');
+                            menuToggle.textContent = 'MENU';
+                            menuToggle.style.color = 'var(--accent-blue)';
+                        }
+                    });
+                });
+            }
+
+            const currentPageId = document.body.getAttribute('data-page');
+            if (currentPageId) {
+                const targetLink = document.querySelector(`.left-nav a[data-id="${currentPageId}"]`);
+                if (targetLink) {
+                    if (targetLink.closest('.nav-deep-list')) {
+                        targetLink.classList.add('active-deep');
+                        
+                        const deepParent = targetLink.closest('.nav-deep-list').parentElement;
+                        if (deepParent) {
+                            deepParent.classList.add('open-deep');
+                            const subLink = deepParent.querySelector('a:first-child');
+                            if (subLink) subLink.classList.add('active-sub');
+                        }
+                        
+                        const mainParent = targetLink.closest('.nav-sub-list').parentElement;
+                        if (mainParent) {
+                            mainParent.classList.add('open-sub');
+                            const mainLink = mainParent.querySelector('a:first-child');
+                            if (mainLink) mainLink.classList.add('active');
+                        }
+                    } else if (targetLink.closest('.nav-sub-list')) {
+                        targetLink.classList.add('active-sub');
+                        const mainParent = targetLink.closest('.nav-sub-list').parentElement;
+                        if (mainParent) {
+                            mainParent.classList.add('open-sub');
+                            const mainLink = mainParent.querySelector('a:first-child');
+                            if (mainLink) mainLink.classList.add('active');
+                        }
+                    } else {
+                        targetLink.classList.add('active');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
