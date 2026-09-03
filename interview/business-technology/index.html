@@ -1,1 +1,528 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5DK7MXRR');</script>
+    <!-- End Google Tag Manager -->
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITエンジニア インタビュー | ダイアモンドヘッド株式会社</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap');
+
+        /* =========================================
+           1. 全体設定・フラット＆クリーンテーマ
+           ========================================= */
+        :root {
+            --bg-base: #ffffff;
+            --text-dark: #111111;
+            --text-body: #333333;
+            --text-muted: #777777;
+            --border-color: #dddddd;
+            --border-dark: #222222;
+            --accent-blue: #00bfa5; 
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .sp-only { display: none; }
+
+        .app-wrapper {
+            display: flex; align-items: flex-start; width: 100%; min-height: 100vh;
+        }
+
+        /* =========================================
+           2. レフトナビゲーション用プレースホルダー
+           ========================================= */
+        .left-nav {
+            width: 280px; height: 100vh; position: fixed; top: 0; left: 0;
+            background-color: #ffffff; border-right: 1px solid var(--border-color);
+            padding: 50px 40px; box-sizing: border-box; display: flex; flex-direction: column;
+            z-index: 1000; overflow-y: auto; 
+        }
+        .left-nav::-webkit-scrollbar { width: 4px; }
+        .left-nav::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+        .nav-logo { text-decoration: none; margin-bottom: 60px; display: block; text-align: center; }
+        .nav-logo img { width: 100%; max-width: 180px; height: auto; display: block; margin: 0 auto; }
+        .nav-logo .logo-text { display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 11px; font-weight: 700; color: #555555; letter-spacing: 0.15em; margin-top: 16px; line-height: 1.6; }
+
+        .nav-recruit { flex-grow: 1; }
+        .nav-recruit-list { list-style: none; padding: 0; margin: 0; }
+        .nav-recruit-list > li { margin-bottom: 24px; position: relative; }
+        .nav-recruit-list a {
+            font-family: 'Noto Sans JP', sans-serif; font-size: 14px; font-weight: 700; color: #333; text-decoration: none;
+            display: flex; align-items: center; justify-content: space-between; transition: color 0.3s;
+        }
+        .nav-recruit-list a:hover, .nav-recruit-list a.active { color: var(--accent-blue); }
+
+        .nav-sub-list {
+            list-style: none; padding: 0 0 0 12px; margin: 0; border-left: 1px solid var(--border-color);
+            max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+        }
+        .nav-recruit-list li.has-sub:hover .nav-sub-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-sub-list,
+        .nav-recruit-list li.has-sub.is-open-accordion .nav-sub-list {
+            max-height: 800px; opacity: 1; padding: 10px 0 0 12px;
+        }
+        .nav-sub-list li { margin-bottom: 14px; position: relative; }
+        .nav-sub-list li:last-child { margin-bottom: 0; }
+        .nav-sub-list a { font-size: 12.5px; font-weight: 500; color: #666; }
+        .nav-sub-list a:hover, .nav-sub-list a.active-sub { color: var(--accent-blue); }
+        
+        .nav-deep-list {
+            list-style: none; padding: 0 0 0 12px; margin: 10px 0 0 0; border-left: 1px solid var(--border-color);
+            max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+        }
+        .nav-recruit-list li.has-sub:hover .nav-deep-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-deep-list,
+        .nav-recruit-list li.has-sub.is-open-accordion .nav-deep-list {
+            max-height: 400px; opacity: 1; padding: 10px 0 0 12px;
+        }
+        .nav-deep-list li { margin-bottom: 10px; }
+        .nav-deep-list a { font-size: 11.5px; font-weight: 400; color: #888; }
+        .nav-deep-list a:hover, .nav-deep-list a.active-deep { color: var(--accent-blue); font-weight: 700; }
+
+        .mobile-header { display: none; }
+
+        /* =========================================
+           3. メインコンテンツ
+           ========================================= */
+        .main-content {
+            flex: 1; width: 100%; padding-left: 280px; box-sizing: border-box;
+            background-color: var(--bg-base);
+            position: relative;
+        }
+
+        .article-hero {
+            position: relative; width: 100%; height: 70vh; min-height: 500px;
+            display: flex; align-items: flex-end; padding: 0 0 60px 10%; box-sizing: border-box; /* ★ PC時の下余白を増やして上へ */
+            background-color: #111; overflow: hidden;
+        }
+        .article-hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('../../images/sato_1.jpg'); /* ★ メインビジュアル */
+            background-size: cover; background-position: center;
+            opacity: 0.6; filter: grayscale(10%); transform: scale(1.03);
+            transition: transform 8s ease-out; 
+        }
+        .article-hero.is-loaded .article-hero-bg { transform: scale(1); }
+        
+        .article-hero::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 80%);
+            z-index: 2; pointer-events: none;
+        }
+
+        .article-hero-content {
+            position: relative; z-index: 10; max-width: 900px; color: #ffffff;
+            opacity: 0; transform: translateY(20px); transition: all 1s ease 0.3s;
+        }
+        .article-hero.is-loaded .article-hero-content { opacity: 1; transform: translateY(0); }
+
+        .article-tag {
+            display: inline-block; font-family: 'Bodoni Moda', serif; font-size: 14px; font-weight: 700; letter-spacing: 0.15em;
+            color: var(--accent-blue); margin-bottom: 24px; text-transform: uppercase;
+        }
+        .article-title {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: clamp(26px, 3.2vw, 40px); font-weight: 700; line-height: 1.5;
+            margin: 0 0 24px 0; letter-spacing: 0.03em;
+            text-wrap: balance; /* ★ 改行バランスを自動で均等にし、孤立した文字を防ぐ */
+        }
+        .article-meta {
+            font-size: 14px; font-weight: 400; color: #bbbbbb; line-height: 1.6;
+            border-left: 1px solid var(--accent-blue); padding-left: 16px;
+        }
+
+        .article-wrapper {
+            max-width: 920px; margin: 0 auto; padding: 100px 5% 120px;
+        }
+
+        .profile-card {
+            display: flex; align-items: flex-start; gap: 40px; padding-bottom: 60px;
+            margin-bottom: 80px;
+        }
+        .profile-card img {
+            width: 120px; height: 120px; border-radius: 4px; object-fit: cover;
+            filter: grayscale(20%); flex-shrink: 0;
+        }
+        .profile-text h3 { font-size: 20px; font-weight: 700; margin: 0 0 12px 0; color: #111; letter-spacing: 0.05em; }
+        .profile-text p { font-size: 15px; color: var(--text-body); line-height: 1.8; margin: 0; }
+
+        .lead-text {
+            font-size: 17px; font-weight: 500; color: #222; line-height: 2.1;
+            margin-bottom: 100px; padding-left: 24px; border-left: 3px solid var(--border-dark);
+        }
+
+        .section-h2 {
+            font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 26px; font-weight: 700; color: #111;
+            margin: 0 0 50px; padding-bottom: 16px; border-bottom: 1px solid var(--border-dark);
+            letter-spacing: 0.05em;
+        }
+        
+        .qa-group { margin-bottom: 100px; }
+
+        .qa-block { margin-bottom: 60px; }
+        .qa-block:last-child { margin-bottom: 0; }
+
+        .qa-q {
+            font-size: 18px; font-weight: 700; color: #111; line-height: 1.7;
+            margin-bottom: 20px; position: relative; padding-left: 40px;
+        }
+        .qa-q::before {
+            content: 'Q.'; position: absolute; left: 0; top: -2px;
+            font-family: 'Bodoni Moda', serif; font-size: 24px; font-weight: 900;
+            color: var(--accent-blue); line-height: 1; font-style: italic;
+        }
+
+        .qa-a {
+            font-size: 16px; color: var(--text-body); line-height: 2.1;
+            padding-left: 40px;
+        }
+        .qa-a p { margin-top: 0; margin-bottom: 1.5em; }
+        .qa-a p:last-child { margin-bottom: 0; }
+
+        .speaker-name {
+            display: inline-block; font-weight: 700; color: #111; margin-right: 8px;
+        }
+
+        .photo-standard {
+            width: calc(100% + 40px); margin: 80px 0 80px -20px;
+        }
+        .photo-standard img {
+            width: 100%; height: auto; max-height: 550px; object-fit: cover;
+            border-radius: 4px;
+        }
+        .photo-caption {
+            font-size: 13px; color: var(--text-muted); margin-top: 12px;
+            text-align: right; letter-spacing: 0.05em; padding-right: 20px;
+        }
+
+        /* ★ 2枚並び（縦長）用のスタイル（サイズを小さく調整） */
+        .photo-split {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+            width: 80%; margin: 60px auto; /* ★ 幅を狭めて中央寄せ */
+        }
+        .photo-split img {
+            width: 100%; height: 350px; /* ★ 高さを低くして小さく見せる */
+            object-fit: cover; /* ★ 枠に合わせて自動トリミング */
+            border-radius: 4px;
+        }
+
+        .pull-quote {
+            text-align: center; margin: 100px auto; padding: 40px 60px;
+            position: relative; max-width: 85%;
+        }
+        .pull-quote::before, .pull-quote::after {
+            font-family: 'Bodoni Moda', serif; font-size: 120px;
+            color: rgba(0, 191, 165, 0.15); 
+            position: absolute; line-height: 1;
+        }
+        .pull-quote::before {
+            content: '“'; left: -20px; top: -30px;
+        }
+        .pull-quote::after {
+            content: '”'; right: -20px; bottom: -70px;
+        }
+        .pull-quote p {
+            font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 24px; font-weight: 700;
+            line-height: 1.7; margin: 0; color: #111; position: relative; z-index: 2;
+        }
+        .pull-quote p span { color: var(--accent-blue); }
+
+        /* 記事下部アクションエリア */
+        .article-action-area {
+            margin-top: 80px; padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+        .article-date {
+            font-size: 13px; color: var(--text-muted); margin-bottom: 30px;
+            letter-spacing: 0.05em; text-align: right;
+            font-family: 'Bodoni Moda', serif;
+        }
+        .action-buttons {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+            max-width: 500px; margin: 0 auto;
+        }
+        .btn-action {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: #111111; color: #ffffff; text-decoration: none;
+            padding: 14px 20px; font-size: 13px; font-weight: 700;
+            letter-spacing: 0.05em; transition: all 0.4s ease;
+            border-radius: 4px; width: 100%; box-sizing: border-box;
+        }
+        .btn-action::after { content: '→'; margin-left: 8px; transition: transform 0.4s; }
+        .btn-action:hover { background-color: var(--accent-blue); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 191, 165, 0.2); }
+        .btn-action:hover::after { transform: translateX(4px); }
+
+        /* スクロールアニメーション用クラス */
+        .fade-up {
+            opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-up.is-visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 992px) {
+            .app-wrapper { display: block; }
+            .main-content { padding-left: 0; }
+            
+            .mobile-header {
+                display: flex; justify-content: space-between; align-items: center;
+                background-color: rgba(255, 255, 255, 0.98);
+                padding: 15px 5%; box-sizing: border-box; border-bottom: 1px solid var(--border-color);
+                position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+            }
+            .menu-toggle {
+                background: none; border: none; font-family: 'Noto Sans JP', sans-serif; font-size: 12px; font-weight: 700; color: var(--accent-blue); cursor: pointer;
+            }
+            .left-nav {
+                position: fixed; top: 0; left: -100%; height: 100vh;
+                transition: left 0.3s ease; box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+            }
+            .left-nav.is-open { left: 0; }
+            
+            .article-hero { margin-top: 60px; height: 50vh; min-height: 400px; padding: 0 5% 25px; } /* ★ スマホ時は下ギリギリまでテキストを下げる */
+            .article-title { font-size: 24px; }
+            
+            .article-wrapper { padding: 60px 5%; }
+            .profile-card { flex-direction: column; align-items: center; text-align: center; gap: 24px; }
+            .lead-text { padding-left: 16px; border-left-width: 2px; font-size: 15px; margin-bottom: 60px; }
+            
+            .qa-q { font-size: 16px; padding-left: 0; padding-top: 36px; }
+            .qa-q::before { top: 0; }
+            .qa-a { font-size: 15px; padding-left: 0; }
+            
+            .photo-standard { width: 100%; margin: 60px 0; }
+            .photo-caption { padding-right: 0; }
+            
+            .photo-split { width: 100%; margin: 60px 0; gap: 12px; }
+            .photo-split img { height: 240px; } /* ★ スマホ時も高さを控えめに */
+            
+            .pull-quote { padding: 40px 20px; margin: 60px 0; max-width: 100%; }
+            .pull-quote::before { left: -10px; top: -20px; font-size: 80px; }
+            .pull-quote::after { right: -10px; bottom: -50px; font-size: 80px; }
+            .pull-quote p { font-size: 18px; }
+
+            .action-buttons { gap: 12px; }
+            .btn-action { padding: 12px 10px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body data-page="interview-sato">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5DK7MXRR"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div class="app-wrapper">
+
+        <!-- レフトナビゲーション -->
+        <div id="sidebar-container"></div>
+
+        <!-- メインコンテンツ -->
+        <main class="main-content">
+            
+            <!-- ヒーローセクション -->
+            <section class="article-hero" id="hero-section">
+                <div class="article-hero-bg"></div>
+                <div class="article-hero-content">
+                    <div class="article-tag">Interview</div>
+                    <h1 class="article-title">
+                        AI時代に求められるのは“ビジネス読解力”。全社システムを構築した若手エンジニアの軌跡
+                    </h1>
+                    <div class="article-meta">
+                        <span>システムサービス部 ビジネステクノロジーＧ</span>
+                        <span>佐藤 晃大</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 記事本文ラッパー -->
+            <div class="article-wrapper">
+                    
+                <!-- ★ プロフィール写真 (sato_2) -->
+                <div class="profile-card fade-up">
+                    <img src="../../images/sato_2.jpg" alt="佐藤さんのプロフィール写真" onerror="this.src='https://placehold.co/300x300/e2e8f0/555555?text=Profile'">
+                    <div class="profile-text">
+                        <h3>佐藤 晃大</h3>
+                        <p>大学4年時にダイアモンドヘッドの内定者インターンに参加し、全社横断の工数管理システムの開発を担当。現在はシステムサービス部門にて、社内外の業務システムの要件定義から開発運用まで携わっている。アメコミを愛し、社内イベントではスパイダーマンのコスプレで参加する一面も。</p>
+                    </div>
+                </div>
+
+                <p class="lead-text fade-up">
+                    大学4年時の内定者インターンとして入社後、全社横断の工数管理システムの新規構築を担当した佐藤さん。現在はシステムサービス部門で、社内外の業務システム開発に携わっています。開発を通して学んだのは、ただコードを書くことではなく、現場の業務フローを理解し「全体最適」を設計する重要性でした。AI技術が進化する中、エンジニアにとって本当に必要な「ビジネスを構造化する力」について話を聞きました。
+                </p>
+
+                <!-- セクション 1 -->
+                <div class="qa-group">
+                    <h2 class="section-h2 fade-up">1. 業務システム開発と「遊び心」</h2>
+                    
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">現在は主にどのような業務を担当されているのでしょうか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">佐藤：</span>現在は8名ほどのチームで、某ファッションブランド様向けの業務システム構築に携わっています。クライアント独自の業務フローを理解し、それを効率的なシステムへ落とし込むため、要件定義から実装までを行っています。</p>
+                            <p>また、それと並行して、私がインターン時代から開発に関わってきた社内の「実績工数管理システム」や「管理会計システム」の保守運用も担当しています。</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">社内イベントではスパイダーマンのコスプレをされているそうですが、アメコミはいつからお好きなんですか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">佐藤：</span>3歳ごろからずっと好きですね。当時、母に映画へ連れて行ってもらったのがきっかけです。社内イベントではスパイダーマンやキャプテン・アメリカなどの自前スーツで参加しています。</p>
+                            <p>実は私が開発した社内システムも、開発当初に名前が決まっていなかった時、私がたまたま着ていたアメコミTシャツから開発コードネームが付けられたんです。ダイアモンドヘッドには、そういった個人の趣味や少しの「遊び心」を許容してくれるカルチャーがあると感じています。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ★ 2枚並び写真 (sato_5, sato_4) -->
+                <div class="photo-split fade-up">
+                    <img src="../../images/sato_5.jpeg" alt="社内イベント風景" onerror="this.src='https://placehold.co/800x1200/eeeeee/888888?text=Photo+1'">
+                    <img src="../../images/sato_4.jpeg" alt="仕事風景" onerror="this.src='https://placehold.co/800x1200/eeeeee/888888?text=Work+1'">
+                </div>
+
+                <!-- セクション 2 -->
+                <div class="qa-group">
+                    <h2 class="section-h2 fade-up">2. 「作る」前に「業務」を知る</h2>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">学生時代にインターンに参加しようと思ったきっかけは何でしたか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">佐藤：</span>大学4年の春頃に内々定をいただき、「来年の春から少しでも即戦力として働けるようになりたい」という目標があったため参加しました。新しい技術を積極的に取り入れており、近年のAI技術の進化に伴って働き方が変わっていく環境に惹かれました。</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">そこで任されたのが、社内の工数管理システムの構築だったのですね。</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">佐藤：</span>はい。「新規構築だから業務に入りやすいだろう」ということでアサインされたのですが、結果的に私一人で開発を進めることになりました。</p>
+                            <p>当社のプロダクトでメインに使われている『Django』（PythonのWebフレームワーク）の学習も兼ねていたため、最初は「どうコードを書くか」という技術的な視点ばかりに目がいっていました。しかし、実際に進めていくと「動くものを作ること」と「運用に乗るものを作ること」は全くの別物だと気づきました。</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">具体的にはどのような点でそう感じたのでしょうか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">佐藤：</span>例えば、社内の工数管理一つをとっても、部署ごとに概念が全く違います。システム＆サービス部は「かかった時間」だけを管理しますが、スタジオ部門になると「時間＋撮影カット数などの数字」の概念が入ってきます。</p>
+                            <p>単に入力チェックを厳しくしてシステム化するだけでは、現場の入力負荷が上がり、使われないシステムになってしまいます。言われた通りにコードを書くのではなく、現場の業務フローや独自のルールを理解し、UIを逆算して「全体の仕組み」をデザインしなければならないと学びました。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 名言引用ブロック -->
+                <div class="pull-quote fade-up">
+                    <p>「<span>動くもの</span>」と「<span>運用に乗るもの</span>」は全くの別物。<br>現場の業務フローを紐解き、<br class="sp-only">仕組み全体をデザインする視点が必要でした。</p>
+                </div>
+
+                <!-- セクション 3 -->
+                <div class="qa-group">
+                    <h2 class="section-h2 fade-up">3. 現場の要望をシステム要件に「翻訳」する</h2>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">その後、「管理会計システム」の構築にも携わったそうですね。</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">佐藤：</span>はい。最大の課題は、私自身に管理会計の知識が全くなかったことでした。各部門がそれぞれどのようなルールでお金を管理し、運用しているのか。専門用語から現場の業務フローまで初めて触れることばかりで、当初はどうシステムへ落とし込めばいいのか苦労しました。</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">その課題はどのように乗り越えたのでしょうか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">佐藤：</span>自分だけで抱え込まず、上層部や各部門の担当者に自らヒアリングへ行きました。わからないことは素直に質問し、「経営陣は最終的に数字をどう見たいのか」「現場の人たちは今どうやって入力しているのか」を地道に紐解いていったんです。</p>
+                            <p>システムを作る以前に、まずは会社のビジネスやお金の動きを理解し、現場の要望をシステム要件へと「翻訳」していく。この経験を通して、技術力だけでなく、周囲に確認しながら業務の解像度を上げていくコミュニケーションの大切さを実感しています。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ★ 単体写真 (sato_3) -->
+                <div class="photo-standard fade-up">
+                    <img src="../../images/sato_3.jpg" alt="仕事風景2" onerror="this.src='https://placehold.co/1600x900/eeeeee/888888?text=Work+2'">
+                </div>
+
+                <!-- セクション 4 -->
+                <div class="qa-group">
+                    <h2 class="section-h2 fade-up">4. AI時代のエンジニアに求められる視点</h2>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">現場のニーズを翻訳する経験を通して、これからのエンジニアに必要なスキルは何だとお考えですか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">佐藤：</span>私が入社した3年前と現在では、開発を取り巻く環境が変わりました。今はAIを使えばコード生成ができ、開発を時短できる時代です。だからこそ、「コードを書く力」だけでは強みになりにくいと感じています。</p>
+                            <p>AI時代にエンジニアが担うべき重要な役割は、クライアントの複雑な業務フローを読み解く「仕様の読解力」と、それをシステムとしてどう構築すべきか見極める「判断力」です。それが、これからのエンジニアの面白さであり、ビジネスを推進していく上で大事な役割になっていくのかなと思っています。</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">最後に、未来の仲間へメッセージをお願いします。</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">佐藤：</span>コードを書くこと自体を目的とするのではなく、ビジネスの課題解決を考えたいエンジニアにとって、ここは成長できる環境だと思います。若手のうちから裁量を任され、失敗を恐れずに挑戦できるカルチャーがあります。</p>
+                            <p>エンジニアリングは「チームスポーツ」だと考えています。周囲と協力しながらものづくりを楽しめる方と、ぜひ一緒にお仕事をしたいです。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ★ 記事アクションエリア（日付とボタン） -->
+                <div class="article-action-area fade-up">
+                    <div class="article-date">2026.09</div>
+                    <div class="action-buttons">
+                        <a href="https://g.diamondhead.info/newgrad/" class="btn-action">新卒採用へ</a>
+                        <a href="https://g.diamondhead.info/midcareer/" class="btn-action">中途採用へ</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 共通フッター -->
+            <div id="footer-container"></div>
+
+        </main>
+    </div>
+
+    <script>
+        // 階層の設定 (interview/business-technology/ のため2階層上)
+        var pathToRoot = "../../";
+
+        // スクロール連動アニメーション
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => {
+                const hero = document.getElementById('hero-section');
+                if (hero) hero.classList.add('is-loaded');
+            }, 100);
+
+            const fadeElements = document.querySelectorAll('.fade-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            });
+
+            fadeElements.forEach(el => observer.observe(el));
+        });
+    </script>
+    
+    <!-- 共通JSの読み込み -->
+    <script src="../../components/sidebar.js"></script>
+    <script src="../../components/footer.js"></script>
+    
+</body>
+</html>
