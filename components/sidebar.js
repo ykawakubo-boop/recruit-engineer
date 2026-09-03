@@ -1,13 +1,12 @@
 // =========================================================================
 // レフトナビゲーション共通パーツ (components/sidebar.js)
 // =========================================================================
-// HTML側で指定された「pathToRoot」を使ってパスを組み立てます。
 (function() {
     "use strict";
 
-    const root = typeof pathToRoot !== 'undefined' ? pathToRoot : '../';
+    // HTML側で定義されていない場合のフォールバック
+    const root = typeof pathToRoot !== 'undefined' ? pathToRoot : (typeof window.pathToRoot !== 'undefined' ? window.pathToRoot : '../');
 
-    // 1. HTMLの流し込み（スマホ用のロゴ画像にはインラインCSSでスタイルを直接適用）
     const container = document.getElementById('sidebar-container');
     if (!container) return;
 
@@ -25,7 +24,7 @@
     <aside class="left-nav" id="commonLeftNav">
         <!-- ロゴ画像とトップへのリンク -->
         <a href="${root}" class="nav-logo" data-id="logo">
-            <img src="${root}images/dh_logo.png" alt="Diamondhead">
+            <img src="${root}images/dh_logo.png" alt="Diamondhead" style="margin-bottom: 10px;">
             <span class="logo-text">ENGINEERING CAREERS</span>
         </a>
         
@@ -40,7 +39,7 @@
                     <ul class="nav-sub-list">
                         <li class="has-deep">
                             <a href="${root}intern/long/" data-id="intern-long">長期インターンシップ</a>
-                            <ul class="nav-deep-list">
+                            <ul class="nav-deep-list" style="list-style: none; padding: 0 0 12px 12px; margin: 10px 0 0 0; border-left: 1px solid var(--border-color);">
                                 <li><a href="${root}intern/long/backend/" data-id="intern-backend">EC支援システム開発</a></li>
                                 <li><a href="${root}intern/long/frontend/" data-id="intern-frontend">ECサイト開発</a></li>
                                 <li><a href="${root}intern/long/ml/" data-id="intern-ml">AI活用プロダクト開発</a></li>
@@ -51,12 +50,22 @@
                         <li><a href="${root}intern/twoweeks/" data-id="intern-twoweeks">2weeksインターンシップ</a></li>
                     </ul>
                 </li>
+                <li class="has-sub">
+                    <!-- ★ ページ遷移させず、クリックでアコーディオン開閉のみ行う設定 -->
+                    <a href="#" class="no-link" data-id="interview-index">インタビュー</a>
+                    <ul class="nav-sub-list">
+                        <!-- ★ フォルダ名（URL）と並び順を更新 -->
+                        <li><a href="${root}interview/ec-service/" data-id="interview-ec">ECサービスG</a></li>
+                        <li><a href="${root}interview/saas/" data-id="interview-kamada">SaaS G</a></li>
+                        <li><a href="${root}interview/business-technology/" data-id="interview-sato">ビジネステクノロジーG</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </aside>
     `;
 
-    // 2. スマホメニュー開閉用のCSSをJSから強制注入
+    // 2. 開閉用クラスの追加CSSをJSから強制注入
     const style = document.createElement('style');
     style.textContent = `
         @media (max-width: 992px) {
@@ -67,12 +76,13 @@
             #commonLeftNav.is-open {
                 left: 0 !important;
             }
-            #commonLeftNav .nav-sub-list,
-            #commonLeftNav .nav-deep-list {
-                max-height: 800px !important;
-                opacity: 1 !important;
-                padding: 10px 0 0 12px !important;
-            }
+        }
+        
+        /* スマホ操作やクリックで開くためのアコーディオン用クラス */
+        #commonLeftNav li.has-sub.is-open-accordion > .nav-sub-list {
+            max-height: 800px !important;
+            opacity: 1 !important;
+            padding: 10px 0 0 12px !important;
         }
     `;
     document.head.appendChild(style);
@@ -83,6 +93,7 @@
         const leftNav = document.getElementById('commonLeftNav');
         
         if (menuToggle && leftNav) {
+            // モバイル用MENUボタン
             menuToggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 leftNav.classList.toggle('is-open');
@@ -95,7 +106,20 @@
                 }
             });
 
-            const navLinks = leftNav.querySelectorAll('a');
+            // インタビューなどの「リンクなし親メニュー」の開閉制御
+            const noLinks = leftNav.querySelectorAll('.no-link');
+            noLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); // ページトップへの遷移を防ぐ
+                    const parentLi = link.closest('.has-sub');
+                    if (parentLi) {
+                        parentLi.classList.toggle('is-open-accordion'); // アコーディオンの開閉
+                    }
+                });
+            });
+
+            // 通常のリンク（各ページへの遷移）をクリックしたときはスマホメニューを閉じる
+            const navLinks = leftNav.querySelectorAll('a:not(.no-link)');
             navLinks.forEach((link) => {
                 link.addEventListener('click', () => {
                     if (window.innerWidth <= 992) {
@@ -119,6 +143,8 @@
                 } else if (targetLink.closest('.nav-sub-list')) {
                     targetLink.classList.add('active-sub');
                     targetLink.closest('.has-sub').querySelector('a:first-child').classList.add('active');
+                    // アクティブな子要素を持つ親アコーディオンは開いておく
+                    targetLink.closest('.has-sub').classList.add('is-open-accordion');
                 } else {
                     targetLink.classList.add('active');
                 }
