@@ -55,7 +55,7 @@
                     <a href="#" class="no-link" data-id="interview-index">インタビュー</a>
                     <ul class="nav-sub-list">
                         <!-- ★ フォルダ名（URL）と並び順を更新 -->
-                        <li><a href="${root}interview/ec-service/" data-id="interview-ec">ECサービスG</a></li>
+                        <li><a href="${root}interview/ec-service/" data-id="interview-matsuo">ECサービスG</a></li>
                         <li><a href="${root}interview/saas/" data-id="interview-kamada">SaaS G</a></li>
                         <li><a href="${root}interview/business-technology/" data-id="interview-sato">ビジネステクノロジーG</a></li>
                     </ul>
