@@ -1,1 +1,535 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5DK7MXRR');</script>
+    <!-- End Google Tag Manager -->
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITエンジニア インタビュー | ダイアモンドヘッド株式会社</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap');
+
+        /* =========================================
+           1. 全体設定・フラット＆クリーンテーマ
+           ========================================= */
+        :root {
+            --bg-base: #ffffff;
+            --text-dark: #111111;
+            --text-body: #333333;
+            --text-muted: #777777;
+            --border-color: #dddddd;
+            --border-dark: #222222;
+            --accent-blue: #00bfa5; 
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .sp-only { display: none; }
+
+        .app-wrapper {
+            display: flex; align-items: flex-start; width: 100%; min-height: 100vh;
+        }
+
+        /* =========================================
+           2. レフトナビゲーション（階層ツリー構造）のスタイル
+           ========================================= */
+        .left-nav {
+            width: 280px; height: 100vh; position: fixed; top: 0; left: 0;
+            background-color: #ffffff; border-right: 1px solid var(--border-color);
+            padding: 50px 40px; box-sizing: border-box; display: flex; flex-direction: column;
+            z-index: 1000; overflow-y: auto; 
+        }
+        .left-nav::-webkit-scrollbar { width: 4px; }
+        .left-nav::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+        .nav-logo { text-decoration: none; margin-bottom: 60px; display: block; text-align: center; }
+        .nav-logo img { width: 100%; max-width: 180px; height: auto; display: block; margin: 0 auto; }
+        .nav-logo .logo-text { display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 11px; font-weight: 700; color: #555555; letter-spacing: 0.15em; margin-top: 16px; line-height: 1.6; }
+
+        .nav-recruit { flex-grow: 1; }
+        .nav-recruit-list { list-style: none; padding: 0; margin: 0; }
+        .nav-recruit-list > li { margin-bottom: 24px; position: relative; }
+        .nav-recruit-list a {
+            font-family: 'Noto Sans JP', sans-serif; font-size: 14px; font-weight: 700; color: #333; text-decoration: none;
+            display: flex; align-items: center; justify-content: space-between; transition: color 0.3s;
+        }
+        .nav-recruit-list a:hover, .nav-recruit-list a.active { color: var(--accent-blue); }
+
+        /* サブメニュー (第2階層) */
+        .nav-sub-list {
+            list-style: none; padding: 0 0 0 12px; margin: 0; border-left: 1px solid var(--border-color);
+            max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+        }
+        .nav-recruit-list li.has-sub:hover .nav-sub-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-sub-list,
+        .nav-recruit-list li.has-sub:has(a.active, a.active-sub, a.active-deep) .nav-sub-list {
+            max-height: 800px; opacity: 1; padding: 10px 0 0 12px;
+        }
+        .nav-sub-list li { margin-bottom: 14px; position: relative; }
+        .nav-sub-list li:last-child { margin-bottom: 0; }
+        .nav-sub-list a { font-size: 12.5px; font-weight: 500; color: #666; }
+        .nav-sub-list a:hover, .nav-sub-list a.active-sub { color: var(--accent-blue); }
+        
+        /* ディープメニュー (第3階層) */
+        .nav-deep-list {
+            list-style: none; padding: 0 0 0 12px; margin: 10px 0 0 0; border-left: 1px solid var(--border-color);
+            max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+        }
+        .nav-recruit-list li.has-sub:hover .nav-deep-list,
+        .nav-recruit-list li.has-sub:focus-within .nav-deep-list,
+        .nav-recruit-list li.has-sub:has(a.active, a.active-sub, a.active-deep) .nav-deep-list {
+            max-height: 400px; opacity: 1; padding: 10px 0 0 12px;
+        }
+        .nav-deep-list li { margin-bottom: 10px; }
+        .nav-deep-list a { font-size: 11.5px; font-weight: 400; color: #888; }
+        .nav-deep-list a:hover, .nav-deep-list a.active-deep { color: var(--accent-blue); font-weight: 700; }
+
+        .mobile-header { display: none; }
+
+        /* =========================================
+           3. メインコンテンツ（エディトリアル・マガジン風）
+           ========================================= */
+        .main-content {
+            flex: 1; width: 100%; padding-left: 280px; box-sizing: border-box;
+            background-color: var(--bg-base);
+            position: relative;
+        }
+
+        /* ヒーローセクション */
+        .article-hero {
+            position: relative; width: 100%; height: 70vh; min-height: 500px;
+            display: flex; align-items: flex-end; padding: 0 0 60px 10%; box-sizing: border-box; /* ★ PC時の下余白を増やして上へ */
+            background-color: #111; overflow: hidden;
+        }
+        .article-hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('../../images/kamada_1.jpg');
+            background-size: cover; 
+            background-position: center 75%; /* ★ 下寄せ(100%)と中央(50%)の半分 */
+            opacity: 0.6; filter: grayscale(10%); transform: scale(1.03);
+            transition: transform 8s ease-out; 
+        }
+        .article-hero.is-loaded .article-hero-bg { transform: scale(1); }
+        
+        .article-hero::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 80%);
+            z-index: 2; pointer-events: none;
+        }
+
+        .article-hero-content {
+            position: relative; z-index: 10; max-width: 1050px; color: #ffffff;
+            opacity: 0; transform: translateY(20px); transition: all 1s ease 0.3s;
+        }
+        .article-hero.is-loaded .article-hero-content { opacity: 1; transform: translateY(0); }
+
+        .article-tag {
+            display: inline-block; font-family: 'Bodoni Moda', serif; font-size: 14px; font-weight: 700; letter-spacing: 0.15em;
+            color: var(--accent-blue); margin-bottom: 24px; text-transform: uppercase;
+        }
+        .article-title {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: clamp(26px, 3.2vw, 40px); font-weight: 700; line-height: 1.5;
+            margin: 0 0 24px 0; letter-spacing: 0.03em;
+        }
+        .article-meta {
+            font-size: 14px; font-weight: 400; color: #bbbbbb; line-height: 1.6;
+            border-left: 1px solid var(--accent-blue); padding-left: 16px;
+        }
+
+        /* 記事コンテナ */
+        .article-wrapper {
+            max-width: 920px; margin: 0 auto; padding: 100px 5% 120px;
+        }
+
+        /* プロフィール */
+        .profile-card {
+            display: flex; align-items: flex-start; gap: 40px; padding-bottom: 60px;
+            margin-bottom: 80px;
+        }
+        .profile-card img {
+            width: 120px; height: 120px; border-radius: 4px; object-fit: cover;
+            object-position: 25% center; /* ★ 左寄せ(0%)と中央(50%)の半分 */
+            filter: grayscale(20%); flex-shrink: 0;
+        }
+        .profile-text h3 { font-size: 20px; font-weight: 700; margin: 0 0 12px 0; color: #111; letter-spacing: 0.05em; }
+        .profile-text p { font-size: 15px; color: var(--text-body); line-height: 1.8; margin: 0; }
+
+        /* リード文 */
+        .lead-text {
+            font-size: 17px; font-weight: 500; color: #222; line-height: 2.1;
+            margin-bottom: 100px; padding-left: 24px; border-left: 3px solid var(--border-dark);
+        }
+
+        /* 見出し */
+        .section-h2 {
+            font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 26px; font-weight: 700; color: #111;
+            margin: 0 0 50px; padding-bottom: 16px; border-bottom: 1px solid var(--border-dark);
+            letter-spacing: 0.05em;
+        }
+        
+        .qa-group { margin-bottom: 100px; }
+
+        /* Q&A */
+        .qa-block {
+            margin-bottom: 60px;
+        }
+        .qa-block:last-child { margin-bottom: 0; }
+
+        .qa-q {
+            font-size: 18px; font-weight: 700; color: #111; line-height: 1.7;
+            margin-bottom: 20px; position: relative; padding-left: 40px;
+        }
+        .qa-q::before {
+            content: 'Q.'; position: absolute; left: 0; top: -2px;
+            font-family: 'Bodoni Moda', serif; font-size: 24px; font-weight: 900;
+            color: var(--accent-blue); line-height: 1; font-style: italic;
+        }
+
+        .qa-a {
+            font-size: 16px; color: var(--text-body); line-height: 2.1;
+            padding-left: 40px;
+        }
+        .qa-a p { margin-top: 0; margin-bottom: 1.5em; }
+        .qa-a p:last-child { margin-bottom: 0; }
+
+        /* 登場人物の名前表記 */
+        .speaker-name {
+            display: inline-block; font-weight: 700; color: #111; margin-right: 8px;
+        }
+
+        /* 写真のレイアウト（ちょい出しワイド） */
+        .photo-standard {
+            width: calc(100% + 40px); margin: 80px 0 80px -20px;
+        }
+        .photo-standard img {
+            width: 100%; height: auto; max-height: 550px; object-fit: cover;
+            border-radius: 4px;
+        }
+        .photo-caption {
+            font-size: 13px; color: var(--text-muted); margin-top: 12px;
+            text-align: right; letter-spacing: 0.05em; padding-right: 20px;
+        }
+
+        /* 名言引用ブロック（特大クオーテーション） */
+        .pull-quote {
+            text-align: center; margin: 100px auto; padding: 40px 60px;
+            position: relative; max-width: 85%;
+        }
+        .pull-quote::before, .pull-quote::after {
+            font-family: 'Bodoni Moda', serif; font-size: 120px;
+            color: rgba(0, 191, 165, 0.15); 
+            position: absolute; line-height: 1;
+        }
+        .pull-quote::before {
+            content: '“'; left: -20px; top: -30px;
+        }
+        .pull-quote::after {
+            content: '”'; right: -20px; bottom: -70px;
+        }
+        .pull-quote p {
+            font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 24px; font-weight: 700;
+            line-height: 1.7; margin: 0; color: #111; position: relative; z-index: 2;
+        }
+        .pull-quote p span { color: var(--accent-blue); }
+
+        /* 記事下部アクションエリア */
+        .article-action-area {
+            margin-top: 80px; padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+        .article-date {
+            font-size: 13px; color: var(--text-muted); margin-bottom: 30px;
+            letter-spacing: 0.05em; text-align: right;
+            font-family: 'Bodoni Moda', serif;
+        }
+        .action-buttons {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+            max-width: 500px; margin: 0 auto;
+        }
+        .btn-action {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: #111111; color: #ffffff; text-decoration: none;
+            padding: 14px 20px; font-size: 13px; font-weight: 700;
+            letter-spacing: 0.05em; transition: all 0.4s ease;
+            border-radius: 4px; width: 100%; box-sizing: border-box;
+        }
+        .btn-action::after { content: '→'; margin-left: 8px; transition: transform 0.4s; }
+        .btn-action:hover { background-color: var(--accent-blue); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 191, 165, 0.2); }
+        .btn-action:hover::after { transform: translateX(4px); }
+
+        /* スクロールアニメーション用クラス */
+        .fade-up {
+            opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-up.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* =========================================
+           4. レスポンシブ (モバイル対応)
+           ========================================= */
+        @media (max-width: 992px) {
+            .app-wrapper { display: block; }
+            .main-content { padding-left: 0; }
+            
+            .mobile-header {
+                display: flex; justify-content: space-between; align-items: center;
+                background-color: rgba(255, 255, 255, 0.98);
+                padding: 15px 5%; box-sizing: border-box; border-bottom: 1px solid var(--border-color);
+                position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+            }
+            .menu-toggle {
+                background: none; border: none; font-family: 'Noto Sans JP', sans-serif; font-size: 12px; font-weight: 700; color: var(--accent-blue); cursor: pointer;
+            }
+            .left-nav {
+                position: fixed; top: 0; left: -100%; height: 100vh;
+                transition: left 0.3s ease; box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+            }
+            .left-nav.is-open { left: 0; }
+            
+            .article-hero { margin-top: 60px; height: 50vh; min-height: 400px; padding: 0 5% 25px; } /* ★ スマホ時は下ギリギリまでテキストを下げる */
+            .article-title { font-size: 24px; }
+            
+            .article-wrapper { padding: 60px 5%; }
+            
+            .profile-card { flex-direction: column; align-items: center; text-align: center; gap: 24px; }
+            
+            .lead-text { padding-left: 16px; border-left-width: 2px; font-size: 15px; margin-bottom: 60px; }
+            
+            .qa-q { font-size: 16px; padding-left: 0; padding-top: 36px; }
+            .qa-q::before { top: 0; }
+            .qa-a { font-size: 15px; padding-left: 0; }
+            
+            .photo-standard { width: 100%; margin: 60px 0; }
+            .photo-caption { padding-right: 0; }
+            
+            .pull-quote { padding: 40px 20px; margin: 60px 0; max-width: 100%; }
+            .pull-quote::before { left: -10px; top: -20px; font-size: 80px; }
+            .pull-quote::after { right: -10px; bottom: -50px; font-size: 80px; }
+            .pull-quote p { font-size: 18px; }
+
+            .action-buttons { gap: 12px; }
+            .btn-action { padding: 12px 10px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body data-page="interview-kamada">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5DK7MXRR"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div class="app-wrapper">
+
+        <!-- レフトナビゲーション (JSにより描画) -->
+        <div id="sidebar-container"></div>
+
+        <!-- メインコンテンツ -->
+        <main class="main-content">
+            
+            <!-- ヒーローセクション -->
+            <section class="article-hero" id="hero-section">
+                <div class="article-hero-bg"></div>
+                <div class="article-hero-content">
+                    <div class="article-tag">Interview</div>
+                    <h1 class="article-title">
+                        原動力は、ファッションへの探求心。<br>未経験からプロダクトを牽引するリーダーの軌跡
+                    </h1>
+                    <div class="article-meta">
+                        <span>システムサービス部 SaaSグループ</span>
+                        <span>鎌田 渓</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 記事本文ラッパー -->
+            <div class="article-wrapper">
+                    
+                <!-- プロフィール -->
+                <div class="profile-card fade-up">
+                    <!-- ★ 極端な位置調整（object-position）を削除し、自然な中央トリミングに戻しました -->
+                    <img src="../../images/kamada_2.jpg" alt="鎌田渓さんのプロフィール写真" onerror="this.src='https://placehold.co/300x300/e2e8f0/555555?text=Profile'">
+                    <div class="profile-text">
+                        <h3>鎌田 渓</h3>
+                        <p>就活時のコロナ禍を機にプログラミングを独学し、ダイアモンドヘッドに入社。入社以来4年にわたり商品情報管理システム（PCS）に携わり、現在はプロダクトマネジメントチームのリーダーを務める。ファッションと北海道コンサドーレ札幌をこよなく愛し、休日には両親を巻き込んでアウェイ遠征に出かける熱狂的な一面も。</p>
+                    </div>
+                </div>
+
+                <!-- リード文 -->
+                <p class="lead-text fade-up">
+                    「コーディング力」だけがエンジニアの価値ではない。未経験からスタートし、現在はアパレルECの要である商品情報管理システム（PCS）のチームリーダーを務める鎌田さん。彼がプロジェクトの中心的な存在へと成長できた背景には、ファッションへの深い愛情と、複雑な業務の仕組みを地道に紐解くコミュニケーション力がありました。AIがコードを生成する時代に、人間だからこそ発揮できるエンジニアの価値について話を聞きました。
+                </p>
+
+                <!-- セクション 1 -->
+                <div class="qa-group">
+                    <h2 class="section-h2 fade-up">1. ファッションとスポーツへの熱量</h2>
+                    
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">ファッションや北海道コンサドーレ札幌への思いについて教えてください。日常でどのように楽しまれていますか。</div>
+                        <div class="qa-a">
+                            <!-- ★ トーンを公式インタビュー向けに調整、エピソードをすっきり整理 -->
+                            <p><span class="speaker-name">鎌田：</span>ファッションに関しては、入社当初はキレイめな服装が中心でしたが、社内の服好きのメンバーと交流するうちに感性が磨かれ、幅が広がりました。最近は印象を大きく変えられるメガネに注目して収集しています。店舗での交流から新たな繋がりも生まれ、人生を豊かにする趣味の一つになっています。</p>
+                            <p>北海道コンサドーレ札幌の応援には、会社の福利厚生である観戦チケットを活用し、ホーム戦は毎回スタジアムへ足を運んでいます。サッカーを通じて社内外に仲間ができ、一体感を持って応援できることに魅力を感じています。また、当初は私一人で観戦していましたが、現在は両親も熱狂的なサポーターとなり、一緒にアウェイ遠征へ行くこともあります。遠征が家族旅行の代わりとなり、良い思い出作りに繋がっています。</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">学生時代は非情報系だったとのことですが、なぜダイアモンドヘッドでエンジニアを目指そうと思ったのですか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">鎌田：</span>就活の時期に、社会で活かせるスキルを持ち合わせていないことに気づき、コロナ禍で自宅学習が可能だったプログラミングの勉強を始めたのがきっかけです。手に職をつける意味でも良い経験になると思いました。</p>
+                            <p>ダイアモンドヘッドを知ったのは、大学時代にJリーグの試合会場でデータを収集するアルバイトをしていた時です。スタジアムの看板の中で唯一何の会社かわからなかったのが「ダイアモンドヘッド」でした。調べてみるとアパレルECのシステム開発を行っている企業だとわかり、学生時代からファッションに関心があったこと、そしてスポーツ活動に理解がある環境に惹かれ、入社を志望しました。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 写真：インタビュー中 -->
+                <div class="photo-standard fade-up">
+                    <img src="../../images/kamada_3.jpg" alt="インタビュー風景" onerror="this.src='https://placehold.co/1600x900/eeeeee/888888?text=Interview'">
+                </div>
+
+                <!-- セクション 2 -->
+                <div class="qa-group">
+                    <h2 class="section-h2 fade-up">2. 「点の知識」では通用しない壁</h2>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">入社当初は苦労もあったのではないでしょうか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">鎌田：</span>はい。入社前の研修や独学で基礎知識は習得したつもりでしたが、実際の業務では通用しない場面が多くありました。学習だけではどうしても「点の知識」にとどまってしまい、大規模な業務システムの一連の流れや全体像を掴むことに苦労しました。</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">その壁をどのように乗り越えていったのですか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">鎌田：</span>まずは基本となるコーディングの反復練習を重ねて技術的な土台を作りました。その過程で、エンジニアにとって真に重要なのは「情報の収集・整理と、その組み立て方」であることに気づきました。以降は、現場で実際に情報を集め、業務フローを整理し、それを自身の開発へ落とし込むサイクルを体系的に学んでいきました。</p>
+                            <p>さらに、システム全体を俯瞰するにはITインフラの知識も不可欠だと感じ、社内のAWS勉強会への参加や資格取得を通じてインプットの幅を広げました。こうした取り組みが、現在のエンジニアとしての地盤に繋がっています。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 名言引用ブロック -->
+                <div class="pull-quote fade-up">
+                    <p>「<span>点の知識</span>」だけでは業務は動かない。<br>現場を飛び回り、情報を整理して組み立てる力が、<br class="sp-only">エンジニアの地盤でした。</p>
+                </div>
+
+                <!-- セクション 3 -->
+                <div class="qa-group">
+                    <h2 class="section-h2 fade-up">3. 複雑な業務の裏側を紐解き、チームを繋ぐ</h2>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">現在は商品情報管理システム（PCS）のリーダーを務められています。具体的にPCSとはどのようなシステムなのでしょうか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">鎌田：</span>PCSは、商品名や説明文、採寸、素材などの基本情報と画像を保存し、各種ECサイトへ自動連携を行う一元管理システムです。アパレルEC特有の難しさとして、展開するECサイトごとに連携可能なカラー、サイズ、カテゴリ、性別の仕様が全く異なります。</p>
+                            <p>本来、メーカーの担当者様は展開先ごとの仕様を理解し、手作業でデータ変換を行う必要があり、非常に膨大で複雑な業務となります。PCSは、そうした複雑な仕様やルールをシステム側で吸収し、一度の登録で複数サイトへの連携を可能にすることで、クライアントの業務負担を大幅に軽減しています。</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">その中で、鎌田さんは現在どのような業務を担当されているのですか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">鎌田：</span>現在はシステムサービス部門 SaaSグループのプロダクトマネジメントチームのリーダーとして、動画登録などの新機能開発や、体制改善プロジェクトの進行管理を主に担当しています。新機能の要件を説明するための資料作成や、ミーティングでの方向づけなどの業務が増え、入社当初と比較すると自らコーディングを行う機会は減少しました。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">入社以来4年間、ずっと同じPCSというプロダクトに携わり続けているのには理由があるのでしょうか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">鎌田：</span>1、2年で他のプロジェクトへ異動するメンバーも多い中、当初は私もさまざまなシステムを経験してみたいという思いがありました。しかし、入社直後の右も左もわからない時期に、チーム内外のコミュニケーションを円滑にする役割を経験したことで、「特定のプロダクトに関する深い知識を持っていた方が、周囲をよりサポートできる」と気づきました。</p>
+                            <p>チームに不足している役割に徹し、目標に対して周囲を巻き込む力を磨いてきたことが、現在の立ち位置に繋がっていると考えています。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 写真：仕事風景 -->
+                <div class="photo-standard fade-up">
+                    <img src="../../images/kamada_4.jpg" alt="仕事風景" onerror="this.src='https://placehold.co/1000x667/f0f4f8/888888?text=Work'">
+                </div>
+
+                <!-- セクション 4 -->
+                <div class="qa-group">
+                    <h2 class="section-h2 fade-up">4. AI時代における、人間ならではのコア価値</h2>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">AIでコードが簡単に書ける時代と言われますが、鎌田さんにとって「エンジニアとして一番価値がある仕事」は何だと思いますか？</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">鎌田：</span>AIの技術は確実に進化を続けていますが、感情や悩みを共有する対話の中でしか汲み取れない、微妙なニュアンスがあると考えています。</p>
+                            <p>開発者が一方的に「便利だ」と思う機能を追加しても、利用者の本質的な課題を解決できないことは多々あります。そうしたニュアンスを同じ人間の立場で感じ取り、利用者の背景や用途を深く分析し、多様な利害関係者を巻き込みながら課題を解決へ導く。そのプロセスにこそ、エンジニアとしての価値があると考えています。</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-block fade-up">
+                        <div class="qa-q">最後に、今後の目標と未来の仲間へのメッセージをお願いします。</div>
+                        <div class="qa-a">
+                            <p><span class="speaker-name">鎌田：</span>現在の立場で、自身に与えられた役割を最大限に全うし、継続して貢献していきたいと考えています。</p>
+                            <p>新しく入社される方でも、「この人なら何か新しいことをやってくれそうだ」と期待させてくれる方とお会いできると嬉しく思います。協調性を持ち、仲間と共に全力でチームを良い方向へ導いていける方と、ぜひ一緒に働きたいです。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ★ 記事アクションエリア（日付とボタン） -->
+                <div class="article-action-area fade-up">
+                    <div class="article-date">2026.09</div>
+                    <div class="action-buttons">
+                        <a href="https://g.diamondhead.info/newgrad/" class="btn-action">新卒採用へ</a>
+                        <a href="https://g.diamondhead.info/midcareer/" class="btn-action">中途採用へ</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 共通フッター -->
+            <div id="footer-container"></div>
+
+        </main>
+    </div>
+
+    <script>
+        // 階層の設定 (interview/saas/ のため2階層上)
+        var pathToRoot = "../../";
+
+        // スクロール連動アニメーション
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => {
+                const hero = document.getElementById('hero-section');
+                if (hero) hero.classList.add('is-loaded');
+            }, 100);
+
+            const fadeElements = document.querySelectorAll('.fade-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            });
+
+            fadeElements.forEach(el => observer.observe(el));
+        });
+    </script>
+    
+    <!-- 共通JSの読み込み -->
+    <script src="../../components/sidebar.js"></script>
+    <script src="../../components/footer.js"></script>
+    
+</body>
+</html>
